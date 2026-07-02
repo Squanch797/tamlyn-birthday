@@ -3,142 +3,190 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Your 26th Birthday Summer Getaway ✨</title>
+  <title>Tamlyns 26th Birthday Getaway ✨</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif&display=swap');
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      /* Sommerlicher, warmer Premium-Verlauf */
       background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fef9d7 100%);
       min-height: 100vh;
       color: #1c1c1e;
       overflow-x: hidden;
-      padding-bottom: 40px;
+      padding-bottom: 60px;
+      touch-action: pan-y; /* Verhindert ungewolltes Zoom/Scroll Verhalten bei Gesten */
     }
     /* iOS Glassmorphism */
     .glass-header {
       background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
     }
     .glass-card {
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.90);
       backdrop-filter: blur(25px);
       -webkit-backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      box-shadow: 0 25px 50px -12px rgba(255, 105, 135, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 25px 50px -12px rgba(255, 105, 135, 0.2);
+    }
+    /* Hide Scrollbars für horizontale Slider */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
     .btn-active:active {
-      transform: scale(0.96);
+      transform: scale(0.95);
+    }
+    /* Wisch-Karten Animation */
+    #swipe-card {
+      will-change: transform;
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .dragging {
+      transition: none !important;
     }
   </style>
 </head>
-<body class="flex flex-col items-center">
+<body class="flex flex-col items-center select-none">
 
-  <header class="w-full max-w-lg glass-header sticky top-0 z-50 px-4 py-3 mb-4 shadow-sm flex items-center justify-between rounded-b-3xl">
-    <div class="flex items-center space-x-3">
-      <div class="relative w-12 h-12 rounded-full overflow-hidden border-2 border-pink-400 shadow-md flex-shrink-0">
-        <img src="IMG_0925.jpeg" alt="Birthday Girl" class="w-full h-full object-cover object-top">
+  <header class="w-full max-w-lg glass-header sticky top-0 z-50 px-5 py-3.5 mb-4 flex items-center justify-between rounded-b-[28px] transition-all">
+    <div class="flex items-center space-x-3.5">
+      <div class="relative w-14 h-14 rounded-full overflow-hidden border-[3px] border-pink-400 shadow-md flex-shrink-0">
+        <img src="IMG_0925.jpeg" alt="Tamlyn" class="w-full h-full object-cover object-top">
       </div>
       <div>
-        <span class="text-[10px] font-extrabold uppercase tracking-widest text-pink-500 block">Exklusiver Trip ❤️</span>
-        <h3 class="text-sm font-black text-gray-800">26. Geburtstag am Meer ☀️</h3>
+        <span class="text-[11px] font-black uppercase tracking-widest text-pink-500 block">Von Simon für Tamlyn ❤️</span>
+        <h3 class="text-base font-black text-gray-900 leading-tight">26. Geburtstag am Meer ☀️</h3>
       </div>
     </div>
-    <div class="bg-gradient-to-r from-pink-500 to-amber-400 text-white text-xs font-black px-3 py-1.5 rounded-full shadow-md animate-pulse flex items-center space-x-1">
+    <div class="bg-gradient-to-r from-pink-500 to-amber-400 text-white text-xs font-black px-3.5 py-2 rounded-full shadow-md flex items-center space-x-1">
       <span>VIP</span>
-      <span>✈️</span>
+      <span class="animate-bounce">🌴</span>
     </div>
   </header>
 
+  <div id="view-loading" class="hidden fixed inset-0 z-50 bg-white/90 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-center">
+    <div class="w-24 h-24 bg-gradient-to-tr from-pink-500 to-amber-400 rounded-3xl flex items-center justify-center text-5xl shadow-2xl mb-6 animate-spin" style="animation-duration: 3s;">
+      ✈️
+    </div>
+    <h3 class="text-2xl font-black text-gray-900 mb-2">Einen Moment, Tamlyn...</h3>
+    <p id="loading-text" class="text-base font-bold text-pink-600 animate-pulse max-w-xs leading-relaxed">
+      Simon verhandelt mit Ryanair über mehr Beinfreiheit...
+    </p>
+  </div>
+
   <div id="app" class="w-full max-w-lg px-4 transition-all duration-500">
     
-    <div id="view-welcome" class="glass-card rounded-[32px] p-8 text-center my-4 flex flex-col items-center justify-center min-h-[520px]">
-      <div class="w-20 h-20 bg-gradient-to-tr from-pink-500 to-amber-400 rounded-3xl flex items-center justify-center text-4xl shadow-xl mb-6 transform rotate-3">
-        🎁
+    <div id="view-welcome" class="glass-card rounded-[36px] p-8 text-center my-2 flex flex-col items-center justify-center min-h-[500px]">
+      <div class="relative w-36 h-36 rounded-full overflow-hidden border-4 border-white shadow-2xl mb-6 transform hover:scale-105 transition duration-500">
+        <img src="IMG_0925.jpeg" alt="Tamlyn" class="w-full h-full object-cover object-top">
+        <div class="absolute bottom-2 right-2 w-10 h-10 bg-gradient-to-tr from-pink-500 to-amber-400 rounded-full flex items-center justify-center text-xl shadow-lg border-2 border-white animate-pulse">
+          👑
+        </div>
       </div>
-      <span class="text-xs font-extrabold tracking-widest text-pink-500 uppercase mb-2">Alles Gute zum Geburtstag!</span>
-      <h1 class="text-3xl md:text-4xl font-black tracking-tight mb-4 text-gray-900 leading-tight">
-        Dein magischer Sommer-Trip ✨
+      <span class="text-xs font-black tracking-widest text-pink-500 uppercase mb-2">Simon lädt dich ein!</span>
+      <h1 class="text-3xl md:text-4xl font-black tracking-tight mb-3 text-gray-900 leading-tight">
+        Happy Birthday, Tamlyn! 🎉
       </h1>
-      <p class="text-gray-700 text-base font-medium leading-relaxed mb-8">
-        Weil du nur das Beste verdienst, entführe ich dich im September in die Sonne! <br><br>
-        Ich habe 6 traumhafte Ziele für uns recherchiert. Klick dich durch alle Städte, spür den Vibe und erstelle am Ende dein persönliches Wunsch-Ranking! ❤️
+      <p class="text-gray-700 text-sm md:text-base font-medium leading-relaxed mb-8">
+        Pack schon mal mental deinen Koffer! Zum 26. Geburtstag entführe ich dich im September auf einen unvergesslichen Sommer-Trip! ❤️<br><br>
+        Ich habe 6 traumhafte Ziele recherchiert. Du kannst die Karten gleich einfach **mit dem Finger wischen** und am Ende dein Wunsch-Ranking erstellen!
       </p>
-      <button onclick="showView('explore')" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-extrabold py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition-all flex items-center justify-center space-x-3 text-lg">
-        <span>Ziele entdecken</span>
-        <span class="text-xl">✈️🌴</span>
+      <button onclick="startAppWithLoading('explore')" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-extrabold py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition-all flex items-center justify-center space-x-3 text-lg">
+        <span>Abenteuer starten</span>
+        <span class="text-2xl">👉✈️</span>
       </button>
     </div>
 
-    <div id="view-explore" class="hidden my-2">
-      <div class="flex justify-between items-center mb-3 px-2">
-        <span class="text-xs font-black uppercase tracking-wider text-pink-600 bg-white/80 px-3 py-1 rounded-full shadow-sm" id="city-counter">Ziel 1 von 6</span>
-        <span class="text-xs font-bold text-gray-600 bg-white/80 px-3 py-1 rounded-full shadow-sm" id="viewed-status">👀 Noch nicht alle gesehen</span>
+    <div id="view-explore" class="hidden my-1">
+      <div class="flex justify-between items-center mb-2 px-2">
+        <span class="text-xs font-black uppercase tracking-wider text-pink-600 bg-white/90 px-3 py-1.5 rounded-full shadow-sm" id="city-counter">Ziel 1 von 6</span>
+        <span class="text-xs font-bold text-gray-600 bg-white/90 px-3 py-1.5 rounded-full shadow-sm" id="viewed-status">👀 Wische zum Entdecken</span>
       </div>
 
-      <div class="glass-card rounded-[36px] overflow-hidden shadow-2xl flex flex-col">
-        <div class="relative h-72 w-full overflow-hidden bg-gray-200">
-          <img id="explore-img" src="" alt="City" class="w-full h-full object-cover">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+      <div id="swipe-card" class="glass-card rounded-[36px] overflow-hidden shadow-2xl flex flex-col relative border-[2px] border-white/80">
+        
+        <div class="relative h-64 w-full overflow-hidden bg-gray-200 flex-shrink-0">
+          <img id="explore-img" src="" alt="City" class="w-full h-full object-cover pointer-events-none">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
+          
           <div class="absolute top-4 right-4 bg-black/40 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-xs font-bold border border-white/20 flex items-center space-x-1">
-            <span>☀️ Vibe:</span>
+            <span>✨ Sommer-Level:</span>
             <span id="explore-vibe-score" class="text-amber-400 font-black"></span>
           </div>
-          <div class="absolute bottom-5 left-6 right-6 text-white">
-            <span id="explore-country" class="text-xs font-extrabold uppercase tracking-widest bg-pink-500 px-3 py-1 rounded-full shadow-md"></span>
-            <h2 id="explore-city" class="text-4xl font-black tracking-tight mt-2 drop-shadow-md"></h2>
+
+          <div class="absolute bottom-4 left-6 right-6 text-white pointer-events-none">
+            <span id="explore-country" class="text-[11px] font-extrabold uppercase tracking-widest bg-pink-500 px-3 py-1 rounded-full shadow-md"></span>
+            <h2 id="explore-city" class="text-4xl font-black tracking-tight mt-1.5 drop-shadow-md"></h2>
           </div>
         </div>
 
-        <div class="p-6 md:p-8 flex-1 flex flex-col justify-between space-y-6">
+        <div class="p-5 md:p-6 flex-1 flex flex-col justify-between space-y-4">
           
-          <div class="grid grid-cols-2 gap-3 bg-white/60 p-4 rounded-2xl border border-white">
-            <div class="text-center border-r border-gray-200">
-              <span class="text-xs font-bold text-gray-400 block uppercase">Wetter im Sept.</span>
-              <span id="explore-temp" class="text-base font-black text-gray-800"></span>
+          <div class="grid grid-cols-2 gap-2 bg-white/70 p-3.5 rounded-2xl border border-white text-center shadow-sm">
+            <div class="border-r border-gray-200">
+              <span class="text-[11px] font-bold text-gray-400 block uppercase">Wetter im Sept.</span>
+              <span id="explore-temp" class="text-sm font-black text-gray-800"></span>
             </div>
-            <div class="text-center">
-              <span class="text-xs font-bold text-gray-400 block uppercase">Budget-Score</span>
-              <span id="explore-price" class="text-base font-black text-emerald-600"></span>
+            <div>
+              <span class="text-[11px] font-bold text-gray-400 block uppercase">Romantik-Score</span>
+              <span id="explore-romance" class="text-sm font-black text-rose-500"></span>
             </div>
           </div>
 
-          <div class="bg-gradient-to-r from-pink-500/10 to-amber-500/10 rounded-2xl p-4 border border-pink-200">
-            <span class="text-xs font-black text-pink-500 uppercase tracking-wider block mb-1">✨ Das Motto</span>
-            <p id="explore-motto" class="text-lg font-extrabold text-gray-900"></p>
+          <div class="bg-gradient-to-r from-pink-500/10 to-amber-500/10 rounded-2xl p-3.5 border border-pink-200">
+            <p id="explore-motto" class="text-base font-black text-gray-900 text-center"></p>
           </div>
 
           <div>
-            <span class="text-xs font-black text-gray-400 uppercase tracking-wider block mb-2">🔥 Highlights & Erlebnisse</span>
-            <ul id="explore-highlights" class="text-base font-semibold text-gray-700 space-y-2 pl-1"></ul>
+            <span class="text-xs font-black text-blue-500 uppercase tracking-wider block mb-2 flex items-center gap-1">
+              <span>🌊 Sommer & Strand-Vibe</span>
+              <span class="text-[10px] text-gray-400 font-normal">(Seitlich wischen 👉)</span>
+            </span>
+            <div id="slider-beach" class="flex overflow-x-auto gap-3 no-scrollbar pb-1 pt-0.5">
+              </div>
           </div>
 
-          <div class="bg-blue-500/10 p-4 rounded-2xl border border-blue-200">
-            <span class="text-xs font-black text-blue-600 uppercase tracking-wider block mb-1">🌊 Sommer & Strand-Faktor</span>
-            <p id="explore-beach" class="text-sm font-medium text-gray-800 leading-relaxed"></p>
+          <div>
+            <span class="text-xs font-black text-amber-600 uppercase tracking-wider block mb-2 flex items-center gap-1">
+              <span>🍷 Kulinarik & Genuss</span>
+              <span class="text-[10px] text-gray-400 font-normal">(Seitlich wischen 👉)</span>
+            </span>
+            <div id="slider-food" class="flex overflow-x-auto gap-3 no-scrollbar pb-1 pt-0.5">
+              </div>
           </div>
 
-          <div class="bg-amber-500/10 p-4 rounded-2xl border border-amber-200">
-            <span class="text-xs font-black text-amber-600 uppercase tracking-wider block mb-1">🍷 Kulinarik & Genuss</span>
-            <p id="explore-food" class="text-sm font-medium text-gray-800 leading-relaxed"></p>
+          <div class="bg-white/50 p-3 rounded-2xl border border-white/60">
+            <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-1">🔥 Top-Erlebnisse für uns:</span>
+            <p id="explore-highlights" class="text-xs font-semibold text-gray-700 leading-relaxed"></p>
           </div>
 
-          <div class="flex items-center justify-between gap-3 pt-4 border-t border-gray-200/60">
-            <button onclick="prevCity()" class="flex-1 bg-white py-4 rounded-2xl text-base font-extrabold text-gray-700 btn-active transition shadow-md border border-gray-100 text-center">
-              &larr; Zurück
-            </button>
-            <button onclick="nextCity()" class="flex-1 bg-gray-900 text-white py-4 rounded-2xl text-base font-extrabold btn-active transition shadow-xl text-center">
-              Nächste &rarr;
-            </button>
+          <div class="pt-2">
+            <div class="flex items-center justify-between text-xs font-extrabold text-gray-400 mb-2 px-2">
+              <span>👈 Vorherige Stadt</span>
+              <span class="text-pink-500 animate-pulse">Wische die Karte!</span>
+              <span>Nächste Stadt 👉</span>
+            </div>
+            
+            <div class="flex items-center gap-2">
+              <button onclick="prevCity()" class="flex-1 bg-white/80 py-3.5 rounded-2xl text-sm font-extrabold text-gray-700 btn-active transition shadow-sm border border-gray-200 text-center">
+                &larr; Zurück
+              </button>
+              <button onclick="nextCity()" class="flex-1 bg-gray-900 text-white py-3.5 rounded-2xl text-sm font-extrabold btn-active transition shadow-lg text-center">
+                Nächste &rarr;
+              </button>
+            </div>
           </div>
 
           <div id="unlock-ranking-box" class="hidden pt-2">
-            <button onclick="showView('ranking')" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black py-4 rounded-2xl shadow-xl btn-active animate-bounce text-base flex items-center justify-center space-x-2">
-              <span>🏆 Alle 6 gesehen! Jetzt Städte ranken</span>
+            <button onclick="startAppWithLoading('ranking')" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black py-4 rounded-2xl shadow-xl btn-active animate-bounce text-base flex items-center justify-center space-x-2">
+              <span>🏆 Alle entdeckt! Jetzt Städte ranken</span>
               <span>➡️</span>
             </button>
           </div>
@@ -150,17 +198,17 @@
     <div id="view-ranking" class="hidden my-2">
       <div class="glass-card rounded-[36px] p-6 md:p-8 shadow-2xl">
         <div class="text-center mb-6">
-          <span class="text-xs font-extrabold text-pink-500 uppercase tracking-widest block mb-1">Dein Plan A, B & C</span>
-          <h2 class="text-3xl font-black text-gray-900 mb-2">Ranke deine Favoriten 🏆</h2>
+          <span class="text-xs font-extrabold text-pink-500 uppercase tracking-widest block mb-1">Simons Plan A, B & C</span>
+          <h2 class="text-3xl font-black text-gray-900 mb-2">Tamlyns Ranking 🏆</h2>
           <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
-            Schiebe deine Favoriten mit den Pfeilen nach oben! Die Nummer 1 ist unser Plan A. Falls dort Flüge oder Hotels vergriffen sind, habe ich direkt deine Alternativen parat! 😉
+            Schiebe deine Favoriten mit den Pfeilen nach oben! Platz 1 ist unser absoluter Plan A. Falls dort Flüge oder Hotels vergriffen sind, habe ich direkt deine Alternativen parat! 😉
           </p>
         </div>
 
-        <div id="ranking-list" class="space-y-3 mb-8"></div>
+        <div id="ranking-list" class="space-y-2.5 mb-8"></div>
 
-        <button onclick="goToDateSelection()" class="w-full bg-gradient-to-r from-pink-500 to-amber-500 text-white font-black py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition text-lg flex items-center justify-center space-x-2">
-          <span>Ranking speichern & weiter 🔒</span>
+        <button onclick="showView('select')" class="w-full bg-gradient-to-r from-pink-500 to-amber-500 text-white font-black py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition text-lg flex items-center justify-center space-x-2">
+          <span>Ranking bestätigen & weiter 🔒</span>
           <span>✨</span>
         </button>
       </div>
@@ -169,18 +217,18 @@
     <div id="view-select" class="hidden my-2">
       <div class="glass-card rounded-[36px] p-6 md:p-8 shadow-2xl">
         <div class="text-center mb-6">
-          <span class="text-xs font-extrabold text-pink-500 uppercase tracking-widest block mb-1">Fast geschafft!</span>
+          <span class="text-xs font-extrabold text-pink-500 uppercase tracking-widest block mb-1">Fast geschafft, Tamlyn!</span>
           <h2 class="text-3xl font-black text-gray-900 mb-1">Wann & Wie? 📅</h2>
-          <p class="text-xs text-gray-500">Wähle das perfekte Datum für deinen Platz 1: <strong id="selected-rank1-name" class="text-pink-600"></strong></p>
+          <p class="text-xs text-gray-500">Wähle das perfekte Datum für deinen Platz 1: <strong id="selected-rank1-name" class="text-pink-600 font-black"></strong></p>
         </div>
 
         <div class="mb-6">
-          <label class="text-xs font-extrabold uppercase tracking-widest text-gray-500 block mb-3">1. Wähle unser Reisedatum (Top Flugzeiten):</label>
+          <label class="text-xs font-extrabold uppercase tracking-widest text-gray-500 block mb-3">1. Wähle unser Reisedatum (Top Flugzeiten ab MUC/FMM):</label>
           <div id="select-date-list" class="space-y-3"></div>
         </div>
 
         <div class="mb-8">
-          <label class="text-xs font-extrabold uppercase tracking-widest text-gray-500 block mb-3">2. Welchen Hotel-Vibe bevorzugst du?</label>
+          <label class="text-xs font-extrabold uppercase tracking-widest text-gray-500 block mb-3">2. Welchen Hotel-Vibe wünschst du dir?</label>
           <div class="grid grid-cols-2 gap-3">
             <button type="button" onclick="selectVibe('Boutique im Zentrum')" id="vibe-boutique" class="vibe-btn border-2 border-gray-200 p-4 rounded-2xl text-center text-xs font-black transition btn-active">
               🏨 Boutique-Hotel mitten im Zentrum
@@ -192,7 +240,7 @@
         </div>
 
         <button onclick="submitChoice()" class="w-full bg-black text-white font-black py-5 rounded-2xl shadow-xl hover:bg-gray-800 btn-active transition-all text-lg tracking-wide flex items-center justify-center space-x-2">
-          <span>Reise jetzt offiziell einloggen! 🎉</span>
+          <span>Geschenk jetzt offiziell einloggen! 🎉</span>
         </button>
       </div>
     </div>
@@ -204,7 +252,7 @@
         </div>
         
         <h2 class="text-3xl font-black tracking-tight mb-2 text-gray-900">Alles eingeloggt! ❤️</h2>
-        <p class="text-gray-600 text-sm font-medium mb-6">Dein sommerlicher 26. Geburtstagstrip steht fest!</p>
+        <p class="text-gray-600 text-sm font-medium mb-6">Tamlyns sommerlicher 26. Geburtstagstrip steht fest!</p>
         
         <div class="bg-gray-900 text-white p-6 rounded-3xl mb-6 text-left shadow-xl space-y-4">
           <div>
@@ -224,12 +272,12 @@
         </div>
 
         <p class="text-xs font-semibold text-gray-600 mb-6 leading-relaxed">
-          Ich mache mich jetzt sofort an die Buchung ab Memmingen/München und suche uns ein wunderschönes Hotel raus! Ich liebe dich! ❤️☀️
+          Ich mache mich jetzt sofort an die Buchung der Flüge ab Memmingen/München und suche uns das perfekte Hotel raus! Ich liebe dich! ❤️☀️
         </p>
 
         <a id="whatsapp-btn" href="#" target="_blank" class="w-full bg-[#25D366] text-white font-black py-5 rounded-2xl shadow-xl hover:bg-[#20bd5a] btn-active transition-all flex items-center justify-center space-x-3 text-base block mb-3">
           <span class="text-xl">💬</span>
-          <span>Ranking per WhatsApp an mich senden</span>
+          <span>Ranking per WhatsApp an Simon senden</span>
         </a>
         <span class="text-[11px] text-gray-500 font-medium">Oder mach einfach einen Screenshot für unsere Vorfreude! 📸</span>
       </div>
@@ -238,6 +286,7 @@
   </div>
 
   <script>
+    // Die 6 Städte (Palma heisst jetzt Mallorca, Preise ersetzt durch Romantik-Score, Visuelle Slider Daten hinzugefügt)
     const cities = [
       {
         id: "porto",
@@ -245,16 +294,18 @@
         country: "Portugal 🇵🇹",
         motto: "Portwein, Atlantik & magische Gassen",
         temperature: "23°C - 26°C",
-        priceEstimate: "Sehr Günstig",
+        romanceScore: "100% Amore ❤️",
         summerVibeScore: "9/10",
         image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80",
-        highlights: [
-          "• Magische Buchhandlung Livraria Lello",
-          "• Sonnenuntergang auf der Ponte Dom Luís I",
-          "• Buntes Uferviertel Ribeira"
+        highlights: "Harry-Potter Buchhandlung Lello • Sonnenuntergang Ponte Dom Luís I • Buntes Uferviertel Ribeira",
+        beachSlider: [
+          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Mit der historischen Holz-Tram direkt an die Atlantikwellen!" },
+          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Foz do Douro: Strand-Cafés und Meeresrauschen." }
         ],
-        beachTip: "Playa de Foz do Douro: Wir fahren mit der historischen Holz-Straßenbahn direkt an die wilden Atlantikwellen und trinken einen Galão am Strand!",
-        foodTip: "Warme Pastéis de Nata frisch aus dem Ofen & ein romantisches Portwein-Tasting direkt am Flussufer.",
+        foodSlider: [
+          { img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80", text: "Warme Pastéis de Nata frisch aus dem Ofen!" },
+          { img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80", text: "Exklusives Portwein-Tasting direkt am Flussufer." }
+        ],
         dates: ["Do, 10.09. - So, 13.09. (Perfekte Flugzeiten)", "Sa, 12.09. - Di, 15.09. (Spätsommer-Hit)"]
       },
       {
@@ -263,34 +314,38 @@
         country: "England 🇬🇧",
         motto: "Die ultimative Weltmetropole",
         temperature: "18°C - 21°C",
-        priceEstimate: "Etwas Teurer",
+        romanceScore: "95% Big City ❤️",
         summerVibeScore: "7/10",
         image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80",
-        highlights: [
-          "• Big Ben, Tower Bridge & London Eye",
-          "• Weltklasse-Shopping in Soho & Regent Street",
-          "• Ein unvergesslicher Musical-Abend im West End"
+        highlights: "Big Ben & Tower Bridge • Shopping in Soho & Regent Street • Musical-Abend im West End",
+        beachSlider: [
+          { img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80", text: "Romantische Bootstour auf der sonnigen Themse." },
+          { img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=400&q=80", text: "Entspanntes Picknick in den königlichen Gärten des Hyde Park." }
         ],
-        beachTip: "Park- & Themse-Chillout: Statt Strand machen wir eine sonnige Bootstour nach Greenwich oder ein traumhaftes Picknick im Hyde Park!",
-        foodTip: "Schlemmen auf dem Borough Market (Food-Himmel!) & authentisches indisches Curry in der hippen Brick Lane.",
+        foodSlider: [
+          { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Schlemmen auf dem weltberühmten Borough Market!" },
+          { img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80", text: "Hipper Afternoon Tea oder authentisches indisches Curry." }
+        ],
         dates: ["Do, 03.09. - So, 06.09. (Beste Sonne)", "Do, 10.09. - So, 13.09."]
       },
       {
-        id: "palma",
-        city: "Palma Stadt",
+        id: "mallorca",
+        city: "Mallorca",
         country: "Spanien 🇪🇸",
         motto: "Das kleine Barcelona am Meer",
         temperature: "27°C - 29°C",
-        priceEstimate: "Mittel",
+        romanceScore: "100% Sonne & Meer ❤️",
         summerVibeScore: "10/10",
         image: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=800&q=80",
-        highlights: [
-          "• Die majestätische Kathedrale La Seu am Meer",
-          "• Verwinkelte Altstadt mit versteckten Palästen",
-          "• Das hippe Künstlerviertel Santa Catalina"
+        highlights: "Majestätische Kathedrale La Seu am Meer • Altstadt-Paläste • Künstlerviertel Santa Catalina",
+        beachSlider: [
+          { img: "https://images.unsplash.com/photo-1601582589907-f92af5ed9db8?auto=format&fit=crop&w=400&q=80", text: "Chillen im schicken Anima Beach Club direkt an der Promenade!" },
+          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Türkises Meer und baden in traumhaften spanischen Buchten." }
         ],
-        beachTip: "Pure Sommer-Vibes: Chillen im schicken Anima Beach Club direkt an der Promenade oder baden in der türkisen Bucht Cala Major.",
-        foodTip: "Frische Tapas im Mercat de l'Olivar & abends fruchtige Cocktails auf einer atemberaubenden Rooftop-Bar.",
+        foodSlider: [
+          { img: "https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=400&q=80", text: "Frische Tapas & Wein im lebendigen Mercat de l'Olivar." },
+          { img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=400&q=80", text: "Abends fruchtige Cocktails auf einer Rooftop-Bar über der Stadt." }
+        ],
         dates: ["Fr, 11.09. - Mo, 14.09. (Verlängertes Wochenende)", "Do, 17.09. - So, 20.09."]
       },
       {
@@ -299,16 +354,18 @@
         country: "Italien 🇮🇹",
         motto: "La Dolce Vita & Ewige Liebe",
         temperature: "26°C - 28°C",
-        priceEstimate: "Etwas Teurer",
+        romanceScore: "100% Amore ❤️",
         summerVibeScore: "8/10",
         image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80",
-        highlights: [
-          "• Kolosseum, Forum Romanum & Vatikan",
-          "• Münze werfen am Trevi-Brunnen (für ewige Liebe!)",
-          "• Abends durch die Gassen von Trastevere flanieren"
+        highlights: "Kolosseum & Vatikan • Münze werfen am Trevi-Brunnen • Abends durch Trastevere flanieren",
+        beachSlider: [
+          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Mit dem Zug in 30 Min ans Meer am Lido di Ostia!" },
+          { img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=400&q=80", text: "Pizza und Aperol im warmen Abend-Sonnenuntergang am Strand." }
         ],
-        beachTip: "Pasta am Meer: Wir setzen uns für 1,50€ in den Regionalzug und sind in 30 Min am Lido di Ostia für Pizza direkt im Sonnenuntergang!",
-        foodTip: "Echte römische Cacio e Pepe Pasta, hauchdünne Pizza aus dem Steinofen & unbegrenzt fantastisches Gelato.",
+        foodSlider: [
+          { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Echte römische Cacio e Pepe Pasta in einer kleinen Gasse." },
+          { img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=400&q=80", text: "Unbegrenzt fantastisches italienisches Gelato in der Sonne!" }
+        ],
         dates: ["Do, 17.09. - So, 20.09. (Angenehme Wärme)", "Do, 24.09. - So, 27.09."]
       },
       {
@@ -317,16 +374,18 @@
         country: "Italien 🇮🇹",
         motto: "Die Karibik Europas",
         temperature: "26°C - 29°C",
-        priceEstimate: "Mittel",
+        romanceScore: "100% Insel-Traum ❤️",
         summerVibeScore: "10/10",
         image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-        highlights: [
-          "• Die thronende Berg-Altstadt 'Castello'",
-          "• Panoramablick von der Bastion Saint Remy",
-          "• Wilde rosa Flamingos in den Salzseen der Stadt"
+        highlights: "Berg-Altstadt Castello • Bastion Saint Remy Panoramablick • Wilde rosa Flamingos sehen",
+        beachSlider: [
+          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Poetto Beach: 8 km weißer Sand direkt vor der Tür!" },
+          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Glasklares, karibisch-türkises Wasser und leere Strände." }
         ],
-        beachTip: "Karibik-Feeling pur: Der Poetto Beach bietet uns 8 Kilometer feinsten weißen Sand und glasklares, türkises Wasser direkt vor der Tür!",
-        foodTip: "Handgemachte sardische Culurgiones (gefüllte Nudeltaschen), würziger Pecorino & eisgekühlter Mirto-Likör.",
+        foodSlider: [
+          { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Handgemachte sardische Culurgiones (gefüllte Nudeltaschen)." },
+          { img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80", text: "Frische Meeresfrüchte & eisgekühlter Mirto-Likör am Meer." }
+        ],
         dates: ["Di, 08.09. - Fr, 11.09. (Ryanair Schnäppchen)", "Do, 17.09. - So, 20.09."]
       },
       {
@@ -335,37 +394,59 @@
         country: "Zypern 🇨🇾",
         motto: "Palmen, Mythen & Meze-Abende",
         temperature: "28°C - 31°C",
-        priceEstimate: "Sehr Günstig",
+        romanceScore: "100% Sommer pur ❤️",
         summerVibeScore: "10/10",
         image: "https://images.unsplash.com/photo-1553913861-c0fddf2619ee?auto=format&fit=crop&w=800&q=80",
-        highlights: [
-          "• Antiker archäologischer Park direkt am Meer",
-          "• Die faszinierenden Königsgräber von Paphos",
-          "• Der malerische Hafen mit der alten Festung"
+        highlights: "Archäologischer Park am Meer • Faszinierende Königsgräber • Malerischer Hafen",
+        beachSlider: [
+          { img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=400&q=80", text: "Sonnengarantie & baden am mythischen Aphrodite-Felsen!" },
+          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Entspanntes schwimmen in der wunderschönen Coral Bay." }
         ],
-        beachTip: "Sonnengarantie: Schwimmen in der windgeschützten Coral Bay oder am mythischen Aphrodite-Felsen (wo die Göttin der Liebe aus dem Meer stieg).",
-        foodTip: "Zypriotische Riesen-Meze (wir probieren bis zu 20 kleine Spezialitäten!) & frisch gegrillter Halloumi.",
+        foodSlider: [
+          { img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", text: "Zypriotische Riesen-Meze (wir probieren 20 Gänge!)" },
+          { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Frisch gegrillter Halloumi & kühler Wein an der Promenade." }
+        ],
         dates: ["Do, 17.09. - So, 20.09. (Voller Hochsommer)", "Do, 24.09. - So, 27.09."]
       }
     ];
 
+    const loadingQuotes = [
+      "Simon verhandelt mit Ryanair über mehr Beinfreiheit... ✈️",
+      "Berechne die optimale Menge an Sonnencreme für Tamlyn... ☀️",
+      "Koffer werden mental schon mal gepackt... 🧳",
+      "Spatzenschlau nach den besten Cocktail-Bars suchen... 🍹",
+      "Entschlüssele den perfekten Geburtstags-Vibe... 🎁"
+    ];
+
     let currentCityIdx = 0;
     let viewedCities = new Set();
-    let rankedCities = [...cities]; // Kopie für das Ranking
+    let rankedCities = [...cities];
     let selectedDate = null;
     let selectedVibe = "Boutique im Zentrum";
+
+    // --- LADE-SCREEN LOGIK ---
+    function startAppWithLoading(targetView) {
+      document.getElementById('view-loading').classList.remove('hidden');
+      const quoteEl = document.getElementById('loading-text');
+      quoteEl.innerText = loadingQuotes[Math.floor(Math.random() * loadingQuotes.length)];
+      
+      setTimeout(() => {
+        document.getElementById('view-loading').classList.add('hidden');
+        showView(targetView);
+      }, 1500);
+    }
 
     function showView(viewId) {
       document.querySelectorAll('#app > div').forEach(el => el.classList.add('hidden'));
       document.getElementById('view-' + viewId).classList.remove('hidden');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // IMMER nach oben scrollen!
 
       if (viewId === 'explore') renderCity();
       if (viewId === 'ranking') renderRanking();
       if (viewId === 'select') renderDateSelection();
     }
 
-    // --- EXPLORER LOGIC ---
+    // --- EXPLORER LOGIK & SLIDER RENDERING ---
     function renderCity() {
       const c = cities[currentCityIdx];
       viewedCities.add(currentCityIdx);
@@ -376,25 +457,41 @@
       document.getElementById('explore-city').innerText = c.city;
       document.getElementById('explore-temp').innerText = c.temperature;
       document.getElementById('explore-vibe-score').innerText = c.summerVibeScore;
-      document.getElementById('explore-price').innerText = c.priceEstimate;
+      document.getElementById('explore-romance').innerText = c.romanceScore;
       document.getElementById('explore-motto').innerText = c.motto;
-      document.getElementById('explore-beach').innerText = c.beachTip;
-      document.getElementById('explore-food').innerText = c.foodTip;
+      document.getElementById('explore-highlights').innerText = c.highlights;
 
-      const hlContainer = document.getElementById('explore-highlights');
-      hlContainer.innerHTML = '';
-      c.highlights.forEach(h => {
-        const li = document.createElement('li');
-        li.innerText = h;
-        hlContainer.appendChild(li);
+      // Render Visuellen Strand Slider
+      const beachSlider = document.getElementById('slider-beach');
+      beachSlider.innerHTML = '';
+      c.beachSlider.forEach(item => {
+        beachSlider.innerHTML += `
+          <div class="w-60 flex-shrink-0 bg-white/90 rounded-2xl overflow-hidden border border-white shadow-sm flex flex-col justify-between">
+            <img src="${item.img}" class="w-full h-28 object-cover">
+            <p class="p-2.5 text-[11px] font-bold text-gray-800 leading-tight">${item.text}</p>
+          </div>
+        `;
       });
 
-      // Prüfen ob alle gesehen wurden
+      // Render Visuellen Food Slider
+      const foodSlider = document.getElementById('slider-food');
+      foodSlider.innerHTML = '';
+      c.foodSlider.forEach(item => {
+        foodSlider.innerHTML += `
+          <div class="w-60 flex-shrink-0 bg-white/90 rounded-2xl overflow-hidden border border-white shadow-sm flex flex-col justify-between">
+            <img src="${item.img}" class="w-full h-28 object-cover">
+            <p class="p-2.5 text-[11px] font-bold text-gray-800 leading-tight">${item.text}</p>
+          </div>
+        `;
+      });
+
       if (viewedCities.size === cities.length) {
-        document.getElementById('viewed-status').innerText = "🌟 Alle gesehen!";
+        document.getElementById('viewed-status').innerText = "🌟 Alle entdeckt!";
         document.getElementById('viewed-status').className = "text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full shadow-sm";
         document.getElementById('unlock-ranking-box').classList.remove('hidden');
       }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scrollt beim Stadtsprung nach oben
     }
 
     function nextCity() {
@@ -407,7 +504,62 @@
       renderCity();
     }
 
-    // --- RANKING LOGIC ---
+    // --- ECHTE 1:1 WISCHGESTEN (TINDER/IOS STYLE) ---
+    const card = document.getElementById('swipe-card');
+    let startX = 0, currentX = 0, startY = 0, isDragging = false;
+
+    card.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isDragging = true;
+      card.classList.add('dragging');
+    }, { passive: true });
+
+    card.addEventListener('touchmove', e => {
+      if (!isDragging) return;
+      currentX = e.touches[0].clientX;
+      const deltaX = currentX - startX;
+      const deltaY = e.touches[0].clientY - startY;
+
+      // Wenn vertikal gescrollt wird, brechen wir die horizontale Wischgeste ab
+      if (Math.abs(deltaY) > Math.abs(deltaX)) return;
+
+      // Karte live am Finger mitziehen (1:1 Gefühl mit leichter Neigung)
+      card.style.transform = `translateX(${deltaX}px) rotate(${deltaX * 0.04}deg)`;
+    }, { passive: true });
+
+    card.addEventListener('touchend', e => {
+      if (!isDragging) return;
+      isDragging = false;
+      card.classList.remove('dragging');
+      const deltaX = currentX - startX;
+
+      // Schwelle erreicht: Stadt wechseln!
+      if (Math.abs(deltaX) > 90) {
+        const direction = deltaX > 0 ? 1 : -1;
+        // Karte fliegt aus dem Bildschirm
+        card.style.transform = `translateX(${direction * 500}px) rotate(${direction * 20}deg)`;
+        
+        setTimeout(() => {
+          if (direction < 0) nextCity();
+          else prevCity();
+          
+          // Karte kommt unsichtbar von der anderen Seite und schnappt in die Mitte
+          card.classList.add('dragging');
+          card.style.transform = `translateX(${direction * -300}px)`;
+          setTimeout(() => {
+            card.classList.remove('dragging');
+            card.style.transform = '';
+          }, 20);
+        }, 200);
+      } else {
+        // Nicht weit genug gewischt: zurückfedern in die Mitte
+        card.style.transform = '';
+      }
+      startX = 0; currentX = 0;
+    });
+
+    // --- RANKING LOGIK ---
     function renderRanking() {
       const list = document.getElementById('ranking-list');
       list.innerHTML = '';
@@ -416,22 +568,22 @@
         const item = document.createElement('div');
         item.className = "bg-white/90 p-4 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between";
         
-        let badgeColor = "bg-gray-200 text-gray-700";
-        if (idx === 0) badgeColor = "bg-gradient-to-r from-amber-400 to-yellow-500 text-white font-black";
-        if (idx === 1) badgeColor = "bg-gray-300 text-gray-800 font-bold";
+        let badgeColor = "bg-gray-200 text-gray-700 font-bold";
+        if (idx === 0) badgeColor = "bg-gradient-to-r from-amber-400 to-yellow-500 text-white font-black shadow-md";
+        if (idx === 1) badgeColor = "bg-gray-300 text-gray-800 font-black";
         if (idx === 2) badgeColor = "bg-amber-700/40 text-white font-bold";
 
         item.innerHTML = `
           <div class="flex items-center space-x-3">
-            <span class="w-8 h-8 ${badgeColor} rounded-full flex items-center justify-center text-sm shadow-sm flex-shrink-0">#${idx + 1}</span>
+            <span class="w-8 h-8 ${badgeColor} rounded-full flex items-center justify-center text-sm flex-shrink-0">#${idx + 1}</span>
             <div>
               <h4 class="text-base font-black text-gray-900">${c.city}</h4>
               <span class="text-xs text-gray-400 block">${c.country} • ${c.motto.split('&')[0]}</span>
             </div>
           </div>
           <div class="flex space-x-1">
-            <button onclick="moveRank(${idx}, -1)" class="w-9 h-9 bg-gray-100 rounded-xl flex items-center justify-center text-gray-700 hover:bg-gray-200 active:scale-90 transition disabled:opacity-30" ${idx === 0 ? 'disabled' : ''}>▲</button>
-            <button onclick="moveRank(${idx}, 1)" class="w-9 h-9 bg-gray-100 rounded-xl flex items-center justify-center text-gray-700 hover:bg-gray-200 active:scale-90 transition disabled:opacity-30" ${idx === rankedCities.length - 1 ? 'disabled' : ''}>▼</button>
+            <button onclick="moveRank(${idx}, -1)" class="w-9 h-9 bg-gray-100 rounded-xl flex items-center justify-center text-gray-700 hover:bg-gray-200 active:scale-90 transition disabled:opacity-20" ${idx === 0 ? 'disabled' : ''}>▲</button>
+            <button onclick="moveRank(${idx}, 1)" class="w-9 h-9 bg-gray-100 rounded-xl flex items-center justify-center text-gray-700 hover:bg-gray-200 active:scale-90 transition disabled:opacity-20" ${idx === rankedCities.length - 1 ? 'disabled' : ''}>▼</button>
           </div>
         `;
         list.appendChild(item);
@@ -441,20 +593,13 @@
     function moveRank(index, direction) {
       const newIndex = index + direction;
       if (newIndex < 0 || newIndex >= rankedCities.length) return;
-      
-      // Swap elements
       const temp = rankedCities[index];
       rankedCities[index] = rankedCities[newIndex];
       rankedCities[newIndex] = temp;
-      
       renderRanking();
     }
 
-    function goToDateSelection() {
-      showView('select');
-    }
-
-    // --- DATE & VIBE SELECTION ---
+    // --- DATUM & VIBE SELECTION ---
     function renderDateSelection() {
       const topCity = rankedCities[0];
       document.getElementById('selected-rank1-name').innerText = `${topCity.city} (${topCity.country})`;
@@ -465,15 +610,14 @@
       topCity.dates.forEach((d, idx) => {
         const btn = document.createElement('button');
         btn.type = "button";
-        btn.className = `w-full border-2 p-4 rounded-2xl text-left text-sm font-bold transition btn-active flex justify-between items-center ${selectedDate === d ? 'border-pink-500 bg-pink-50 text-pink-600 shadow-md' : 'border-gray-200 bg-white/70 text-gray-800'}`;
+        btn.className = `w-full border-2 p-4 rounded-2xl text-left text-sm font-bold transition btn-active flex justify-between items-center ${selectedDate === d ? 'border-pink-500 bg-pink-50 text-pink-600 shadow-md' : 'border-gray-200 bg-white/80 text-gray-800'}`;
         btn.innerHTML = `<span>📅 ${d}</span><span class="text-xs bg-white px-3 py-1 rounded-full border border-gray-200 text-gray-600">Option ${idx+1}</span>`;
         btn.onclick = () => {
           selectedDate = d;
-          renderDateSelection(); // update classes
+          renderDateSelection();
         };
         dateList.appendChild(btn);
       });
-
       updateVibeButtons();
     }
 
@@ -487,25 +631,22 @@
         if (btn.innerText.includes(selectedVibe.split(' ')[0])) {
           btn.className = "vibe-btn border-2 border-pink-500 bg-pink-50 text-pink-600 p-4 rounded-2xl text-center text-xs font-black transition btn-active shadow-md";
         } else {
-          btn.className = "vibe-btn border-2 border-gray-200 bg-white/70 text-gray-800 p-4 rounded-2xl text-center text-xs font-black transition btn-active";
+          btn.className = "vibe-btn border-2 border-gray-200 bg-white/80 text-gray-800 p-4 rounded-2xl text-center text-xs font-black transition btn-active";
         }
       });
     }
 
-    // --- FINAL SUBMIT ---
+    // --- SUBMIT ---
     function submitChoice() {
       if (!selectedDate) {
-        alert("Bitte wähle oben noch ein Reisedatum für Platz 1 aus! 📅✨");
+        alert("Bitte wähle oben noch ein Reisedatum aus! 📅✨");
         return;
       }
-
       const topCity = rankedCities[0];
-      
       document.getElementById('success-city').innerText = `${topCity.city} (${topCity.country})`;
       document.getElementById('success-date').innerText = selectedDate;
       document.getElementById('success-vibe').innerText = selectedVibe;
 
-      // Render Backup texts
       const backupsContainer = document.getElementById('success-backups');
       backupsContainer.innerHTML = `
         <div>Platz 2: <strong>${rankedCities[1].city}</strong></div>
@@ -513,38 +654,21 @@
         <div>Platz 4: <strong>${rankedCities[3].city}</strong></div>
       `;
 
-      // WhatsApp Text formatieren
       let rankingText = rankedCities.map((c, i) => `${i+1}. ${c.city}`).join('\n');
-      const waText = encodeURIComponent(`Hey! Ich habe mein Wunsch-Ranking für meinen 26. Geburtstag erstellt! 🎉☀️\n\n🌟 UNSER PLAN A (Platz 1):\n📍 Ziel: ${topCity.city}\n📅 Datum: ${selectedDate}\n🏨 Hotel: ${selectedVibe}\n\n🛡️ MEIN KOMPLETTES RANKING (Falls was ausgebucht ist):\n${rankingText}\n\nIch liebe dich und freue mich riesig! ❤️✈️`);
+      const waText = encodeURIComponent(`Hey Simon! Ich habe mein Wunsch-Ranking für meinen 26. Geburtstag erstellt! 🎉☀️\n\n🌟 UNSER PLAN A (Platz 1):\n📍 Ziel: ${topCity.city}\n📅 Datum: ${selectedDate}\n🏨 Hotel: ${selectedVibe}\n\n🛡️ MEIN KOMPLETTES RANKING (Falls was ausgebucht ist):\n${rankingText}\n\nDanke für dieses Wahnsinns-Geschenk, ich liebe dich! ❤️✈️`);
       document.getElementById('whatsapp-btn').href = `https://wa.me/?text=${waText}`;
 
-      showView('success');
-      triggerConfetti();
+      startAppWithLoading('success');
+      setTimeout(() => triggerConfetti(), 1500);
     }
 
     function triggerConfetti() {
       var duration = 4 * 1000;
       var end = Date.now() + duration;
-
       (function frame() {
-        confetti({
-          particleCount: 6,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 },
-          colors: ['#ec4899', '#f59e0b', '#3b82f6', '#10b981']
-        });
-        confetti({
-          particleCount: 6,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 },
-          colors: ['#ec4899', '#f59e0b', '#3b82f6', '#10b981']
-        });
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
+        confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ec4899', '#f59e0b', '#3b82f6', '#10b981'] });
+        confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ec4899', '#f59e0b', '#3b82f6', '#10b981'] });
+        if (Date.now() < end) requestAnimationFrame(frame);
       }());
     }
   </script>
