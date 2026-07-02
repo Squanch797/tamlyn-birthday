@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Tamlyns Geburtstags-Trip ✨</title>
+  <title>Tamlyns Sommer Trip ☀️</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
@@ -19,14 +19,14 @@
     }
     /* iOS Glassmorphism */
     .glass-header {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(35px);
       -webkit-backdrop-filter: blur(35px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.95);
       box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
     }
     .glass-card {
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.93);
       backdrop-filter: blur(30px);
       -webkit-backdrop-filter: blur(30px);
       border: 1px solid rgba(255, 255, 255, 0.95);
@@ -52,17 +52,23 @@
 </head>
 <body class="flex flex-col items-center select-none">
 
-  <header class="w-full max-w-lg glass-header sticky top-0 z-50 px-5 py-3.5 mb-4 flex items-center justify-between rounded-b-[28px] transition-all">
-    <div class="flex items-center space-x-3.5">
-      <div class="relative w-14 h-14 rounded-full overflow-hidden border-[3px] border-pink-400 shadow-md flex-shrink-0">
+  <header class="w-full max-w-lg glass-header sticky top-0 z-50 px-4 py-3 mb-4 flex items-center justify-between rounded-b-[28px] transition-all">
+    <div onclick="showView('welcome')" class="flex items-center space-x-3 cursor-pointer active:opacity-70 transition group" title="Zurück zur Startseite">
+      <div class="relative w-12 h-12 rounded-full overflow-hidden border-[2.5px] border-pink-400 shadow-md flex-shrink-0 group-hover:scale-105 transition">
         <img src="IMG_0925.jpeg" alt="Tamlyn" class="w-full h-full object-cover object-top">
       </div>
       <div>
-        <span class="text-[11px] font-black uppercase tracking-widest text-pink-500 block">Geburtstag 07.07. • Trip Sept. ❤️</span>
-        <h3 class="text-base font-black text-gray-900 leading-tight">Tamlyns Sommer-Trip ✈️</h3>
+        <h3 class="text-base font-black text-gray-900 leading-tight flex items-center gap-1">
+          <span>Tamlyns Sommer Trip</span>
+          <span class="text-amber-500">☀️</span>
+        </h3>
+        <span class="text-[10px] font-extrabold text-pink-500 flex items-center gap-0.5">
+          <span>🏠 Klick für Startseite</span>
+        </span>
       </div>
     </div>
-    <div class="bg-gradient-to-r from-pink-500 to-amber-400 text-white text-xs font-black px-3.5 py-2 rounded-full shadow-md flex items-center space-x-1">
+
+    <div class="bg-gradient-to-r from-pink-500 to-amber-400 text-white text-xs font-black px-3.5 py-1.5 rounded-full shadow-md flex items-center space-x-1">
       <span>VIP</span>
       <span class="animate-bounce">👑</span>
     </div>
@@ -73,9 +79,8 @@
       ✈️
     </div>
     <h3 class="text-2xl font-black text-gray-900 mb-2">Einen Moment, Tamlyn...</h3>
-    <p id="loading-text" class="text-base font-bold text-pink-600 animate-pulse max-w-xs leading-relaxed">
-      Simon verhandelt mit Ryanair über mehr Beinfreiheit...
-    </p>
+    <p id="loading-text" class="text-base font-bold text-pink-600 animate-pulse max-w-xs leading-relaxed min-h-[60px] flex items-center justify-center"></p>
+    <span class="text-[11px] text-gray-400 mt-6 uppercase tracking-widest font-semibold">Tipp: Nimm dir Zeit fürs Lesen 😉</span>
   </div>
 
   <div id="app" class="w-full max-w-lg px-4 transition-all duration-500">
@@ -104,7 +109,7 @@
     <div id="view-explore" class="hidden my-1">
       <div class="flex justify-between items-center mb-2 px-2">
         <span class="text-xs font-black uppercase tracking-wider text-pink-600 bg-white/90 px-3 py-1.5 rounded-full shadow-sm" id="city-counter">Ziel 1 von 6</span>
-        <span class="text-xs font-bold text-gray-600 bg-white/90 px-3 py-1.5 rounded-full shadow-sm" id="viewed-status">👀 Wische zum Entdecken</span>
+        <span class="text-xs font-bold text-gray-600 bg-white/90 px-3 py-1.5 rounded-full shadow-sm" id="viewed-status">👀 Wische oder nutze die Pfeile</span>
       </div>
 
       <div id="swipe-card" class="glass-card rounded-[36px] overflow-hidden shadow-2xl flex flex-col relative border-[2px] border-white/80 w-full">
@@ -113,8 +118,16 @@
           <img id="explore-img" src="" alt="City" class="w-full h-full object-cover pointer-events-none">
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
           
-          <div class="absolute top-4 right-4 bg-black/40 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-xs font-bold border border-white/20 flex items-center space-x-1 pointer-events-none">
-            <span>☀️ Sommer-Level:</span>
+          <button onclick="prevCity()" class="absolute left-2.5 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/40 hover:bg-black/60 backdrop-blur-md text-white rounded-full flex items-center justify-center text-lg z-10 active:scale-90 transition no-swipe shadow-lg border border-white/20" title="Vorherige Stadt">
+            &#10094;
+          </button>
+          
+          <button onclick="nextCity()" class="absolute right-2.5 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/40 hover:bg-black/60 backdrop-blur-md text-white rounded-full flex items-center justify-center text-lg z-10 active:scale-90 transition no-swipe shadow-lg border border-white/20" title="Nächste Stadt">
+            &#10095;
+          </button>
+          
+          <div class="absolute top-4 right-14 bg-black/40 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold border border-white/20 flex items-center space-x-1 pointer-events-none">
+            <span>☀️ Vibe:</span>
             <span id="explore-vibe-score" class="text-amber-400 font-black"></span>
           </div>
 
@@ -126,7 +139,7 @@
 
         <div class="p-5 md:p-6 flex-1 flex flex-col justify-between space-y-4">
           
-          <div class="grid grid-cols-2 gap-2 bg-white/70 p-3.5 rounded-2xl border border-white text-center shadow-sm no-swipe">
+          <div class="grid grid-cols-2 gap-2 bg-white/70 p-3.5 rounded-2xl border border-white text-center shadow-sm">
             <div class="border-r border-gray-200">
               <span class="text-[11px] font-bold text-gray-400 block uppercase">Wetter im Sept.</span>
               <span id="explore-temp" class="text-sm font-black text-gray-800"></span>
@@ -137,11 +150,11 @@
             </div>
           </div>
 
-          <div class="bg-gradient-to-r from-pink-500/10 to-amber-500/10 rounded-2xl p-3.5 border border-pink-200 no-swipe">
+          <div class="bg-gradient-to-r from-pink-500/10 to-amber-500/10 rounded-2xl p-3.5 border border-pink-200">
             <p id="explore-motto" class="text-base font-black text-gray-900 text-center"></p>
           </div>
 
-          <div class="bg-rose-50/80 p-3.5 rounded-2xl border border-rose-100 no-swipe">
+          <div class="bg-rose-50/80 p-3.5 rounded-2xl border border-rose-100">
             <span class="text-[11px] font-extrabold text-rose-600 uppercase tracking-widest block mb-1 flex items-center gap-1">
               <span>❤️ Warum das perfekt für uns ist:</span>
             </span>
@@ -149,17 +162,17 @@
           </div>
 
           <div class="no-swipe">
-            <span class="text-xs font-black text-blue-500 uppercase tracking-wider block mb-2 flex items-center gap-1">
+            <span class="text-xs font-black text-blue-500 uppercase tracking-wider block mb-2 flex items-center justify-between">
               <span>🌊 Sommer & Strand-Vibe</span>
-              <span class="text-[10px] text-gray-400 font-normal">(In Bildern scrollen 👉)</span>
+              <span class="text-[10px] text-gray-400 font-normal">👉 In Bildern scrollen</span>
             </span>
             <div id="slider-beach" class="flex overflow-x-auto gap-3 no-scrollbar pb-1 pt-0.5"></div>
           </div>
 
           <div class="no-swipe">
-            <span class="text-xs font-black text-amber-600 uppercase tracking-wider block mb-2 flex items-center gap-1">
+            <span class="text-xs font-black text-amber-600 uppercase tracking-wider block mb-2 flex items-center justify-between">
               <span>🍷 Kulinarik & Genuss</span>
-              <span class="text-[10px] text-gray-400 font-normal">(In Bildern scrollen 👉)</span>
+              <span class="text-[10px] text-gray-400 font-normal">👉 In Bildern scrollen</span>
             </span>
             <div id="slider-food" class="flex overflow-x-auto gap-3 no-scrollbar pb-1 pt-0.5"></div>
           </div>
@@ -174,7 +187,7 @@
             <div id="secret-box" class="hidden mt-2 bg-purple-50/80 p-3.5 rounded-2xl border border-purple-100 text-xs font-medium text-gray-700 leading-relaxed"></div>
           </div>
 
-          <div class="bg-white/60 p-3.5 rounded-2xl border border-white no-swipe">
+          <div class="bg-white/60 p-3.5 rounded-2xl border border-white">
             <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-1">🔥 Top-Erlebnisse vor Ort:</span>
             <p id="explore-highlights" class="text-xs font-bold text-gray-800 leading-relaxed"></p>
           </div>
@@ -182,16 +195,16 @@
           <div class="pt-2 no-swipe">
             <div class="flex items-center justify-between text-xs font-extrabold text-gray-400 mb-2 px-2">
               <span>👈 Vorherige</span>
-              <span class="text-pink-500 animate-pulse font-black">Wische oben auf dem Bild!</span>
+              <span class="text-pink-500 animate-pulse font-black">Wische die Karte oder nutze Pfeile!</span>
               <span>Nächste 👉</span>
             </div>
             
             <div class="flex items-center gap-2">
-              <button onclick="prevCity()" class="flex-1 bg-white/80 py-3.5 rounded-2xl text-sm font-extrabold text-gray-700 btn-active transition shadow-sm border border-gray-200 text-center">
-                &larr; Zurück
+              <button onclick="prevCity()" class="flex-1 bg-white/80 py-3.5 rounded-2xl text-sm font-extrabold text-gray-700 btn-active transition shadow-sm border border-gray-200 text-center flex items-center justify-center gap-1">
+                <span>&larr;</span> <span>Zurück</span>
               </button>
-              <button onclick="nextCity()" class="flex-1 bg-gray-900 text-white py-3.5 rounded-2xl text-sm font-extrabold btn-active transition shadow-lg text-center">
-                Nächste &rarr;
+              <button onclick="nextCity()" class="flex-1 bg-gray-900 text-white py-3.5 rounded-2xl text-sm font-extrabold btn-active transition shadow-lg text-center flex items-center justify-center gap-1">
+                <span>Nächste</span> <span>&rarr;</span>
               </button>
             </div>
           </div>
@@ -298,7 +311,7 @@
   </div>
 
   <script>
-    // Die 6 Städte (100% korrekte Bilder, keine Pyramiden in Zypern, spannende Geheimtipps & Warum perfekt für uns)
+    // Die 6 Städte mit MASSIV ERWEITERTEN Attraktionen, lokalen Essens- & Strandbildern!
     const cities = [
       {
         id: "porto",
@@ -311,14 +324,16 @@
         image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Romantik pur! Wir können tagsüber am Atlantikstrand liegen und abends bei warmem Licht durch verwinkelte Gassen schlendern.",
         secretTip: "Wusstest du? Die Buchhandlung Livraria Lello in Porto gilt als schönste der Welt und hat J.K. Rowling zu Harry Potters Hogwarts-Bibliothek inspiriert!",
-        highlights: "Harry-Potter Buchhandlung Lello • Sonnenuntergang Ponte Dom Luís I • Buntes Uferviertel Ribeira",
+        highlights: "Buchhandlung Lello • Brücke Ponte Dom Luís I • Aussichtsturm Torre dos Clérigos • Palácio da Bolsa • Seilbahn von Gaia • Buntes Uferviertel Ribeira • Altstadt Sé",
         beachSlider: [
           { img: "https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?auto=format&fit=crop&w=400&q=80", text: "Mit der historischen Holz-Tram direkt an die Atlantikwellen!" },
-          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Foz do Douro: Strand-Cafés und erfrischendes Meeresrauschen." }
+          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Foz do Douro: Strand-Cafés und erfrischendes Meeresrauschen." },
+          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Praia de Matosinhos: Breiter Sandstrand perfekt zum Chillen." }
         ],
         foodSlider: [
           { img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80", text: "Warme Pastéis de Nata frisch aus dem Ofen!" },
-          { img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80", text: "Exklusives Portwein-Tasting direkt am sonnigen Flussufer." }
+          { img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80", text: "Exklusives Portwein-Tasting direkt am sonnigen Flussufer." },
+          { img: "https://images.unsplash.com/photo-1626804475297-41608ea09aeb?auto=format&fit=crop&w=400&q=80", text: "Portos Kult-Gericht: Das herzhafte Francesinha-Sandwich!" }
         ],
         dates: ["Do, 10.09. - So, 13.09. (Perfekte Flugzeiten)", "Sa, 12.09. - Di, 15.09. (Spätsommer-Hit)"]
       },
@@ -333,20 +348,22 @@
         image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Der ultimative Kontrast! Wenn wir Lust auf Weltklasse-Shopping, Musicals und unendliche Food-Markets haben, ist das unser Jackpot.",
         secretTip: "Insider-Tipp: Im September ist statistisch gesehen der trockenste und sonnigste Monat in London! Perfekt für den Sky Garden mit 360° Blick über die Stadt.",
-        highlights: "Big Ben & Tower Bridge • Shopping in Soho & Regent Street • Musical-Abend im West End",
+        highlights: "Big Ben & Westminster • London Eye & Tower Bridge • British Museum • Sky Garden Panoramablick • Shopping in Soho • Camden Market • West End Musicals",
         beachSlider: [
           { img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80", text: "Romantische Bootstour auf der sonnigen Themse nach Greenwich." },
-          { img: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=400&q=80", text: "Entspanntes Picknick in den königlichen Gärten des Hyde Park." }
+          { img: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=400&q=80", text: "Entspanntes Picknick in den königlichen Gärten des Hyde Park." },
+          { img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=400&q=80", text: "Flanieren an der belebten South Bank Promenade am Wasser." }
         ],
         foodSlider: [
           { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Schlemmen auf dem weltberühmten Borough Market!" },
-          { img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80", text: "Hipper Afternoon Tea & authentisches Curry in Brick Lane." }
+          { img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80", text: "Klassiker am Mittag: Echte englische Fish & Chips!" },
+          { img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=400&q=80", text: "Hipper Afternoon Tea oder ein deftiger Sunday Roast im Pub." }
         ],
         dates: ["Do, 03.09. - So, 06.09. (Beste Sonne)", "Do, 10.09. - So, 13.09."]
       },
       {
         id: "mallorca",
-        city: "Mallorca",
+        city: "Mallorca (Palma)",
         country: "Spanien 🇪🇸",
         motto: "Das kleine Barcelona am Meer",
         temperature: "27°C - 29°C",
@@ -355,13 +372,15 @@
         image: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Palma bietet uns den perfekten Mix aus spanischem Tapas-Flair, wunderschöner Architektur und wunderschönen Stränden direkt vor der Tür.",
         secretTip: "Geheimtipp abseits vom Touristen-Trubel: Wir besuchen abends das Viertel Santa Catalina – dort treffen sich die Einheimischen auf Wein und die besten Tapas der Insel!",
-        highlights: "Majestätische Kathedrale La Seu am Meer • Altstadt-Paläste • Künstlerviertel Santa Catalina",
+        highlights: "Kathedrale La Seu am Meer • Königspalast Almudaina • Rundburg Castell de Bellver • Ausgehviertel Santa Catalina • Historische Altstadt • Strandpromenade",
         beachSlider: [
           { img: "https://images.unsplash.com/photo-1601582589907-f92af5ed9db8?auto=format&fit=crop&w=400&q=80", text: "Chillen im schicken Anima Beach Club direkt an der Promenade!" },
-          { img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80", text: "Türkises Meer und baden in traumhaften spanischen Buchten." }
+          { img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80", text: "Türkises Meer und baden in der sonnigen Bucht Cala Major." },
+          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Platja de Palma: Endlos weißer Sand am türkisblauen Meer." }
         ],
         foodSlider: [
-          { img: "https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=400&q=80", text: "Frische Tapas & Wein im lebendigen Mercat de l'Olivar." },
+          { img: "https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=400&q=80", text: "Frische Tapas & spanischer Schinken im Mercat de l'Olivar." },
+          { img: "https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=400&q=80", text: "Traditionelle Paella mit Meeresfrüchten direkt am Hafen." },
           { img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=400&q=80", text: "Abends fruchtige Cocktails auf einer Rooftop-Bar über der Stadt." }
         ],
         dates: ["Fr, 11.09. - Mo, 14.09. (Verlängertes Wochenende)", "Do, 17.09. - So, 20.09."]
@@ -377,14 +396,16 @@
         image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Ein absolutes Bucket-List-Ziel! Wir genießen das italienische Lebensgefühl, essen die beste Pasta der Welt und werfen eine Münze in den Trevi-Brunnen.",
         secretTip: "Fun Fact: Wer eine Münze über die rechte Schulter in den Trevi-Brunnen wirft, kehrt nach Rom zurück. Wer zwei wirft, verliebt sich in einen Italiener – also wirf bitte nur eine! 😉",
-        highlights: "Kolosseum & Vatikan • Münze werfen am Trevi-Brunnen • Abends durch Trastevere flanieren",
+        highlights: "Das antike Kolosseum • Vatikanstadt & Petersdom • Trevi-Brunnen • Pantheon • Piazza Navona • Spanische Treppe • Abends durch Trastevere flanieren",
         beachSlider: [
           { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Mit dem Zug in 30 Min ans Meer am Lido di Ostia!" },
-          { img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=400&q=80", text: "Pizza und Aperol im warmen Abend-Sonnenuntergang am Strand." }
+          { img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=400&q=80", text: "Pizza und Aperol im warmen Abend-Sonnenuntergang am Strand." },
+          { img: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=400&q=80", text: "Chillen mit einem Gelato im idyllischen Park der Villa Borghese." }
         ],
         foodSlider: [
-          { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Echte römische Cacio e Pepe Pasta in einer kleinen Gasse." },
-          { img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=400&q=80", text: "Unbegrenzt fantastisches italienisches Gelato in der Sonne!" }
+          { img: "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=400&q=80", text: "Königin der Pasta: Echte römische Spaghetti Carbonara!" },
+          { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Hauchdünne, knusprige Pizza al Taglio direkt aus dem Steinofen." },
+          { img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=400&q=80", text: "Unbegrenzt fantastisches italienisches Gelato & Tiramisu!" }
         ],
         dates: ["Do, 17.09. - So, 20.09. (Angenehme Wärme)", "Do, 24.09. - So, 27.09."]
       },
@@ -399,13 +420,15 @@
         image: "https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Wenn wir wirklich karibisches, glasklares Wasser und weiße Sandstrände wollen, ohne um die halbe Welt zu fliegen, ist Sardinien unschlagbar.",
         secretTip: "Natur-Wunder direkt in der Stadt: In Cagliari leben das ganze Jahr über tausende wilde, rosarote Flamingos in den Salzseen direkt neben dem Strand!",
-        highlights: "Berg-Altstadt Castello • Bastion Saint Remy Panoramablick • Wilde rosa Flamingos sehen",
+        highlights: "Thronende Altstadt Castello • Bastion Saint Remy Aussicht • Wilde rosa Flamingos in den Salzseen • San Benedetto Markt • Costa Smeralda Vibe • Grotta di Nettuno",
         beachSlider: [
-          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Poetto Beach: 8 km feiner Sand direkt am Stadtort!" },
-          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Glasklares, karibisch-türkises Wasser und leere Traumbuchten." }
+          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Poetto Beach: 8 km feiner weißer Sand direkt vor der Tür!" },
+          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Glasklares, karibisch-türkises Wasser und leere Traumbuchten." },
+          { img: "https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=400&q=80", text: "Cala Mariolu: Eine der spektakulärsten Badebuchten Europas!" }
         ],
         foodSlider: [
           { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Handgemachte sardische Culurgiones (gefüllte Nudeltaschen)." },
+          { img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=400&q=80", text: "Traditionelles hauchdünnes Pane Carasau & würziger Pecorino." },
           { img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80", text: "Frische Meeresfrüchte & eisgekühlter Mirto-Likör am Meer." }
         ],
         dates: ["Di, 08.09. - Fr, 11.09. (Ryanair Schnäppchen)", "Do, 17.09. - So, 20.09."]
@@ -421,14 +444,16 @@
         image: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Sonnengarantie pur! Während es in Deutschland im September schon kühler wird, haben wir auf Zypern echten Hochsommer und 27°C warmes Mittelmeer.",
         secretTip: "Mythologie-Romantik: Wir besuchen den berühmten 'Aphrodite-Felsen'. Laut Legende stieg die Göttin der Liebe genau hier aus dem Meer. Wer ihn umstimmt, dem wird ewige Jugend geschenkt!",
-        highlights: "Archäologischer Park am Meer • Antike Königsgräber in den Felsen • Malerischer Hafen",
+        highlights: "Archäologischer Park am Meer (UNESCO) • Antike Königsgräber in den Felsen • Malerischer Hafen & Kastell • Felsen der Aphrodite • Akamas Halbinsel",
         beachSlider: [
           { img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=400&q=80", text: "Sonnengarantie & baden am mythischen Aphrodite-Felsen!" },
-          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Entspanntes schwimmen in der wunderschönen Coral Bay." }
+          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Entspanntes schwimmen in der windgeschützten Coral Bay." },
+          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Die Blaue Lagune: Kristallklares Wasser wie in der Karibik!" }
         ],
         foodSlider: [
-          { img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", text: "Zypriotische Riesen-Meze (wir probieren 20 kleine Gänge!)" },
-          { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Frisch gegrillter Halloumi & kühler Wein an der Promenade." }
+          { img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", text: "Zypriotische Riesen-Meze (wir probieren 20 kleine Spezialitäten!)" },
+          { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Frisch gegrillter, quietschender Halloumi-Käse an der Promenade." },
+          { img: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=400&q=80", text: "Zartes Souvlaki-Fleischspießchen & süßes Baklava zum Dessert." }
         ],
         dates: ["Do, 17.09. - So, 20.09. (Voller Hochsommer)", "Do, 24.09. - So, 27.09."]
       }
@@ -439,7 +464,8 @@
       "Berechne die optimale Menge an Sonnencreme für Tamlyn... ☀️",
       "Koffer werden mental schon mal gepackt... 🧳",
       "Spatzenschlau nach den besten Cocktail-Bars suchen... 🍹",
-      "Entschlüssele den perfekten Geburtstags-Vibe... 🎁"
+      "Entschlüssele den perfekten Geburtstags-Vibe... 🎁",
+      "Prüfe, wo der Aperol-Spritz am kältesten serviert wird... 🥂"
     ];
 
     let currentCityIdx = 0;
@@ -448,7 +474,7 @@
     let selectedDate = null;
     let selectedVibe = "Boutique im Zentrum";
 
-    // --- LADE-SCREEN LOGIK ---
+    // --- LADE-SCREEN LOGIK (LÄNGER FÜR DIE SPRÜCHE: 3,5 SEKUNDEN!) ---
     function startAppWithLoading(targetView) {
       document.getElementById('view-loading').classList.remove('hidden');
       const quoteEl = document.getElementById('loading-text');
@@ -457,7 +483,7 @@
       setTimeout(() => {
         document.getElementById('view-loading').classList.add('hidden');
         showView(targetView);
-      }, 1500);
+      }, 3500); // 3,5 Sekunden Einblendzeit!
     }
 
     function showView(viewId) {
@@ -500,7 +526,7 @@
       document.getElementById('secret-box').innerText = c.secretTip;
       document.getElementById('explore-highlights').innerText = c.highlights;
 
-      // Geheimtipp Box standardmäßig schließen beim Stadtwanderung
+      // Geheimtipp Box standardmäßig schließen
       document.getElementById('secret-box').classList.add('hidden');
       document.getElementById('secret-arrow').innerText = '▼';
 
@@ -542,17 +568,14 @@
       const card = document.getElementById('swipe-card');
       const offset = isNext ? -60 : 60;
       
-      // Ausblenden und leicht verschieben
       card.style.opacity = '0';
       card.style.transform = `translateX(${offset}px)`;
 
       setTimeout(() => {
         directionCallback();
-        // Auf der anderen Seite positionieren
         card.style.transform = `translateX(${-offset}px)`;
         
         setTimeout(() => {
-          // Wieder flüssig einblenden
           card.style.opacity = '1';
           card.style.transform = 'translateX(0)';
         }, 30);
@@ -573,12 +596,12 @@
       }, false);
     }
 
-    // --- OPTIMIERTE WISCHGESTEN (TRENNUNG VON SLIDERN UND KARTE) ---
+    // --- OPTIMIERTE WISCHGESTEN (ÜBERALL AUF DER KARTE, AUSSER SLIDER & BUTTONS!) ---
     const card = document.getElementById('swipe-card');
     let startX = 0, startY = 0, isDragging = false;
 
     card.addEventListener('touchstart', e => {
-      // Wenn der Touch in einem Slider oder auf einem Button startet: NIEMALS die Karte wischen!
+      // Wenn in Bild-Slidern oder auf Buttons berührt wird: NICHT die Karte wischen!
       if (e.target.closest('.no-swipe')) {
         isDragging = false;
         return;
@@ -593,14 +616,13 @@
       const deltaX = e.touches[0].clientX - startX;
       const deltaY = e.touches[0].clientY - startY;
 
-      // Wenn vertikal gescrollt wird, brechen wir die Wischgeste ab
+      // Wenn vertikal gescrollt wird, Wischgeste abbrechen
       if (Math.abs(deltaY) > Math.abs(deltaX)) {
         isDragging = false;
         card.style.transform = '';
         return;
       }
 
-      // Leichte, elegante Bewegung am Finger (max 60px)
       const moveX = Math.max(-60, Math.min(60, deltaX * 0.4));
       card.style.transform = `translateX(${moveX}px)`;
     }, { passive: true });
@@ -610,12 +632,10 @@
       isDragging = false;
       const deltaX = e.changedTouches[0].clientX - startX;
 
-      // Schwelle erreicht: Stadt seidenweich wechseln!
       if (Math.abs(deltaX) > 70) {
         if (deltaX < 0) nextCity();
         else prevCity();
       } else {
-        // Nicht weit genug gewischt: sanft zurückfedern
         card.style.transform = 'translateX(0)';
       }
       startX = 0; startY = 0;
