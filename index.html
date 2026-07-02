@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Tamlyns 26th Birthday Getaway ✨</title>
+  <title>Tamlyns Geburtstags-Trip ✨</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
@@ -15,21 +15,21 @@
       color: #1c1c1e;
       overflow-x: hidden;
       padding-bottom: 60px;
-      touch-action: pan-y; /* Verhindert ungewolltes Zoom/Scroll Verhalten bei Gesten */
+      touch-action: pan-y;
     }
     /* iOS Glassmorphism */
     .glass-header {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.9);
       box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
     }
     .glass-card {
-      background: rgba(255, 255, 255, 0.90);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
       box-shadow: 0 25px 50px -12px rgba(255, 105, 135, 0.2);
     }
     /* Hide Scrollbars für horizontale Slider */
@@ -41,15 +41,12 @@
       scrollbar-width: none;
     }
     .btn-active:active {
-      transform: scale(0.95);
+      transform: scale(0.96);
     }
-    /* Wisch-Karten Animation */
+    /* Seidenweiche iOS Wisch-Transition ohne Glitches */
     #swipe-card {
-      will-change: transform;
-      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-    .dragging {
-      transition: none !important;
+      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.35s ease;
+      will-change: transform, opacity;
     }
   </style>
 </head>
@@ -61,17 +58,17 @@
         <img src="IMG_0925.jpeg" alt="Tamlyn" class="w-full h-full object-cover object-top">
       </div>
       <div>
-        <span class="text-[11px] font-black uppercase tracking-widest text-pink-500 block">Von Simon für Tamlyn ❤️</span>
-        <h3 class="text-base font-black text-gray-900 leading-tight">26. Geburtstag am Meer ☀️</h3>
+        <span class="text-[11px] font-black uppercase tracking-widest text-pink-500 block">Geburtstag 07.07. • Trip Sept. ❤️</span>
+        <h3 class="text-base font-black text-gray-900 leading-tight">Tamlyns Sommer-Trip ✈️</h3>
       </div>
     </div>
     <div class="bg-gradient-to-r from-pink-500 to-amber-400 text-white text-xs font-black px-3.5 py-2 rounded-full shadow-md flex items-center space-x-1">
       <span>VIP</span>
-      <span class="animate-bounce">🌴</span>
+      <span class="animate-bounce">👑</span>
     </div>
   </header>
 
-  <div id="view-loading" class="hidden fixed inset-0 z-50 bg-white/90 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-center">
+  <div id="view-loading" class="hidden fixed inset-0 z-50 bg-white/95 backdrop-blur-2xl flex flex-col items-center justify-center p-6 text-center">
     <div class="w-24 h-24 bg-gradient-to-tr from-pink-500 to-amber-400 rounded-3xl flex items-center justify-center text-5xl shadow-2xl mb-6 animate-spin" style="animation-duration: 3s;">
       ✈️
     </div>
@@ -87,19 +84,19 @@
       <div class="relative w-36 h-36 rounded-full overflow-hidden border-4 border-white shadow-2xl mb-6 transform hover:scale-105 transition duration-500">
         <img src="IMG_0925.jpeg" alt="Tamlyn" class="w-full h-full object-cover object-top">
         <div class="absolute bottom-2 right-2 w-10 h-10 bg-gradient-to-tr from-pink-500 to-amber-400 rounded-full flex items-center justify-center text-xl shadow-lg border-2 border-white animate-pulse">
-          👑
+          ☀️
         </div>
       </div>
-      <span class="text-xs font-black tracking-widest text-pink-500 uppercase mb-2">Simon lädt dich ein!</span>
+      <span class="text-xs font-black tracking-widest text-pink-500 uppercase mb-2">07.07. • Happy Birthday! 🎉</span>
       <h1 class="text-3xl md:text-4xl font-black tracking-tight mb-3 text-gray-900 leading-tight">
-        Happy Birthday, Tamlyn! 🎉
+        Alles Gute, Tamlyn! ❤️
       </h1>
       <p class="text-gray-700 text-sm md:text-base font-medium leading-relaxed mb-8">
-        Pack schon mal mental deinen Koffer! Zum 26. Geburtstag entführe ich dich im September auf einen unvergesslichen Sommer-Trip! ❤️<br><br>
-        Ich habe 6 traumhafte Ziele recherchiert. Du kannst die Karten gleich einfach **mit dem Finger wischen** und am Ende dein Wunsch-Ranking erstellen!
+        Weil du heute 26 Jahre alt wirst und nur das Beste verdienst, schenke ich dir gemeinsame Zeit am Meer! <br><br>
+        Da Vorfreude die schönste Freude ist, fliegen wir im **September** bei optimalem Spätsommer-Wetter. Du hast ab heute die absolute Kontrolle über unser Ziel: Klick dich durch, spür den Vibe und erstelle dein Wunsch-Ranking! ✨
       </p>
       <button onclick="startAppWithLoading('explore')" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-extrabold py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition-all flex items-center justify-center space-x-3 text-lg">
-        <span>Abenteuer starten</span>
+        <span>Geschenk auspacken</span>
         <span class="text-2xl">👉✈️</span>
       </button>
     </div>
@@ -110,14 +107,14 @@
         <span class="text-xs font-bold text-gray-600 bg-white/90 px-3 py-1.5 rounded-full shadow-sm" id="viewed-status">👀 Wische zum Entdecken</span>
       </div>
 
-      <div id="swipe-card" class="glass-card rounded-[36px] overflow-hidden shadow-2xl flex flex-col relative border-[2px] border-white/80">
+      <div id="swipe-card" class="glass-card rounded-[36px] overflow-hidden shadow-2xl flex flex-col relative border-[2px] border-white/80 w-full">
         
         <div class="relative h-64 w-full overflow-hidden bg-gray-200 flex-shrink-0">
           <img id="explore-img" src="" alt="City" class="w-full h-full object-cover pointer-events-none">
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
           
-          <div class="absolute top-4 right-4 bg-black/40 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-xs font-bold border border-white/20 flex items-center space-x-1">
-            <span>✨ Sommer-Level:</span>
+          <div class="absolute top-4 right-4 bg-black/40 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-xs font-bold border border-white/20 flex items-center space-x-1 pointer-events-none">
+            <span>☀️ Sommer-Level:</span>
             <span id="explore-vibe-score" class="text-amber-400 font-black"></span>
           </div>
 
@@ -129,7 +126,7 @@
 
         <div class="p-5 md:p-6 flex-1 flex flex-col justify-between space-y-4">
           
-          <div class="grid grid-cols-2 gap-2 bg-white/70 p-3.5 rounded-2xl border border-white text-center shadow-sm">
+          <div class="grid grid-cols-2 gap-2 bg-white/70 p-3.5 rounded-2xl border border-white text-center shadow-sm no-swipe">
             <div class="border-r border-gray-200">
               <span class="text-[11px] font-bold text-gray-400 block uppercase">Wetter im Sept.</span>
               <span id="explore-temp" class="text-sm font-black text-gray-800"></span>
@@ -140,38 +137,53 @@
             </div>
           </div>
 
-          <div class="bg-gradient-to-r from-pink-500/10 to-amber-500/10 rounded-2xl p-3.5 border border-pink-200">
+          <div class="bg-gradient-to-r from-pink-500/10 to-amber-500/10 rounded-2xl p-3.5 border border-pink-200 no-swipe">
             <p id="explore-motto" class="text-base font-black text-gray-900 text-center"></p>
           </div>
 
-          <div>
+          <div class="bg-rose-50/80 p-3.5 rounded-2xl border border-rose-100 no-swipe">
+            <span class="text-[11px] font-extrabold text-rose-600 uppercase tracking-widest block mb-1 flex items-center gap-1">
+              <span>❤️ Warum das perfekt für uns ist:</span>
+            </span>
+            <p id="explore-why" class="text-xs font-semibold text-gray-800 leading-relaxed"></p>
+          </div>
+
+          <div class="no-swipe">
             <span class="text-xs font-black text-blue-500 uppercase tracking-wider block mb-2 flex items-center gap-1">
               <span>🌊 Sommer & Strand-Vibe</span>
-              <span class="text-[10px] text-gray-400 font-normal">(Seitlich wischen 👉)</span>
+              <span class="text-[10px] text-gray-400 font-normal">(In Bildern scrollen 👉)</span>
             </span>
-            <div id="slider-beach" class="flex overflow-x-auto gap-3 no-scrollbar pb-1 pt-0.5">
-              </div>
+            <div id="slider-beach" class="flex overflow-x-auto gap-3 no-scrollbar pb-1 pt-0.5"></div>
           </div>
 
-          <div>
+          <div class="no-swipe">
             <span class="text-xs font-black text-amber-600 uppercase tracking-wider block mb-2 flex items-center gap-1">
               <span>🍷 Kulinarik & Genuss</span>
-              <span class="text-[10px] text-gray-400 font-normal">(Seitlich wischen 👉)</span>
+              <span class="text-[10px] text-gray-400 font-normal">(In Bildern scrollen 👉)</span>
             </span>
-            <div id="slider-food" class="flex overflow-x-auto gap-3 no-scrollbar pb-1 pt-0.5">
-              </div>
+            <div id="slider-food" class="flex overflow-x-auto gap-3 no-scrollbar pb-1 pt-0.5"></div>
           </div>
 
-          <div class="bg-white/50 p-3 rounded-2xl border border-white/60">
-            <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-1">🔥 Top-Erlebnisse für uns:</span>
-            <p id="explore-highlights" class="text-xs font-semibold text-gray-700 leading-relaxed"></p>
+          <div class="no-swipe">
+            <button onclick="toggleSecret()" class="w-full bg-gradient-to-r from-purple-500/10 to-indigo-500/10 hover:from-purple-500/20 hover:to-indigo-500/20 border border-purple-200 p-3 rounded-2xl text-left transition flex items-center justify-between">
+              <span class="text-xs font-black text-purple-700 flex items-center gap-1.5">
+                <span>🎁 Klick für Simons Geheimtipp & Fun Fact</span>
+              </span>
+              <span id="secret-arrow" class="text-xs font-bold text-purple-600">▼</span>
+            </button>
+            <div id="secret-box" class="hidden mt-2 bg-purple-50/80 p-3.5 rounded-2xl border border-purple-100 text-xs font-medium text-gray-700 leading-relaxed"></div>
           </div>
 
-          <div class="pt-2">
+          <div class="bg-white/60 p-3.5 rounded-2xl border border-white no-swipe">
+            <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-1">🔥 Top-Erlebnisse vor Ort:</span>
+            <p id="explore-highlights" class="text-xs font-bold text-gray-800 leading-relaxed"></p>
+          </div>
+
+          <div class="pt-2 no-swipe">
             <div class="flex items-center justify-between text-xs font-extrabold text-gray-400 mb-2 px-2">
-              <span>👈 Vorherige Stadt</span>
-              <span class="text-pink-500 animate-pulse">Wische die Karte!</span>
-              <span>Nächste Stadt 👉</span>
+              <span>👈 Vorherige</span>
+              <span class="text-pink-500 animate-pulse font-black">Wische oben auf dem Bild!</span>
+              <span>Nächste 👉</span>
             </div>
             
             <div class="flex items-center gap-2">
@@ -184,7 +196,7 @@
             </div>
           </div>
 
-          <div id="unlock-ranking-box" class="hidden pt-2">
+          <div id="unlock-ranking-box" class="hidden pt-2 no-swipe">
             <button onclick="startAppWithLoading('ranking')" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black py-4 rounded-2xl shadow-xl btn-active animate-bounce text-base flex items-center justify-center space-x-2">
               <span>🏆 Alle entdeckt! Jetzt Städte ranken</span>
               <span>➡️</span>
@@ -272,7 +284,7 @@
         </div>
 
         <p class="text-xs font-semibold text-gray-600 mb-6 leading-relaxed">
-          Ich mache mich jetzt sofort an die Buchung der Flüge ab Memmingen/München und suche uns das perfekte Hotel raus! Ich liebe dich! ❤️☀️
+          Ich mache mich jetzt sofort an die Buchung ab Memmingen/München und suche uns das perfekte Hotel raus! Happy Birthday und ich liebe dich! ❤️☀️
         </p>
 
         <a id="whatsapp-btn" href="#" target="_blank" class="w-full bg-[#25D366] text-white font-black py-5 rounded-2xl shadow-xl hover:bg-[#20bd5a] btn-active transition-all flex items-center justify-center space-x-3 text-base block mb-3">
@@ -286,7 +298,7 @@
   </div>
 
   <script>
-    // Die 6 Städte (Palma heisst jetzt Mallorca, Preise ersetzt durch Romantik-Score, Visuelle Slider Daten hinzugefügt)
+    // Die 6 Städte (100% korrekte Bilder, keine Pyramiden in Zypern, spannende Geheimtipps & Warum perfekt für uns)
     const cities = [
       {
         id: "porto",
@@ -297,14 +309,16 @@
         romanceScore: "100% Amore ❤️",
         summerVibeScore: "9/10",
         image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80",
+        whyPerfect: "Romantik pur! Wir können tagsüber am Atlantikstrand liegen und abends bei warmem Licht durch verwinkelte Gassen schlendern.",
+        secretTip: "Wusstest du? Die Buchhandlung Livraria Lello in Porto gilt als schönste der Welt und hat J.K. Rowling zu Harry Potters Hogwarts-Bibliothek inspiriert!",
         highlights: "Harry-Potter Buchhandlung Lello • Sonnenuntergang Ponte Dom Luís I • Buntes Uferviertel Ribeira",
         beachSlider: [
-          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Mit der historischen Holz-Tram direkt an die Atlantikwellen!" },
-          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Foz do Douro: Strand-Cafés und Meeresrauschen." }
+          { img: "https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?auto=format&fit=crop&w=400&q=80", text: "Mit der historischen Holz-Tram direkt an die Atlantikwellen!" },
+          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Foz do Douro: Strand-Cafés und erfrischendes Meeresrauschen." }
         ],
         foodSlider: [
           { img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80", text: "Warme Pastéis de Nata frisch aus dem Ofen!" },
-          { img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80", text: "Exklusives Portwein-Tasting direkt am Flussufer." }
+          { img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80", text: "Exklusives Portwein-Tasting direkt am sonnigen Flussufer." }
         ],
         dates: ["Do, 10.09. - So, 13.09. (Perfekte Flugzeiten)", "Sa, 12.09. - Di, 15.09. (Spätsommer-Hit)"]
       },
@@ -317,14 +331,16 @@
         romanceScore: "95% Big City ❤️",
         summerVibeScore: "7/10",
         image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80",
+        whyPerfect: "Der ultimative Kontrast! Wenn wir Lust auf Weltklasse-Shopping, Musicals und unendliche Food-Markets haben, ist das unser Jackpot.",
+        secretTip: "Insider-Tipp: Im September ist statistisch gesehen der trockenste und sonnigste Monat in London! Perfekt für den Sky Garden mit 360° Blick über die Stadt.",
         highlights: "Big Ben & Tower Bridge • Shopping in Soho & Regent Street • Musical-Abend im West End",
         beachSlider: [
-          { img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80", text: "Romantische Bootstour auf der sonnigen Themse." },
-          { img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=400&q=80", text: "Entspanntes Picknick in den königlichen Gärten des Hyde Park." }
+          { img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80", text: "Romantische Bootstour auf der sonnigen Themse nach Greenwich." },
+          { img: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=400&q=80", text: "Entspanntes Picknick in den königlichen Gärten des Hyde Park." }
         ],
         foodSlider: [
           { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Schlemmen auf dem weltberühmten Borough Market!" },
-          { img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80", text: "Hipper Afternoon Tea oder authentisches indisches Curry." }
+          { img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80", text: "Hipper Afternoon Tea & authentisches Curry in Brick Lane." }
         ],
         dates: ["Do, 03.09. - So, 06.09. (Beste Sonne)", "Do, 10.09. - So, 13.09."]
       },
@@ -337,10 +353,12 @@
         romanceScore: "100% Sonne & Meer ❤️",
         summerVibeScore: "10/10",
         image: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=800&q=80",
+        whyPerfect: "Palma bietet uns den perfekten Mix aus spanischem Tapas-Flair, wunderschöner Architektur und wunderschönen Stränden direkt vor der Tür.",
+        secretTip: "Geheimtipp abseits vom Touristen-Trubel: Wir besuchen abends das Viertel Santa Catalina – dort treffen sich die Einheimischen auf Wein und die besten Tapas der Insel!",
         highlights: "Majestätische Kathedrale La Seu am Meer • Altstadt-Paläste • Künstlerviertel Santa Catalina",
         beachSlider: [
           { img: "https://images.unsplash.com/photo-1601582589907-f92af5ed9db8?auto=format&fit=crop&w=400&q=80", text: "Chillen im schicken Anima Beach Club direkt an der Promenade!" },
-          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Türkises Meer und baden in traumhaften spanischen Buchten." }
+          { img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80", text: "Türkises Meer und baden in traumhaften spanischen Buchten." }
         ],
         foodSlider: [
           { img: "https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=400&q=80", text: "Frische Tapas & Wein im lebendigen Mercat de l'Olivar." },
@@ -357,6 +375,8 @@
         romanceScore: "100% Amore ❤️",
         summerVibeScore: "8/10",
         image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80",
+        whyPerfect: "Ein absolutes Bucket-List-Ziel! Wir genießen das italienische Lebensgefühl, essen die beste Pasta der Welt und werfen eine Münze in den Trevi-Brunnen.",
+        secretTip: "Fun Fact: Wer eine Münze über die rechte Schulter in den Trevi-Brunnen wirft, kehrt nach Rom zurück. Wer zwei wirft, verliebt sich in einen Italiener – also wirf bitte nur eine! 😉",
         highlights: "Kolosseum & Vatikan • Münze werfen am Trevi-Brunnen • Abends durch Trastevere flanieren",
         beachSlider: [
           { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Mit dem Zug in 30 Min ans Meer am Lido di Ostia!" },
@@ -376,11 +396,13 @@
         temperature: "26°C - 29°C",
         romanceScore: "100% Insel-Traum ❤️",
         summerVibeScore: "10/10",
-        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=800&q=80",
+        whyPerfect: "Wenn wir wirklich karibisches, glasklares Wasser und weiße Sandstrände wollen, ohne um die halbe Welt zu fliegen, ist Sardinien unschlagbar.",
+        secretTip: "Natur-Wunder direkt in der Stadt: In Cagliari leben das ganze Jahr über tausende wilde, rosarote Flamingos in den Salzseen direkt neben dem Strand!",
         highlights: "Berg-Altstadt Castello • Bastion Saint Remy Panoramablick • Wilde rosa Flamingos sehen",
         beachSlider: [
-          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Poetto Beach: 8 km weißer Sand direkt vor der Tür!" },
-          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Glasklares, karibisch-türkises Wasser und leere Strände." }
+          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Poetto Beach: 8 km feiner Sand direkt am Stadtort!" },
+          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Glasklares, karibisch-türkises Wasser und leere Traumbuchten." }
         ],
         foodSlider: [
           { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Handgemachte sardische Culurgiones (gefüllte Nudeltaschen)." },
@@ -390,20 +412,22 @@
       },
       {
         id: "zypern",
-        city: "Paphos",
+        city: "Paphos (Zypern)",
         country: "Zypern 🇨🇾",
         motto: "Palmen, Mythen & Meze-Abende",
         temperature: "28°C - 31°C",
         romanceScore: "100% Sommer pur ❤️",
         summerVibeScore: "10/10",
-        image: "https://images.unsplash.com/photo-1553913861-c0fddf2619ee?auto=format&fit=crop&w=800&q=80",
-        highlights: "Archäologischer Park am Meer • Faszinierende Königsgräber • Malerischer Hafen",
+        image: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
+        whyPerfect: "Sonnengarantie pur! Während es in Deutschland im September schon kühler wird, haben wir auf Zypern echten Hochsommer und 27°C warmes Mittelmeer.",
+        secretTip: "Mythologie-Romantik: Wir besuchen den berühmten 'Aphrodite-Felsen'. Laut Legende stieg die Göttin der Liebe genau hier aus dem Meer. Wer ihn umstimmt, dem wird ewige Jugend geschenkt!",
+        highlights: "Archäologischer Park am Meer • Antike Königsgräber in den Felsen • Malerischer Hafen",
         beachSlider: [
           { img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=400&q=80", text: "Sonnengarantie & baden am mythischen Aphrodite-Felsen!" },
           { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Entspanntes schwimmen in der wunderschönen Coral Bay." }
         ],
         foodSlider: [
-          { img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", text: "Zypriotische Riesen-Meze (wir probieren 20 Gänge!)" },
+          { img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", text: "Zypriotische Riesen-Meze (wir probieren 20 kleine Gänge!)" },
           { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Frisch gegrillter Halloumi & kühler Wein an der Promenade." }
         ],
         dates: ["Do, 17.09. - So, 20.09. (Voller Hochsommer)", "Do, 24.09. - So, 27.09."]
@@ -439,11 +463,24 @@
     function showView(viewId) {
       document.querySelectorAll('#app > div').forEach(el => el.classList.add('hidden'));
       document.getElementById('view-' + viewId).classList.remove('hidden');
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // IMMER nach oben scrollen!
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
       if (viewId === 'explore') renderCity();
       if (viewId === 'ranking') renderRanking();
       if (viewId === 'select') renderDateSelection();
+    }
+
+    // --- GEHEIMTIPP TOGGLE ---
+    function toggleSecret() {
+      const box = document.getElementById('secret-box');
+      const arrow = document.getElementById('secret-arrow');
+      if (box.classList.contains('hidden')) {
+        box.classList.remove('hidden');
+        arrow.innerText = '▲';
+      } else {
+        box.classList.add('hidden');
+        arrow.innerText = '▼';
+      }
     }
 
     // --- EXPLORER LOGIK & SLIDER RENDERING ---
@@ -459,7 +496,13 @@
       document.getElementById('explore-vibe-score').innerText = c.summerVibeScore;
       document.getElementById('explore-romance').innerText = c.romanceScore;
       document.getElementById('explore-motto').innerText = c.motto;
+      document.getElementById('explore-why').innerText = c.whyPerfect;
+      document.getElementById('secret-box').innerText = c.secretTip;
       document.getElementById('explore-highlights').innerText = c.highlights;
+
+      // Geheimtipp Box standardmäßig schließen beim Stadtwanderung
+      document.getElementById('secret-box').classList.add('hidden');
+      document.getElementById('secret-arrow').innerText = '▼';
 
       // Render Visuellen Strand Slider
       const beachSlider = document.getElementById('slider-beach');
@@ -491,72 +534,91 @@
         document.getElementById('unlock-ranking-box').classList.remove('hidden');
       }
 
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scrollt beim Stadtsprung nach oben
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- SEIDENWEICHE ANIMATION OHNE GLITCHES ---
+    function animateCardSwitch(directionCallback, isNext) {
+      const card = document.getElementById('swipe-card');
+      const offset = isNext ? -60 : 60;
+      
+      // Ausblenden und leicht verschieben
+      card.style.opacity = '0';
+      card.style.transform = `translateX(${offset}px)`;
+
+      setTimeout(() => {
+        directionCallback();
+        // Auf der anderen Seite positionieren
+        card.style.transform = `translateX(${-offset}px)`;
+        
+        setTimeout(() => {
+          // Wieder flüssig einblenden
+          card.style.opacity = '1';
+          card.style.transform = 'translateX(0)';
+        }, 30);
+      }, 250);
     }
 
     function nextCity() {
-      currentCityIdx = (currentCityIdx + 1) % cities.length;
-      renderCity();
+      animateCardSwitch(() => {
+        currentCityIdx = (currentCityIdx + 1) % cities.length;
+        renderCity();
+      }, true);
     }
 
     function prevCity() {
-      currentCityIdx = (currentCityIdx - 1 + cities.length) % cities.length;
-      renderCity();
+      animateCardSwitch(() => {
+        currentCityIdx = (currentCityIdx - 1 + cities.length) % cities.length;
+        renderCity();
+      }, false);
     }
 
-    // --- ECHTE 1:1 WISCHGESTEN (TINDER/IOS STYLE) ---
+    // --- OPTIMIERTE WISCHGESTEN (TRENNUNG VON SLIDERN UND KARTE) ---
     const card = document.getElementById('swipe-card');
-    let startX = 0, currentX = 0, startY = 0, isDragging = false;
+    let startX = 0, startY = 0, isDragging = false;
 
     card.addEventListener('touchstart', e => {
+      // Wenn der Touch in einem Slider oder auf einem Button startet: NIEMALS die Karte wischen!
+      if (e.target.closest('.no-swipe')) {
+        isDragging = false;
+        return;
+      }
       startX = e.touches[0].clientX;
       startY = e.touches[0].clientY;
       isDragging = true;
-      card.classList.add('dragging');
     }, { passive: true });
 
     card.addEventListener('touchmove', e => {
       if (!isDragging) return;
-      currentX = e.touches[0].clientX;
-      const deltaX = currentX - startX;
+      const deltaX = e.touches[0].clientX - startX;
       const deltaY = e.touches[0].clientY - startY;
 
-      // Wenn vertikal gescrollt wird, brechen wir die horizontale Wischgeste ab
-      if (Math.abs(deltaY) > Math.abs(deltaX)) return;
+      // Wenn vertikal gescrollt wird, brechen wir die Wischgeste ab
+      if (Math.abs(deltaY) > Math.abs(deltaX)) {
+        isDragging = false;
+        card.style.transform = '';
+        return;
+      }
 
-      // Karte live am Finger mitziehen (1:1 Gefühl mit leichter Neigung)
-      card.style.transform = `translateX(${deltaX}px) rotate(${deltaX * 0.04}deg)`;
+      // Leichte, elegante Bewegung am Finger (max 60px)
+      const moveX = Math.max(-60, Math.min(60, deltaX * 0.4));
+      card.style.transform = `translateX(${moveX}px)`;
     }, { passive: true });
 
     card.addEventListener('touchend', e => {
       if (!isDragging) return;
       isDragging = false;
-      card.classList.remove('dragging');
-      const deltaX = currentX - startX;
+      const deltaX = e.changedTouches[0].clientX - startX;
 
-      // Schwelle erreicht: Stadt wechseln!
-      if (Math.abs(deltaX) > 90) {
-        const direction = deltaX > 0 ? 1 : -1;
-        // Karte fliegt aus dem Bildschirm
-        card.style.transform = `translateX(${direction * 500}px) rotate(${direction * 20}deg)`;
-        
-        setTimeout(() => {
-          if (direction < 0) nextCity();
-          else prevCity();
-          
-          // Karte kommt unsichtbar von der anderen Seite und schnappt in die Mitte
-          card.classList.add('dragging');
-          card.style.transform = `translateX(${direction * -300}px)`;
-          setTimeout(() => {
-            card.classList.remove('dragging');
-            card.style.transform = '';
-          }, 20);
-        }, 200);
+      // Schwelle erreicht: Stadt seidenweich wechseln!
+      if (Math.abs(deltaX) > 70) {
+        if (deltaX < 0) nextCity();
+        else prevCity();
       } else {
-        // Nicht weit genug gewischt: zurückfedern in die Mitte
-        card.style.transform = '';
+        // Nicht weit genug gewischt: sanft zurückfedern
+        card.style.transform = 'translateX(0)';
       }
-      startX = 0; currentX = 0;
+      startX = 0; startY = 0;
     });
 
     // --- RANKING LOGIK ---
@@ -655,7 +717,7 @@
       `;
 
       let rankingText = rankedCities.map((c, i) => `${i+1}. ${c.city}`).join('\n');
-      const waText = encodeURIComponent(`Hey Simon! Ich habe mein Wunsch-Ranking für meinen 26. Geburtstag erstellt! 🎉☀️\n\n🌟 UNSER PLAN A (Platz 1):\n📍 Ziel: ${topCity.city}\n📅 Datum: ${selectedDate}\n🏨 Hotel: ${selectedVibe}\n\n🛡️ MEIN KOMPLETTES RANKING (Falls was ausgebucht ist):\n${rankingText}\n\nDanke für dieses Wahnsinns-Geschenk, ich liebe dich! ❤️✈️`);
+      const waText = encodeURIComponent(`Hey Simon! Ich habe mein Wunsch-Ranking für unseren September-Trip erstellt! 🎉☀️\n\n🌟 UNSER PLAN A (Platz 1):\n📍 Ziel: ${topCity.city}\n📅 Datum: ${selectedDate}\n🏨 Hotel: ${selectedVibe}\n\n🛡️ MEIN KOMPLETTES RANKING (Falls was ausgebucht ist):\n${rankingText}\n\nDanke für dieses Wahnsinns-Geburtstagsgeschenk, ich liebe dich! ❤️✈️`);
       document.getElementById('whatsapp-btn').href = `https://wa.me/?text=${waText}`;
 
       startAppWithLoading('success');
