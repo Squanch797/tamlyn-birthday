@@ -10,7 +10,10 @@
     @import url('https://fonts.googleapis.com/css2?family=-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif&display=swap');
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fef9d7 100%);
+      background: radial-gradient(circle at 15% 0%, #ffb199 0%, transparent 45%),
+                  radial-gradient(circle at 85% 15%, #ffe29a 0%, transparent 50%),
+                  linear-gradient(160deg, #ff6f91 0%, #ff9a76 45%, #ffd97d 100%);
+      background-attachment: fixed;
       min-height: 100vh;
       color: #1c1c1e;
       overflow-x: hidden;
@@ -19,18 +22,21 @@
     }
     /* iOS Glassmorphism */
     .glass-header {
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(35px);
       -webkit-backdrop-filter: blur(35px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.95);
-      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.12);
+    }
+    .header-accent {
+      height: 4px;
+      background: linear-gradient(90deg, #ec4899 0%, #fb7185 35%, #f59e0b 100%);
     }
     .glass-card {
       background: rgba(255, 255, 255, 0.93);
       backdrop-filter: blur(30px);
       -webkit-backdrop-filter: blur(30px);
       border: 1px solid rgba(255, 255, 255, 0.95);
-      box-shadow: 0 25px 50px -12px rgba(255, 105, 135, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(190, 24, 93, 0.25);
     }
     /* Hide Scrollbars für horizontale Slider */
     .no-scrollbar::-webkit-scrollbar {
@@ -52,26 +58,29 @@
 </head>
 <body class="flex flex-col items-center select-none">
 
-  <header class="w-full max-w-lg glass-header sticky top-0 z-50 px-4 py-3 mb-4 flex items-center justify-between rounded-b-[28px] transition-all">
-    <div onclick="showView('welcome')" class="flex items-center space-x-3 cursor-pointer active:opacity-70 transition group" title="Zurück zur Startseite">
-      <div class="relative w-12 h-12 rounded-full overflow-hidden border-[2.5px] border-pink-400 shadow-md flex-shrink-0 group-hover:scale-105 transition">
-        <img src="IMG_0925.jpeg" alt="Tamlyn" class="w-full h-full object-cover object-top">
+  <header class="w-full glass-header sticky top-0 z-50 transition-all">
+    <div class="w-full max-w-lg mx-auto px-5 py-5 flex items-center justify-between">
+      <div onclick="showView('welcome')" class="flex items-center space-x-3.5 cursor-pointer active:opacity-70 transition group" title="Zurück zur Startseite">
+        <div class="relative w-16 h-16 rounded-full overflow-hidden border-[3px] border-pink-400 shadow-lg flex-shrink-0 group-hover:scale-105 transition">
+          <img src="IMG_0925.jpeg" alt="Tamlyn" class="w-full h-full object-cover object-top">
+        </div>
+        <div>
+          <h3 class="text-lg font-black text-gray-900 leading-tight flex items-center gap-1.5">
+            <span>Tamlyns Sommer Trip</span>
+            <span class="text-amber-500">☀️</span>
+          </h3>
+          <span class="text-[11px] font-extrabold text-pink-500 flex items-center gap-0.5">
+            <span>🏠 Klick für Startseite</span>
+          </span>
+        </div>
       </div>
-      <div>
-        <h3 class="text-base font-black text-gray-900 leading-tight flex items-center gap-1">
-          <span>Tamlyns Sommer Trip</span>
-          <span class="text-amber-500">☀️</span>
-        </h3>
-        <span class="text-[10px] font-extrabold text-pink-500 flex items-center gap-0.5">
-          <span>🏠 Klick für Startseite</span>
-        </span>
-      </div>
-    </div>
 
-    <div class="bg-gradient-to-r from-pink-500 to-amber-400 text-white text-xs font-black px-3.5 py-1.5 rounded-full shadow-md flex items-center space-x-1">
-      <span>VIP</span>
-      <span class="animate-bounce">👑</span>
+      <div class="bg-gradient-to-r from-pink-500 to-amber-400 text-white text-xs font-black px-4 py-2 rounded-full shadow-md flex items-center space-x-1">
+        <span>VIP</span>
+        <span class="animate-bounce">👑</span>
+      </div>
     </div>
+    <div class="header-accent"></div>
   </header>
 
   <div id="view-loading" class="hidden fixed inset-0 z-50 bg-white/95 backdrop-blur-2xl flex flex-col items-center justify-center p-6 text-center">
@@ -97,8 +106,9 @@
         Alles Gute, Tamlyn! ❤️
       </h1>
       <p class="text-gray-700 text-sm md:text-base font-medium leading-relaxed mb-8">
-        Weil du heute 26 Jahre alt wirst und nur das Beste verdienst, schenke ich dir eine unvergessliche gemeinsame Zeit, in der wir zusammen etwas ganz Neues entdecken! <br><br>
-        **Was du machen musst:** Klick dich durch die Ziele, spür den Vibe und erstelle danach dein Wunsch-Ranking. So haben wir im September bei optimalem Wetter den perfekten Trip! ✨
+        Zum 26. Geburtstag schenke ich dir eine unvergessliche Reise zu zweit! 🎁
+        <br><br>
+        <strong class="text-gray-900">So geht's:</strong> Entdecke die Ziele, spür den Vibe und erstelle dein Ranking – für den perfekten Trip im September. ✨
       </p>
       <button onclick="startAppWithLoading('explore')" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-extrabold py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition-all flex items-center justify-center space-x-3 text-lg">
         <span>Geschenk auspacken</span>
@@ -308,9 +318,9 @@
           Ich mache mich jetzt sofort an die Buchung ab Memmingen/München und suche uns das perfekte Hotel raus! Happy Birthday und ich liebe dich! ❤️☀️
         </p>
 
-        <a id="sms-btn" href="#" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-black py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition-all flex items-center justify-center space-x-3 text-base block mb-3 no-swipe">
+        <a id="whatsapp-btn" href="#" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-black py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition-all flex items-center justify-center space-x-3 text-base block mb-3 no-swipe">
           <span class="text-xl">💬</span>
-          <span>Entscheidung per SMS an Simon senden</span>
+          <span>Entscheidung per WhatsApp an Simon senden</span>
         </a>
 
         <button onclick="resetRankingAndTest()" class="w-full bg-gradient-to-r from-amber-500 to-amber-700 text-white font-black py-4 rounded-2xl shadow-xl btn-active transition text-sm flex items-center justify-center space-x-2 mb-3 no-swipe">
@@ -335,23 +345,24 @@
         temperature: "23°C - 26°C",
         romanceScore: "100% Amore ❤️",
         summerVibeScore: "9/10",
-        image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1744993551783-15876865a783?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Romantik pur! Wir können tagsüber am Atlantikstrand liegen und abends bei warmem Licht durch verwinkelte Gassen schlendern.",
         secretTip: "Wusstest du? Die Buchhandlung Livraria Lello in Porto gilt als schönste der Welt und hat J.K. Rowling zu Harry Potters Hogwarts-Bibliothek inspiriert!",
+        highlights: "Bootstour auf dem Douro bei Sonnenuntergang, Weinprobe in den Kellern von Gaia und barfuß durch die Ribeira schlendern.",
         landmarkSlider: [
-          { img: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=400&q=80", text: "Die magische Brücke Ponte Dom Luís I bei Sonnenuntergang." },
-          { img: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=400&q=80", text: "Das historische, farbenfrohe Uferviertel Ribeira." },
-          { img: "https://images.unsplash.com/photo-1599827552599-eee18f4a1387?auto=format&fit=crop&w=400&q=80", text: "Aussichtsturm Torre dos Clérigos & wunderschöne Azulejo-Fliesen." }
+          { img: "https://images.unsplash.com/photo-1762294946283-6921938e9937?auto=format&fit=crop&w=400&q=80", text: "Die eiserne Ponte Dom Luís I überspannt majestätisch den Douro." },
+          { img: "https://images.unsplash.com/photo-1744737037951-5739074ec785?auto=format&fit=crop&w=400&q=80", text: "Bunte Fassaden und rote Ziegeldächer prägen das Ribeira-Viertel." },
+          { img: "https://images.unsplash.com/photo-1532682908332-165811c1f832?auto=format&fit=crop&w=400&q=80", text: "Die weltberühmte Buchhandlung Livraria Lello verzaubert mit ihrer Architektur." }
         ],
         beachSlider: [
-          { img: "https://images.unsplash.com/photo-1583037189850-1921ae7c6c22?auto=format&fit=crop&w=400&q=80", text: "Mit der historischen Holz-Tram direkt an die Atlantikwellen!" },
-          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Foz do Douro: Strand-Cafés und erfrischendes Meeresrauschen." },
-          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Praia de Matosinhos: Breiter Sandstrand perfekt zum Chillen." }
+          { img: "https://images.unsplash.com/photo-1779607648814-a851e8b8971e?auto=format&fit=crop&w=400&q=80", text: "Die historische gelbe Straßenbahn Linie 1 rattert entlang des Douro." },
+          { img: "https://images.unsplash.com/photo-1698448114705-f65758180cb8?auto=format&fit=crop&w=400&q=80", text: "Der Leuchtturm von Foz do Douro, wo der Fluss aufs Meer trifft." },
+          { img: "https://images.unsplash.com/photo-1589194255218-0fcd180f8c40?auto=format&fit=crop&w=400&q=80", text: "Praia de Matosinhos: feiner Sand und Atlantikwellen vor Portos Toren." }
         ],
         foodSlider: [
-          { img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80", text: "Warme Pastéis de Nata frisch aus dem Ofen!" },
-          { img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80", text: "Exklusives Portwein-Tasting direkt am sonnigen Flussufer." },
-          { img: "https://images.unsplash.com/photo-1626804475297-41608ea09aeb?auto=format&fit=crop&w=400&q=80", text: "Portos Kult-Gericht: Das herzhafte Francesinha-Sandwich!" }
+          { img: "https://images.unsplash.com/photo-1618250713296-ee011768e525?auto=format&fit=crop&w=400&q=80", text: "Knusprig-cremige Pastéis de Nata, Portugals süße Verführung." },
+          { img: "https://images.unsplash.com/photo-1496537103253-04627ff71f96?auto=format&fit=crop&w=400&q=80", text: "Portwein reift in jahrhundertealten Fässern der Keller von Gaia." },
+          { img: "https://images.unsplash.com/photo-1731601815826-ad54e3ddff8a?auto=format&fit=crop&w=400&q=80", text: "Herzhafte portugiesische Küche – deftiges Comfort Food aus Porto." }
         ],
         dates: ["Do, 10.09. - So, 13.09. (Perfekte Flugzeiten)", "Sa, 12.09. - Di, 15.09. (Spätsommer-Hit)"]
       },
@@ -363,23 +374,24 @@
         temperature: "18°C - 21°C",
         romanceScore: "95% Big City ❤️",
         summerVibeScore: "7/10",
-        image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1742252306330-453455bd7526?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Der ultimative Kontrast! Wenn wir Lust auf Weltklasse-Shopping, Musicals und unendliche Food-Markets haben, ist das unser Jackpot.",
         secretTip: "Insider-Tipp: Im September ist statistisch gesehen der trockenste und sonnigste Monat in London! Perfekt für den Sky Garden mit 360° Blick über die Stadt.",
+        highlights: "Musical im West End, Sonnenuntergang im Sky Garden und Bummel über die Markthallen von Camden.",
         landmarkSlider: [
-          { img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=400&q=80", text: "Big Ben & The Houses of Parliament an der Themse." },
-          { img: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=400&q=80", text: "Die majestätische Tower Bridge im warmen Sonnenlicht." },
-          { img: "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=400&q=80", text: "Das London Eye mit Blick auf die gesamte Metropole." }
+          { img: "https://images.unsplash.com/photo-1762111359347-0f1adf7fbde0?auto=format&fit=crop&w=400&q=80", text: "Der berühmte Uhrturm Big Ben mitten in London." },
+          { img: "https://images.unsplash.com/photo-1570357324345-42c6a755f677?auto=format&fit=crop&w=400&q=80", text: "Tower Bridge – Londons ikonisches Wahrzeichen über der Themse." },
+          { img: "https://images.unsplash.com/photo-1662714188306-0275ce3df517?auto=format&fit=crop&w=400&q=80", text: "Londons Riesenrad London Eye mit Blick auf die Stadt." }
         ],
         beachSlider: [
-          { img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80", text: "Romantische Bootstour auf der sonnigen Themse nach Greenwich." },
-          { img: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=400&q=80", text: "Entspanntes Picknick in den königlichen Gärten des Hyde Park." },
-          { img: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=400&q=80", text: "Flanieren an der belebten South Bank Promenade am Wasser." }
+          { img: "https://images.unsplash.com/photo-1605472075495-53461153f4e3?auto=format&fit=crop&w=400&q=80", text: "Bootstour auf der Themse vorbei an Tower Bridge." },
+          { img: "https://images.unsplash.com/photo-1653671678686-0a827fb67e5c?auto=format&fit=crop&w=400&q=80", text: "Picknick und Sonne im grünen Hyde Park." },
+          { img: "https://images.unsplash.com/photo-1501960986979-0a84e0e6c8f7?auto=format&fit=crop&w=400&q=80", text: "Spaziergang entlang der South Bank Promenade an der Themse." }
         ],
         foodSlider: [
-          { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Schlemmen auf dem weltberühmten Borough Market!" },
-          { img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80", text: "Klassiker am Mittag: Echte englische Fish & Chips!" },
-          { img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=400&q=80", text: "Hipper Afternoon Tea oder ein deftiger Sunday Roast im Pub." }
+          { img: "https://images.unsplash.com/photo-1681408427437-2f36187a7762?auto=format&fit=crop&w=400&q=80", text: "Borough Market – Londons berühmte überdachte Feinschmecker-Markthalle." },
+          { img: "https://images.unsplash.com/photo-1697748836791-9ddf7e616ece?auto=format&fit=crop&w=400&q=80", text: "Klassisch britisch: knusprige Fish and Chips." },
+          { img: "https://images.unsplash.com/photo-1518225197792-0b2ec38b3212?auto=format&fit=crop&w=400&q=80", text: "Afternoon Tea mit Etagere, Scones und feinem Tee." }
         ],
         dates: ["Do, 03.09. - So, 06.09. (Beste Sonne)", "Do, 10.09. - So, 13.09."]
       },
@@ -391,23 +403,24 @@
         temperature: "27°C - 29°C",
         romanceScore: "100% Sonne & Meer ❤️",
         summerVibeScore: "10/10",
-        image: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1779377751297-64c381238ffe?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Palma bietet uns den perfekten Mix aus spanischem Tapas-Flair, wunderschöner Architektur und wunderschönen Stränden direkt vor der Tür.",
         secretTip: "Geheimtipp abseits vom Touristen-Trubel: Wir besuchen abends das Viertel Santa Catalina – dort treffen sich die Einheimischen auf Wein und die besten Tapas der Insel!",
+        highlights: "Sonnenaufgang am Cap Formentor, Tapas-Hopping in Santa Catalina und Cocktails zum Sonnenuntergang.",
         landmarkSlider: [
-          { img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=400&q=80", text: "Die majestätische Kathedrale La Seu direkt am Meer." },
-          { img: "https://images.unsplash.com/photo-1558642084-fd07fae5282e?auto=format&fit=crop&w=400&q=80", text: "Die historische Rundburg Castell de Bellver über der Stadt." },
-          { img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80", text: "Die königlichen Gärten & der Palast Almudaina." }
+          { img: "https://images.unsplash.com/photo-1692698746104-7f1465fbad9b?auto=format&fit=crop&w=400&q=80", text: "Die gotische Kathedrale La Seu thront direkt am Meer." },
+          { img: "https://images.unsplash.com/photo-1747997933675-75c37860783d?auto=format&fit=crop&w=400&q=80", text: "Castell de Bellver: Europas einzige runde Burg über Palma." },
+          { img: "https://images.unsplash.com/photo-1692698727302-eceedaa5009b?auto=format&fit=crop&w=400&q=80", text: "Malerische Gassen der Altstadt von Palma mit historischem Uhrturm." }
         ],
         beachSlider: [
-          { img: "https://images.unsplash.com/photo-1601582589907-f92af5ed9db8?auto=format&fit=crop&w=400&q=80", text: "Chillen im schicken Anima Beach Club direkt an der Promenade!" },
-          { img: "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=400&q=80", text: "Türkises Meer und baden in der sonnigen Bucht Cala Major." },
-          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Platja de Palma: Endlos weißer Sand am türkisblauen Meer." }
+          { img: "https://images.unsplash.com/photo-1706611498219-3c73fdcd83e2?auto=format&fit=crop&w=400&q=80", text: "Poolbar-Flair wie in den Beach Clubs rund um Palma." },
+          { img: "https://images.unsplash.com/photo-1672264430465-781cd9154896?auto=format&fit=crop&w=400&q=80", text: "Türkise Bucht bei Palma – Postkarten-Wasser zum Eintauchen." },
+          { img: "https://images.unsplash.com/photo-1631150924300-f6144161ac21?auto=format&fit=crop&w=400&q=80", text: "Kilometerlanger Sandstrand vor den Toren Palmas." }
         ],
         foodSlider: [
-          { img: "https://images.unsplash.com/photo-1515443961218-a51367888e4b?auto=format&fit=crop&w=400&q=80", text: "Frische Tapas & spanischer Schinken im Mercat de l'Olivar." },
-          { img: "https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=400&q=80", text: "Traditionelle Paella mit Meeresfrüchten direkt am Hafen." },
-          { img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=400&q=80", text: "Abends fruchtige Cocktails auf einer Rooftop-Bar über der Stadt." }
+          { img: "https://images.unsplash.com/photo-1656423521731-9665583f100c?auto=format&fit=crop&w=400&q=80", text: "Spanische Tapas – kleine Häppchen, große Geschmacksvielfalt." },
+          { img: "https://images.unsplash.com/photo-1694685367640-05d6624e57f1?auto=format&fit=crop&w=400&q=80", text: "Paella mit frischen Meeresfrüchten, klassisch spanisch." },
+          { img: "https://images.unsplash.com/photo-1763544305653-d5d0a4175f2c?auto=format&fit=crop&w=400&q=80", text: "Cocktails bei Sonnenuntergang mit Blick aufs Mittelmeer." }
         ],
         dates: ["Fr, 11.09. - Mo, 14.09. (Verlängertes Wochenende)", "Do, 17.09. - So, 20.09."]
       },
@@ -419,51 +432,53 @@
         temperature: "26°C - 28°C",
         romanceScore: "100% Amore ❤️",
         summerVibeScore: "8/10",
-        image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1509024644558-2f56ce76c490?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Ein absolutes Bucket-List-Ziel! Wir genießen das italienische Lebensgefühl, essen die beste Pasta der Welt und werfen eine Münze in den Trevi-Brunnen.",
         secretTip: "Fun Fact: Wer eine Münze über die rechte Schulter in den Trevi-Brunnen wirft, kehrt nach Rom zurück. Wer zwei wirft, verliebt sich in einen Italiener – also wirf bitte nur eine! 😉",
+        highlights: "Abendspaziergang zum Kolosseum, Aperitivo auf der Piazza Navona und Gelato-Tour durch Trastevere.",
         landmarkSlider: [
-          { img: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=400&q=80", text: "Das antike Kolosseum im goldenen Licht der Sonne." },
-          { img: "https://images.unsplash.com/photo-1584972191378-d70853fa44f3?auto=format&fit=crop&w=400&q=80", text: "Der magische Trevi-Brunnen – Münze werfen nicht vergessen!" },
-          { img: "https://images.unsplash.com/photo-1531572753322-ad063cecc140?auto=format&fit=crop&w=400&q=80", text: "Der imposante Petersdom & die Vatikanstadt." }
+          { img: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=400&q=80", text: "Das antike Kolosseum in stiller Morgendämmerung." },
+          { img: "https://images.unsplash.com/photo-1764947810288-079f2cb6f419?auto=format&fit=crop&w=400&q=80", text: "Münzwurf am legendären Trevi-Brunnen bei Dämmerlicht." },
+          { img: "https://images.unsplash.com/photo-1742161052819-82040e7b11f0?auto=format&fit=crop&w=400&q=80", text: "Die imposante Kuppel des Petersdoms im Vatikan." }
         ],
         beachSlider: [
-          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Mit dem Zug in 30 Min ans Meer am Lido di Ostia!" },
-          { img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=400&q=80", text: "Pizza und Aperol im warmen Abend-Sonnenuntergang am Strand." },
-          { img: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=400&q=80", text: "Chillen mit einem Gelato im idyllischen Park der Villa Borghese." }
+          { img: "https://images.unsplash.com/photo-1600436728014-bbbb1dc65515?auto=format&fit=crop&w=400&q=80", text: "Lido di Ostia: Roms Sandstrand für laue Sommertage." },
+          { img: "https://images.unsplash.com/photo-1516961412704-d6726cf53803?auto=format&fit=crop&w=400&q=80", text: "Aperol Spritz zum römischen Sommerabend-Aperitivo." },
+          { img: "https://images.unsplash.com/photo-1718845643799-9a44658c7a90?auto=format&fit=crop&w=400&q=80", text: "Ruderboot-Idylle in den grünen Gärten der Villa Borghese." }
         ],
         foodSlider: [
-          { img: "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=400&q=80", text: "Königin der Pasta: Echte römische Spaghetti Carbonara!" },
-          { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Hauchdünne, knusprige Pizza al Taglio direkt aus dem Steinofen." },
-          { img: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=400&q=80", text: "Unbegrenzt fantastisches italienisches Gelato & Tiramisu!" }
+          { img: "https://images.unsplash.com/photo-1755594461640-b800c6bafdfa?auto=format&fit=crop&w=400&q=80", text: "Cremige Spaghetti Carbonara, ein römischer Klassiker." },
+          { img: "https://images.unsplash.com/photo-1694444399201-a5680e376313?auto=format&fit=crop&w=400&q=80", text: "Knusprige Pizza frisch aus dem Holzofen." },
+          { img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=400&q=80", text: "Süßer Abschluss: cremiges Tiramisu mit Kakaopulver." }
         ],
         dates: ["Do, 17.09. - So, 20.09. (Angenehme Wärme)", "Do, 24.09. - So, 27.09."]
       },
       {
         id: "sardinien",
         city: "Sardinien",
-        country: "Italien 1🇮🇹",
+        country: "Italien 🇮🇹",
         motto: "Die Karibik Europas",
         temperature: "26°C - 29°C",
         romanceScore: "100% Insel-Traum ❤️",
         summerVibeScore: "10/10",
-        image: "https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1646865043257-3767188963f1?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Wenn wir wirklich karibisches, glasklares Wasser und weiße Sandstrände wollen, ohne um die halbe Welt zu fliegen, ist Sardinien unschlagbar.",
         secretTip: "Natur-Wunder direkt in der Stadt: In Cagliari leben das ganze Jahr über tausende wilde, rosarote Flamingos in den Salzseen direkt neben dem Strand!",
+        highlights: "Bootstour zu den Flamingos, Schnorcheln in Cala Mariolu und Sonnenuntergang am Poetto Beach.",
         landmarkSlider: [
-          { img: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=400&q=80", text: "Die thronende Berg-Altstadt 'Castello' in Cagliari." },
-          { img: "https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=400&q=80", text: "Panoramablick über das Meer von der Bastion Saint Remy." },
-          { img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=400&q=80", text: "Wilde, rosa Flamingos im Naturpark direkt vor der Stadt." }
+          { img: "https://images.unsplash.com/photo-1691054911384-b0150c524d37?auto=format&fit=crop&w=400&q=80", text: "Castello: Cagliaris Altstadt hoch über dem Meer." },
+          { img: "https://images.unsplash.com/photo-1667467539978-dba73692f6ff?auto=format&fit=crop&w=400&q=80", text: "Bastione di Saint Remy: Cagliaris monumentale Panoramaterrasse." },
+          { img: "https://images.unsplash.com/photo-1704738288620-0d20b142768f?auto=format&fit=crop&w=400&q=80", text: "Wilde, rosa Flamingos in den Salinen Sardiniens." }
         ],
         beachSlider: [
-          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Poetto Beach: 8 km feiner weißer Sand direkt vor der Tür!" },
-          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Glasklares, karibisch-türkises Wasser und leere Traumbuchten." },
-          { img: "https://images.unsplash.com/photo-1584646098378-0874589d76b1?auto=format&fit=crop&w=400&q=80", text: "Cala Mariolu: Eine der spektakulärsten Badebuchten Europas!" }
+          { img: "https://images.unsplash.com/photo-1620318936760-546d065d03eb?auto=format&fit=crop&w=400&q=80", text: "Poetto: Cagliaris berühmter, kilometerlanger Stadtstrand." },
+          { img: "https://images.unsplash.com/photo-1557207411-58bf12d9079f?auto=format&fit=crop&w=400&q=80", text: "Türkise Buchten wie hier bei Porto San Paolo." },
+          { img: "https://images.unsplash.com/photo-1633853703227-57a074903869?auto=format&fit=crop&w=400&q=80", text: "Cala Mariolu: Sardiniens spektakulärster Kieselstrand." }
         ],
         foodSlider: [
-          { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Handgemachte sardische Culurgiones (gefüllte Nudeltaschen)." },
-          { img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=400&q=80", text: "Traditionelles hauchdünne Pane Carasau & würziger Pecorino." },
-          { img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80", text: "Frische Meeresfrüchte & eisgekühlter Mirto-Likör am Meer." }
+          { img: "https://images.unsplash.com/photo-1676832661871-994153cf2d93?auto=format&fit=crop&w=400&q=80", text: "Culurgiones: gefüllte Pasta-Spezialität Sardiniens." },
+          { img: "https://images.unsplash.com/photo-1655662844300-e59c3d2e7587?auto=format&fit=crop&w=400&q=80", text: "Würziger Pecorino, sardischer Schafskäse-Klassiker." },
+          { img: "https://images.unsplash.com/photo-1653663178687-21d1e16ba8ae?auto=format&fit=crop&w=400&q=80", text: "Spaghetti mit Bottarga: Sardiniens Fischrogen-Delikatesse." }
         ],
         dates: ["Di, 08.09. - Fr, 11.09. (Ryanair Schnäppchen)", "Do, 17.09. - So, 20.09."]
       },
@@ -475,23 +490,24 @@
         temperature: "28°C - 31°C",
         romanceScore: "100% Sommer pur ❤️",
         summerVibeScore: "10/10",
-        image: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1642888386073-84b9461dc523?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Sonnengarantie pur! Während es in Deutschland im September schon kühler wird, haben wir auf Zypern echten Hochsommer und 27°C warmes Mittelmeer.",
         secretTip: "Mythologie-Romantik: Wir besuchen den berühmten 'Aphrodite-Felsen'. Laut Legende stieg die Göttin der Liebe genau hier aus dem Meer. Wer ihn umschwimmt, dem wird ewige Jugend geschenkt!",
+        highlights: "Schwimmen am Aphrodite-Felsen, Sonnenuntergang an der Blauen Lagune und Meze-Abend am Hafen.",
         landmarkSlider: [
-          { img: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=400&q=80", text: "Antiker Archäologischer Park direkt an den Wellen (UNESCO)." },
-          { img: "https://images.unsplash.com/photo-1553913861-c0fddf2619ee?auto=format&fit=crop&w=400&q=80", text: "Das historische Kastell & der malerische Hafen von Paphos." },
-          { img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=400&q=80", text: "Der mythische Felsen der Aphrodite im kristallklaren Meer." }
+          { img: "https://images.unsplash.com/photo-1747561651023-a43726dea247?auto=format&fit=crop&w=400&q=80", text: "Antike Säulen und Ruinen im historischen Paphos (UNESCO)." },
+          { img: "https://images.unsplash.com/photo-1748431031723-4efb5f44ee4c?auto=format&fit=crop&w=400&q=80", text: "Das mittelalterliche Kastell wacht über den Hafen von Paphos." },
+          { img: "https://images.unsplash.com/photo-1598183706997-b09928fb4175?auto=format&fit=crop&w=400&q=80", text: "Aphrodites Felsen – Geburtsort der Liebesgöttin aus dem Meer." }
         ],
         beachSlider: [
-          { img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=400&q=80", text: "Sonnengarantie & baden am mythischen Aphrodite-Felsen!" },
-          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Entspanntes schwimmen in der wunderschönen Coral Bay." },
-          { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Die Blaue Lagune: Kristallklares Wasser wie in der Karibik!" }
+          { img: "https://images.unsplash.com/photo-1579289953609-16d4e1390adc?auto=format&fit=crop&w=400&q=80", text: "Baden im kristallklaren Wasser nahe Aphrodites Felsen." },
+          { img: "https://images.unsplash.com/photo-1622632983419-53f7c2737d23?auto=format&fit=crop&w=400&q=80", text: "Feiner Sandstrand und türkises Wasser an der Küste von Paphos." },
+          { img: "https://images.unsplash.com/photo-1622615821403-5364ad6e25d1?auto=format&fit=crop&w=400&q=80", text: "Die Blaue Lagune der Akamas-Halbinsel in leuchtendem Türkis." }
         ],
         foodSlider: [
-          { img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80", text: "Zypriotische Riesen-Meze (wir probieren 20 kleine Spezialitäten!)" },
-          { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Frisch gegrillter, quietschender Halloumi-Käse an der Promenade." },
-          { img: "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=400&q=80", text: "Zartes Souvlaki-Fleischspießchen & süßes Baklava zum Dessert." }
+          { img: "https://images.unsplash.com/photo-1542528180-0c79567c66de?auto=format&fit=crop&w=400&q=80", text: "Mediterrane Meze-Platte mit Hummus, Fladenbrot und kleinen Köstlichkeiten." },
+          { img: "https://images.unsplash.com/photo-1757522745249-d9a075cf38de?auto=format&fit=crop&w=400&q=80", text: "Gegrillter Halloumi – der zypriotische Käse-Klassiker vom Grill." },
+          { img: "https://images.unsplash.com/photo-1761828122856-8703baac8e86?auto=format&fit=crop&w=400&q=80", text: "Goldener Baklava mit Pistazien zum krönenden Abschluss." }
         ],
         dates: ["Do, 17.09. - So, 20.09. (Voller Hochsommer)", "Do, 24.09. - So, 27.09."]
       }
