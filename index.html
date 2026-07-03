@@ -22,10 +22,12 @@
     }
     /* iOS Glassmorphism */
     .glass-header {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(35px);
-      -webkit-backdrop-filter: blur(35px);
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
       box-shadow: 0 10px 30px -10px rgba(0,0,0,0.12);
+      border-radius: 0 0 32px 32px;
+      overflow: hidden;
     }
     .header-accent {
       height: 4px;
@@ -49,6 +51,17 @@
     .btn-active:active {
       transform: scale(0.96);
     }
+    /* Maus-Drag-Scroll für Bilder-Slider auf dem Desktop (Touch bleibt native) */
+    .drag-scroll {
+      cursor: grab;
+    }
+    .drag-scroll.dragging {
+      cursor: grabbing;
+      scroll-snap-type: none;
+    }
+    .drag-scroll img {
+      -webkit-user-drag: none;
+    }
     /* Seidenweiche iOS Wisch-Transition ohne Glitches */
     #swipe-card {
       transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.35s ease;
@@ -63,6 +76,7 @@
       <div onclick="showView('welcome')" class="flex items-center space-x-3.5 cursor-pointer active:opacity-70 transition group" title="Zurück zur Startseite">
         <div class="relative w-16 h-16 rounded-full overflow-hidden border-[3px] border-pink-400 shadow-lg flex-shrink-0 group-hover:scale-105 transition">
           <img src="IMG_0925.jpeg" alt="Tamlyn" class="w-full h-full object-cover object-top">
+          <span class="absolute text-xl drop-shadow-md animate-pulse select-none pointer-events-none" style="top:-7px; left:58%; transform: translateX(-50%) rotate(-10deg);">👑</span>
         </div>
         <div>
           <h3 class="text-lg font-black text-gray-900 leading-tight flex items-center gap-1.5">
@@ -97,15 +111,13 @@
     <div id="view-welcome" class="glass-card rounded-[36px] p-8 text-center my-2 flex flex-col items-center justify-center min-h-[500px]">
       <div class="relative w-36 h-36 rounded-full overflow-hidden border-4 border-white shadow-2xl mb-6 transform hover:scale-105 transition duration-500">
         <img src="IMG_0925.jpeg" alt="Tamlyn" class="w-full h-full object-cover object-top">
-        <div class="absolute bottom-2 right-2 w-10 h-10 bg-gradient-to-tr from-pink-500 to-amber-400 rounded-full flex items-center justify-center text-xl shadow-lg border-2 border-white animate-pulse">
-          👑
-        </div>
+        <span class="absolute text-5xl drop-shadow-lg animate-pulse select-none pointer-events-none" style="top:-16px; left:58%; transform: translateX(-50%) rotate(-10deg);">👑</span>
       </div>
       <span class="text-xs font-black tracking-widest text-pink-500 uppercase mb-2">07.07. • Happy Birthday! 🎉</span>
       <h1 class="text-3xl md:text-4xl font-black tracking-tight mb-3 text-gray-900 leading-tight">
         Alles Gute, Tamlyn! ❤️
       </h1>
-      <p class="text-gray-700 text-sm md:text-base font-medium leading-relaxed mb-8">
+      <p class="text-gray-700 text-base md:text-lg font-medium leading-relaxed mb-8">
         Zum 26. Geburtstag schenke ich dir eine unvergessliche Reise zu zweit! 🎁
         <br><br>
         <strong class="text-gray-900">So geht's:</strong> Entdecke die Ziele, spür den Vibe und erstelle dein Ranking – für den perfekten Trip im September. ✨
@@ -155,7 +167,7 @@
               <span id="explore-temp" class="text-sm font-black text-gray-800"></span>
             </div>
             <div>
-              <span class="text-[11px] font-bold text-gray-400 block uppercase">Romantik-Score</span>
+              <span class="text-[11px] font-bold text-gray-400 block uppercase">Pärchen-Faktor</span>
               <span id="explore-romance" class="text-sm font-black text-rose-500"></span>
             </div>
           </div>
@@ -176,7 +188,7 @@
               <span>🏛️ Top-Sehenswürdigkeiten</span>
               <span class="text-[10px] text-gray-400 font-normal">👉 In Bildern scrollen</span>
             </span>
-            <div id="slider-landmarks" class="flex overflow-x-auto gap-3 no-scrollbar pb-1 pt-0.5"></div>
+            <div id="slider-landmarks" class="flex overflow-x-auto gap-3 no-scrollbar drag-scroll pb-1 pt-0.5"></div>
           </div>
 
           <div class="no-swipe">
@@ -184,7 +196,7 @@
               <span>🌊 Sommer & Strand-Vibe</span>
               <span class="text-[10px] text-gray-400 font-normal">👉 In Bildern scrollen</span>
             </span>
-            <div id="slider-beach" class="flex overflow-x-auto gap-3 no-scrollbar pb-1 pt-0.5"></div>
+            <div id="slider-beach" class="flex overflow-x-auto gap-3 no-scrollbar drag-scroll pb-1 pt-0.5"></div>
           </div>
 
           <div class="no-swipe">
@@ -192,13 +204,13 @@
               <span>🍷 Kulinarik & Genuss</span>
               <span class="text-[10px] text-gray-400 font-normal">👉 In Bildern scrollen</span>
             </span>
-            <div id="slider-food" class="flex overflow-x-auto gap-3 no-scrollbar pb-1 pt-0.5"></div>
+            <div id="slider-food" class="flex overflow-x-auto gap-3 no-scrollbar drag-scroll pb-1 pt-0.5"></div>
           </div>
 
           <div class="no-swipe">
             <button onclick="toggleSecret()" class="w-full bg-gradient-to-r from-purple-500/10 to-indigo-500/10 hover:from-purple-500/20 hover:to-indigo-500/20 border border-purple-200 p-3 rounded-2xl text-left transition flex items-center justify-between">
               <span class="text-xs font-black text-purple-700 flex items-center gap-1.5">
-                <span>🎁 Klick für Simons Geheimtipp & Fun Fact</span>
+                <span>🎁 Klick für Simons Geheimtipp</span>
               </span>
               <span id="secret-arrow" class="text-xs font-bold text-purple-600">▼</span>
             </button>
@@ -347,7 +359,7 @@
         summerVibeScore: "9/10",
         image: "https://images.unsplash.com/photo-1744993551783-15876865a783?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Romantik pur! Wir können tagsüber am Atlantikstrand liegen und abends bei warmem Licht durch verwinkelte Gassen schlendern.",
-        secretTip: "Wusstest du? Die Buchhandlung Livraria Lello in Porto gilt als schönste der Welt und hat J.K. Rowling zu Harry Potters Hogwarts-Bibliothek inspiriert!",
+        secretTip: "Geheimtipp: Fahr raus zum Praia de Miramar – kleiner Sandstrand mit der berühmten Kapelle mitten im Meer, oft mit Beachvolleyball-Feldern und einem Traum-Sonnenuntergang.",
         highlights: "Bootstour auf dem Douro bei Sonnenuntergang, Weinprobe in den Kellern von Gaia und barfuß durch die Ribeira schlendern.",
         landmarkSlider: [
           { img: "https://images.unsplash.com/photo-1762294946283-6921938e9937?auto=format&fit=crop&w=400&q=80", text: "Die eiserne Ponte Dom Luís I überspannt majestätisch den Douro." },
@@ -434,7 +446,7 @@
         summerVibeScore: "8/10",
         image: "https://images.unsplash.com/photo-1509024644558-2f56ce76c490?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Ein absolutes Bucket-List-Ziel! Wir genießen das italienische Lebensgefühl, essen die beste Pasta der Welt und werfen eine Münze in den Trevi-Brunnen.",
-        secretTip: "Fun Fact: Wer eine Münze über die rechte Schulter in den Trevi-Brunnen wirft, kehrt nach Rom zurück. Wer zwei wirft, verliebt sich in einen Italiener – also wirf bitte nur eine! 😉",
+        secretTip: "Geheimtipp: Der Giardino degli Aranci auf dem Aventin bietet einen der schönsten Sonnenuntergangsblicke über Rom – direkt nebenan siehst du durchs berühmte Schlüsselloch die Kuppel des Petersdoms perfekt gerahmt.",
         highlights: "Abendspaziergang zum Kolosseum, Aperitivo auf der Piazza Navona und Gelato-Tour durch Trastevere.",
         landmarkSlider: [
           { img: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=400&q=80", text: "Das antike Kolosseum in stiller Morgendämmerung." },
@@ -492,7 +504,7 @@
         summerVibeScore: "10/10",
         image: "https://images.unsplash.com/photo-1642888386073-84b9461dc523?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Sonnengarantie pur! Während es in Deutschland im September schon kühler wird, haben wir auf Zypern echten Hochsommer und 27°C warmes Mittelmeer.",
-        secretTip: "Mythologie-Romantik: Wir besuchen den berühmten 'Aphrodite-Felsen'. Laut Legende stieg die Göttin der Liebe genau hier aus dem Meer. Wer ihn umschwimmt, dem wird ewige Jugend geschenkt!",
+        secretTip: "Geheimtipp: Fahr zur Lara Beach im Akamas-Nationalpark – ein einsamer, unberührter Sandstrand mit türkisem Wasser, fernab vom Trubel der Touristenorte.",
         highlights: "Schwimmen am Aphrodite-Felsen, Sonnenuntergang an der Blauen Lagune und Meze-Abend am Hafen.",
         landmarkSlider: [
           { img: "https://images.unsplash.com/photo-1747561651023-a43726dea247?auto=format&fit=crop&w=400&q=80", text: "Antike Säulen und Ruinen im historischen Paphos (UNESCO)." },
@@ -676,6 +688,46 @@
         renderCity();
       }, false);
     }
+
+    // --- MAUS-DRAG-SCROLL FÜR SLIDER (NUR DESKTOP/MAUS, TOUCH BLEIBT NATIVE) ---
+    function enableDragScroll(el) {
+      let isDown = false, startX = 0, startScroll = 0, moved = false;
+
+      el.addEventListener('mousedown', e => {
+        isDown = true;
+        moved = false;
+        el.classList.add('dragging');
+        startX = e.pageX;
+        startScroll = el.scrollLeft;
+      });
+
+      window.addEventListener('mouseup', () => {
+        isDown = false;
+        el.classList.remove('dragging');
+      });
+
+      el.addEventListener('mouseleave', () => {
+        isDown = false;
+        el.classList.remove('dragging');
+      });
+
+      el.addEventListener('mousemove', e => {
+        if (!isDown) return;
+        e.preventDefault();
+        const delta = e.pageX - startX;
+        if (Math.abs(delta) > 3) moved = true;
+        el.scrollLeft = startScroll - delta;
+      });
+
+      // Verhindert, dass ein Drag versehentlich als Klick auf ein Bild zählt
+      el.addEventListener('click', e => {
+        if (moved) { e.preventDefault(); e.stopPropagation(); }
+      }, true);
+    }
+
+    ['slider-landmarks', 'slider-beach', 'slider-food'].forEach(id => {
+      enableDragScroll(document.getElementById(id));
+    });
 
     // --- OPTIMIERTE WISCHGESTEN ---
     const card = document.getElementById('swipe-card');
