@@ -89,7 +89,7 @@
       <div class="relative w-36 h-36 rounded-full overflow-hidden border-4 border-white shadow-2xl mb-6 transform hover:scale-105 transition duration-500">
         <img src="IMG_0925.jpeg" alt="Tamlyn" class="w-full h-full object-cover object-top">
         <div class="absolute bottom-2 right-2 w-10 h-10 bg-gradient-to-tr from-pink-500 to-amber-400 rounded-full flex items-center justify-center text-xl shadow-lg border-2 border-white animate-pulse">
-          ✨
+          👑
         </div>
       </div>
       <span class="text-xs font-black tracking-widest text-pink-500 uppercase mb-2">07.07. • Happy Birthday! 🎉</span>
@@ -98,7 +98,7 @@
       </h1>
       <p class="text-gray-700 text-sm md:text-base font-medium leading-relaxed mb-8">
         Weil du heute 26 Jahre alt wirst und nur das Beste verdienst, schenke ich dir eine unvergessliche gemeinsame Zeit, in der wir zusammen etwas ganz Neues entdecken! <br><br>
-        Da Vorfreude die schönste Freude ist, starten wir im **September**. Du hast ab heute die absolute Kontrolle über unser Ziel: Klick dich durch, spür den Vibe und erstelle dein Wunsch-Ranking! ✨
+        **Was du machen musst:** Klick dich durch die Ziele, spür den Vibe und erstelle danach dein Wunsch-Ranking. So haben wir im September bei optimalem Wetter den perfekten Trip! ✨
       </p>
       <button onclick="startAppWithLoading('explore')" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-extrabold py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition-all flex items-center justify-center space-x-3 text-lg">
         <span>Geschenk auspacken</span>
@@ -112,7 +112,7 @@
         <span class="text-xs font-bold text-gray-600 bg-white/90 px-3 py-1.5 rounded-full shadow-sm" id="viewed-status">👀 Wische oder nutze die Pfeile</span>
       </div>
 
-      <div id="swipe-card" class="glass-card rounded-[36px] overflow-hidden shadow-2xl flex flex-col relative border-[2px] border-white/80 w-full">
+      <div id="swipe-card" class="glass-card rounded-[36px] overflow-hidden shadow-2xl flex flex-col relative border-[2px] border-white/80 w-full no-scrollbar">
         
         <div class="relative h-64 w-full overflow-hidden bg-gray-200 flex-shrink-0">
           <img id="explore-img" src="" alt="City" class="w-full h-full object-cover pointer-events-none">
@@ -127,7 +127,7 @@
           </button>
           
           <div class="absolute top-4 right-14 bg-black/40 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-bold border border-white/20 flex items-center space-x-1 pointer-events-none">
-            <span>☀️ Vibe:</span>
+            <span>☀️ Level:</span>
             <span id="explore-vibe-score" class="text-amber-400 font-black"></span>
           </div>
 
@@ -193,6 +193,11 @@
               <span id="secret-arrow" class="text-xs font-bold text-purple-600">▼</span>
             </button>
             <div id="secret-box" class="hidden mt-2 bg-purple-50/80 p-3.5 rounded-2xl border border-purple-100 text-xs font-medium text-gray-700 leading-relaxed"></div>
+          </div>
+
+          <div class="bg-white/60 p-3.5 rounded-2xl border border-white no-swipe">
+            <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-1">🔥 Top-Erlebnisse für uns:</span>
+            <p id="explore-highlights" class="text-xs font-bold text-gray-800 leading-relaxed"></p>
           </div>
 
           <div class="pt-2 no-swipe">
@@ -303,14 +308,15 @@
           Ich mache mich jetzt sofort an die Buchung ab Memmingen/München und suche uns das perfekte Hotel raus! Happy Birthday und ich liebe dich! ❤️☀️
         </p>
 
-        <a id="sms-btn" href="#" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-black py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition-all flex items-center justify-center space-x-3 text-base block mb-3">
+        <a id="sms-btn" href="#" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-black py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition-all flex items-center justify-center space-x-3 text-base block mb-3 no-swipe">
           <span class="text-xl">💬</span>
           <span>Entscheidung per SMS an Simon senden</span>
         </a>
 
-        <a id="whatsapp-btn" href="#" target="_blank" class="w-full bg-[#25D366] text-white font-extrabold py-3 rounded-2xl shadow-md hover:bg-[#20bd5a] btn-active transition-all flex items-center justify-center space-x-2 text-xs block mb-3 opacity-90">
-          <span>Oder per WhatsApp an Simon senden</span>
-        </a>
+        <button onclick="resetRankingAndTest()" class="w-full bg-gradient-to-r from-amber-500 to-amber-700 text-white font-black py-4 rounded-2xl shadow-xl btn-active transition text-sm flex items-center justify-center space-x-2 mb-3 no-swipe">
+          <span>🧪 Test: Ranking zurücksetzen</span>
+          <span>🔄</span>
+        </button>
 
         <span class="text-[11px] text-gray-500 font-medium">Oder mach einfach einen Screenshot für unsere Vorfreude! 📸</span>
       </div>
@@ -319,7 +325,7 @@
   </div>
 
   <script>
-    // Die 6 Städte mit 3 separaten Bild-Slidern, geprüften Fotos und echten Wahrzeichen!
+    // Die 6 Städte mit 3 separaten, geprüften Bild-Slidern, echten Wahrzeichen, echten lokalen Stränden/Foods und interaktiven Geheimtipps!
     const cities = [
       {
         id: "porto",
@@ -436,7 +442,7 @@
       {
         id: "sardinien",
         city: "Sardinien",
-        country: "Italien 🇮🇹",
+        country: "Italien 1🇮🇹",
         motto: "Die Karibik Europas",
         temperature: "26°C - 29°C",
         romanceScore: "100% Insel-Traum ❤️",
@@ -456,7 +462,7 @@
         ],
         foodSlider: [
           { img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80", text: "Handgemachte sardische Culurgiones (gefüllte Nudeltaschen)." },
-          { img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=400&q=80", text: "Traditionelles hauchdünnes Pane Carasau & würziger Pecorino." },
+          { img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=400&q=80", text: "Traditionelles hauchdünne Pane Carasau & würziger Pecorino." },
           { img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=400&q=80", text: "Frische Meeresfrüchte & eisgekühlter Mirto-Likör am Meer." }
         ],
         dates: ["Di, 08.09. - Fr, 11.09. (Ryanair Schnäppchen)", "Do, 17.09. - So, 20.09."]
@@ -479,7 +485,7 @@
         ],
         beachSlider: [
           { img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=400&q=80", text: "Sonnengarantie & baden am mythischen Aphrodite-Felsen!" },
-          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Entspanntes schwimmen in der windgeschützten Coral Bay." },
+          { img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80", text: "Entspanntes schwimmen in der wunderschönen Coral Bay." },
           { img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80", text: "Die Blaue Lagune: Kristallklares Wasser wie in der Karibik!" }
         ],
         foodSlider: [
@@ -506,7 +512,23 @@
     let selectedDate = null;
     let selectedVibe = "Boutique im Zentrum";
 
-    // --- LADE-SCREEN LOGIK ---
+    // --- RESET LOGIK FÜR DIE TESTFUNKTION ---
+    function resetRankingAndTest() {
+      // Alles auf Null setzen
+      currentCityIdx = 0;
+      viewedCities = new Set();
+      rankedCities = [...cities];
+      selectedDate = null;
+      selectedVibe = "Boutique im Zentrum";
+      
+      // Zurück zur Startseite springen
+      showView('welcome');
+      
+      // Kleiner Hinweis
+      alert("Testfunktion: Alles wurde zurückgesetzt! Du kannst Tamlyns Trip jetzt nochmal von vorne konfigurieren. 😊");
+    }
+
+    // --- LADE-SCREEN LOGIK (LÄNGER: 6,5 SEKUNDEN FÜR DEN WITZ!) ---
     function startAppWithLoading(targetView) {
       document.getElementById('view-loading').classList.remove('hidden');
       const quoteEl = document.getElementById('loading-text');
@@ -515,7 +537,7 @@
       setTimeout(() => {
         document.getElementById('view-loading').classList.add('hidden');
         showView(targetView);
-      }, 3500);
+      }, 6500); // 6,5 Sekunden Einblendzeit!
     }
 
     function showView(viewId) {
@@ -541,7 +563,7 @@
       }
     }
 
-    // --- EXPLORER LOGIK & 3 SLIDER RENDERING ---
+    // --- EXPLORER LOGIK & SLIDER RENDERING ---
     function renderCity() {
       const c = cities[currentCityIdx];
       viewedCities.add(currentCityIdx);
@@ -556,6 +578,7 @@
       document.getElementById('explore-motto').innerText = c.motto;
       document.getElementById('explore-why').innerText = c.whyPerfect;
       document.getElementById('secret-box').innerText = c.secretTip;
+      document.getElementById('explore-highlights').innerText = c.highlights;
 
       document.getElementById('secret-box').classList.add('hidden');
       document.getElementById('secret-arrow').innerText = '▼';
@@ -721,7 +744,7 @@
       renderRanking();
     }
 
-    // --- DATUM & VIBE SELECTION ---
+    // --- DATUM & VIBE AUSWAHL ---
     function renderDateSelection() {
       const topCity = rankedCities[0];
       document.getElementById('selected-rank1-name').innerText = `${topCity.city} (${topCity.country})`;
@@ -758,7 +781,7 @@
       });
     }
 
-    // --- SUBMIT (SMS AN SIMON: 015161144959) ---
+    // --- SUBMIT ---
     function submitChoice() {
       if (!selectedDate) {
         alert("Bitte wähle oben noch ein Reisedatum aus! 📅✨");
@@ -777,15 +800,8 @@
       `;
 
       let rankingText = rankedCities.map((c, i) => `${i+1}. ${c.city}`).join('\n');
-      const messageText = `Hey Simon! Ich habe mein Wunsch-Ranking für unseren September-Trip erstellt! 🎉☀️\n\n🌟 UNSER PLAN A (Platz 1):\n📍 Ziel: ${topCity.city}\n📅 Datum: ${selectedDate}\n🏨 Hotel: ${selectedVibe}\n\n🛡️ MEIN KOMPLETTES RANKING (Falls was ausgebucht ist):\n${rankingText}\n\nDanke für dieses Wahnsinns-Geburtstagsgeschenk, ich liebe dich! ❤️✈️`;
-      
-      // SMS-Link speziell für iPhone & Android mit Simons Nummer!
-      const smsUrl = `sms:015161144959&body=${encodeURIComponent(messageText)}`;
-      document.getElementById('sms-btn').href = smsUrl;
-
-      // WhatsApp als Fallback
-      const waUrl = `https://wa.me/4915161144959?text=${encodeURIComponent(messageText)}`;
-      document.getElementById('whatsapp-btn').href = waUrl;
+      const waText = encodeURIComponent(`Hey Simon! Ich habe mein Wunsch-Ranking für unseren September-Trip erstellt! 🎉☀️\n\n🌟 UNSER PLAN A (Platz 1):\n📍 Ziel: ${topCity.city}\n📅 Datum: ${selectedDate}\n🏨 Hotel: ${selectedVibe}\n\n🛡️ MEIN KOMPLETTES RANKING (Falls was ausgebucht ist):\n${rankingText}\n\nDanke für dieses Wahnsinns-Geburtstagsgeschenk, ich liebe dich! ❤️✈️`);
+      document.getElementById('whatsapp-btn').href = `https://wa.me/?text=${waText}`;
 
       startAppWithLoading('success');
       setTimeout(() => triggerConfetti(), 1500);
