@@ -67,6 +67,14 @@
       transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.35s ease;
       will-change: transform, opacity;
     }
+    @media print {
+      body * { visibility: hidden; }
+      #ticket-preview-wrap, #ticket-preview-wrap * { visibility: visible; }
+      #ticket-preview-wrap {
+        position: fixed; top: 0; left: 0; width: 100%;
+        border: none !important; box-shadow: none !important; border-radius: 0 !important;
+      }
+    }
   </style>
 </head>
 <body class="flex flex-col items-center select-none">
@@ -122,10 +130,14 @@
         <br><br>
         <strong class="text-gray-900">So geht's:</strong> Entdecke die Ziele, spür den Vibe und erstelle dein Ranking – für den perfekten Trip im September. ✨
       </p>
-      <button onclick="startAppWithLoading('explore')" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-extrabold py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition-all flex items-center justify-center space-x-3 text-lg">
-        <span>Geschenk auspacken</span>
-        <span class="text-2xl">👉✈️</span>
-      </button>
+      <div class="relative w-full rounded-2xl overflow-hidden shadow-xl">
+        <button onclick="startAppWithLoading('explore')" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-extrabold py-5 rounded-2xl hover:opacity-95 btn-active transition-all flex items-center justify-center space-x-3 text-lg">
+          <span>Geschenk auspacken</span>
+          <span class="text-2xl">👉✈️</span>
+        </button>
+        <canvas id="scratch-canvas" class="absolute inset-0 w-full h-full rounded-2xl touch-none cursor-pointer"></canvas>
+      </div>
+      <span class="text-[11px] text-gray-400 font-semibold mt-3">✨ Rubbel die Fläche frei, um dein Geschenk zu öffnen</span>
     </div>
 
     <div id="view-explore" class="hidden my-1">
@@ -326,6 +338,8 @@
           </div>
         </div>
 
+        <div id="success-countdown" class="hidden inline-flex items-center gap-2 bg-pink-50 text-pink-600 font-black text-xs px-4 py-2.5 rounded-full shadow-sm mb-6"></div>
+
         <p class="text-xs font-semibold text-gray-600 mb-6 leading-relaxed">
           Ich mache mich jetzt sofort an die Buchung ab Memmingen/München und suche uns das perfekte Hotel raus! Happy Birthday und ich liebe dich! ❤️☀️
         </p>
@@ -335,12 +349,81 @@
           <span>Entscheidung per WhatsApp an Simon senden</span>
         </a>
 
+        <button onclick="generateStoryImage()" class="w-full bg-gradient-to-r from-violet-500 to-fuchsia-600 text-white font-black py-4 rounded-2xl shadow-xl btn-active transition text-sm flex items-center justify-center space-x-2 mb-3 no-swipe">
+          <span class="text-lg">📸</span>
+          <span>Story-Bild zum Teilen speichern</span>
+        </button>
+
         <button onclick="resetRankingAndTest()" class="w-full bg-gradient-to-r from-amber-500 to-amber-700 text-white font-black py-4 rounded-2xl shadow-xl btn-active transition text-sm flex items-center justify-center space-x-2 mb-3 no-swipe">
           <span>🧪 Test: Ranking zurücksetzen</span>
           <span>🔄</span>
         </button>
 
         <span class="text-[11px] text-gray-500 font-medium">Oder mach einfach einen Screenshot für unsere Vorfreude! 📸</span>
+      </div>
+    </div>
+
+    <div id="view-ticket" class="hidden my-2">
+      <div class="glass-card rounded-[36px] p-6 md:p-8 shadow-2xl">
+        <div class="text-center mb-6">
+          <span class="text-xs font-extrabold text-pink-500 uppercase tracking-widest block mb-1">Nur für Simon 🤫</span>
+          <h2 class="text-2xl font-black text-gray-900 mb-1">Boardingpass-Generator</h2>
+          <p class="text-xs text-gray-500">Teaser-Boardingpass zum Ausdrucken – als Überraschung, bevor Tamlyn die App nutzt.</p>
+        </div>
+
+        <div class="space-y-4 mb-6 no-swipe">
+          <div>
+            <label class="text-xs font-extrabold uppercase tracking-widest text-gray-500 block mb-2">Ziel</label>
+            <select id="ticket-city-select" class="w-full border-2 border-gray-200 rounded-2xl p-3 text-sm font-bold"></select>
+          </div>
+          <div>
+            <label class="text-xs font-extrabold uppercase tracking-widest text-gray-500 block mb-2">Reisedatum (Text)</label>
+            <input id="ticket-date-input" type="text" class="w-full border-2 border-gray-200 rounded-2xl p-3 text-sm font-bold">
+          </div>
+          <label class="flex items-center gap-2 text-xs font-bold text-gray-600">
+            <input id="ticket-blur-toggle" type="checkbox" checked class="w-4 h-4">
+            Ziel als Überraschung verschleiern (Blur für den Ausdruck)
+          </label>
+        </div>
+
+        <div id="ticket-preview-wrap" class="mb-6 overflow-hidden rounded-3xl border-4 border-white shadow-xl">
+          <div id="ticket-card" class="relative w-full aspect-[16/9] bg-gray-900 text-white overflow-hidden">
+            <img id="ticket-photo" src="" class="absolute inset-0 w-full h-full object-cover" style="filter:blur(18px) brightness(0.55);">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-black/70"></div>
+            <div class="relative p-6 flex flex-col justify-between h-full">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-black tracking-widest">✈️ SIMON AIR</span>
+                <span class="text-[10px] font-bold bg-white/20 px-3 py-1 rounded-full">BOARDING PASS</span>
+              </div>
+              <div>
+                <span class="text-[10px] uppercase tracking-widest text-white/70 block">Passagier</span>
+                <span class="text-xl font-black block mb-2">Tamlyn ❤️</span>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="text-[10px] uppercase tracking-widest text-white/70 block">Von</span>
+                    <span class="text-lg font-black">MUC/FMM</span>
+                  </div>
+                  <span class="text-2xl">✈️</span>
+                  <div class="text-right">
+                    <span class="text-[10px] uppercase tracking-widest text-white/70 block">Nach</span>
+                    <span id="ticket-city-label" class="text-lg font-black">???</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] font-bold border-t border-white/20 pt-3">
+                <span>GATE: ❤️</span>
+                <span id="ticket-date-label">--.--</span>
+                <span>SITZ: VIP-1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 no-swipe">
+          <button onclick="printTicket()" class="bg-gray-900 text-white font-black py-4 rounded-2xl shadow-xl btn-active">🖨️ Drucken</button>
+          <button onclick="downloadTicketImage()" class="bg-gradient-to-r from-pink-500 to-amber-500 text-white font-black py-4 rounded-2xl shadow-xl btn-active">💾 Als Bild</button>
+        </div>
+        <button onclick="showView('welcome')" class="w-full mt-3 text-xs font-bold text-gray-400 no-swipe">Zurück zur normalen App</button>
       </div>
     </div>
 
@@ -376,7 +459,7 @@
           { img: "https://images.unsplash.com/photo-1496537103253-04627ff71f96?auto=format&fit=crop&w=400&q=80", text: "Portwein reift in jahrhundertealten Fässern der Keller von Gaia." },
           { img: "https://images.unsplash.com/photo-1731601815826-ad54e3ddff8a?auto=format&fit=crop&w=400&q=80", text: "Herzhafte portugiesische Küche – deftiges Comfort Food aus Porto." }
         ],
-        dates: ["Do, 10.09. - So, 13.09. (Perfekte Flugzeiten)", "Sa, 12.09. - Di, 15.09. (Spätsommer-Hit)"]
+        dates: ["Sa, 19.09. - Di, 22.09. (Ryanair FMM, 1 Urlaubstag)", "Fr, 25.09. - So, 27.09. (Ryanair FMM, ganz ohne Urlaubstag)"]
       },
       {
         id: "london",
@@ -405,7 +488,7 @@
           { img: "https://images.unsplash.com/photo-1697748836791-9ddf7e616ece?auto=format&fit=crop&w=400&q=80", text: "Klassisch britisch: knusprige Fish and Chips." },
           { img: "https://images.unsplash.com/photo-1518225197792-0b2ec38b3212?auto=format&fit=crop&w=400&q=80", text: "Afternoon Tea mit Etagere, Scones und feinem Tee." }
         ],
-        dates: ["Do, 03.09. - So, 06.09. (Beste Sonne)", "Do, 10.09. - So, 13.09."]
+        dates: ["Do, 17.09. - So, 20.09. (ab München, 1 Urlaubstag)", "Do, 24.09. - So, 27.09. (ab München, 1 Urlaubstag)"]
       },
       {
         id: "mallorca",
@@ -434,7 +517,7 @@
           { img: "https://images.unsplash.com/photo-1694685367640-05d6624e57f1?auto=format&fit=crop&w=400&q=80", text: "Paella mit frischen Meeresfrüchten, klassisch spanisch." },
           { img: "https://images.unsplash.com/photo-1763544305653-d5d0a4175f2c?auto=format&fit=crop&w=400&q=80", text: "Cocktails bei Sonnenuntergang mit Blick aufs Mittelmeer." }
         ],
-        dates: ["Fr, 11.09. - Mo, 14.09. (Verlängertes Wochenende)", "Do, 17.09. - So, 20.09."]
+        dates: ["Do, 17.09. - So, 20.09. (Ryanair FMM, 1 Urlaubstag)", "Do, 24.09. - So, 27.09. (Ryanair FMM, 1 Urlaubstag)"]
       },
       {
         id: "rom",
@@ -463,7 +546,7 @@
           { img: "https://images.unsplash.com/photo-1694444399201-a5680e376313?auto=format&fit=crop&w=400&q=80", text: "Knusprige Pizza frisch aus dem Holzofen." },
           { img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=400&q=80", text: "Süßer Abschluss: cremiges Tiramisu mit Kakaopulver." }
         ],
-        dates: ["Do, 17.09. - So, 20.09. (Angenehme Wärme)", "Do, 24.09. - So, 27.09."]
+        dates: ["Do, 17.09. - So, 20.09. (ab München, 1 Urlaubstag)", "Do, 24.09. - So, 27.09. (ab München, 1 Urlaubstag)"]
       },
       {
         id: "sardinien",
@@ -492,7 +575,7 @@
           { img: "https://images.unsplash.com/photo-1655662844300-e59c3d2e7587?auto=format&fit=crop&w=400&q=80", text: "Würziger Pecorino, sardischer Schafskäse-Klassiker." },
           { img: "https://images.unsplash.com/photo-1653663178687-21d1e16ba8ae?auto=format&fit=crop&w=400&q=80", text: "Spaghetti mit Bottarga: Sardiniens Fischrogen-Delikatesse." }
         ],
-        dates: ["Di, 08.09. - Fr, 11.09. (Ryanair Schnäppchen)", "Do, 17.09. - So, 20.09."]
+        dates: ["Do, 17.09. - So, 20.09. (ab München, Flugtage vorab kurz prüfen)", "Mi, 16.09. - So, 20.09. (Alghero ab Memmingen, ca. 3 Urlaubstage)"]
       },
       {
         id: "zypern",
@@ -521,7 +604,7 @@
           { img: "https://images.unsplash.com/photo-1757522745249-d9a075cf38de?auto=format&fit=crop&w=400&q=80", text: "Gegrillter Halloumi – der zypriotische Käse-Klassiker vom Grill." },
           { img: "https://images.unsplash.com/photo-1761828122856-8703baac8e86?auto=format&fit=crop&w=400&q=80", text: "Goldener Baklava mit Pistazien zum krönenden Abschluss." }
         ],
-        dates: ["Do, 17.09. - So, 20.09. (Voller Hochsommer)", "Do, 24.09. - So, 27.09."]
+        dates: ["Do, 17.09. - So, 20.09. (Ryanair FMM, Flugtage vorab kurz prüfen)", "Do, 24.09. - So, 27.09. (Ryanair FMM, Flugtage vorab kurz prüfen)"]
       }
     ];
 
@@ -576,6 +659,8 @@
       if (viewId === 'explore') renderCity();
       if (viewId === 'ranking') renderRanking();
       if (viewId === 'select') renderDateSelection();
+      if (viewId === 'welcome') initScratchCard();
+      if (viewId === 'ticket') initTicketView();
     }
 
     // --- GEHEIMTIPP TOGGLE ---
@@ -676,6 +761,7 @@
     }
 
     function nextCity() {
+      playSwipeSound();
       animateCardSwitch(() => {
         currentCityIdx = (currentCityIdx + 1) % cities.length;
         renderCity();
@@ -683,6 +769,7 @@
     }
 
     function prevCity() {
+      playSwipeSound();
       animateCardSwitch(() => {
         currentCityIdx = (currentCityIdx - 1 + cities.length) % cities.length;
         renderCity();
@@ -871,8 +958,17 @@
       const waText = encodeURIComponent(`Hey Simon! Ich habe mein Wunsch-Ranking für unseren September-Trip erstellt! 🎉☀️\n\n🌟 UNSER PLAN A (Platz 1):\n📍 Ziel: ${topCity.city}\n📅 Datum: ${selectedDate}\n🏨 Hotel: ${selectedVibe}\n\n🛡️ MEIN KOMPLETTES RANKING (Falls was ausgebucht ist):\n${rankingText}\n\nDanke für dieses Wahnsinns-Geburtstagsgeschenk, ich liebe dich! ❤️✈️`);
       document.getElementById('whatsapp-btn').href = `https://wa.me/?text=${waText}`;
 
+      const countdownEl = document.getElementById('success-countdown');
+      const days = daysUntilDateString(selectedDate);
+      if (days !== null && days >= 0) {
+        countdownEl.innerText = days === 0 ? "🎉 Es geht heute los!" : `⏳ Noch ${days} ${days === 1 ? 'Tag' : 'Tage'} bis zur Abreise!`;
+        countdownEl.classList.remove('hidden');
+      } else {
+        countdownEl.classList.add('hidden');
+      }
+
       startAppWithLoading('success');
-      setTimeout(() => triggerConfetti(), 1500);
+      setTimeout(() => { triggerConfetti(); playTadaSound(); }, 1500);
     }
 
     function triggerConfetti() {
@@ -883,6 +979,330 @@
         confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ec4899', '#f59e0b', '#3b82f6', '#10b981'] });
         if (Date.now() < end) requestAnimationFrame(frame);
       }());
+    }
+
+    // --- SOUND-EFFEKTE (per Web Audio API erzeugt, keine externen Dateien nötig) ---
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return null;
+        audioCtx = new AC();
+      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function playTone(freq, duration, type, startGain, delay) {
+      const ctx = getAudioCtx();
+      if (!ctx) return;
+      const startTime = ctx.currentTime + (delay || 0);
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type || 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(startGain || 0.1, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + duration + 0.05);
+    }
+
+    function playSwipeSound() {
+      playTone(680, 0.1, 'sine', 0.06, 0);
+    }
+
+    function playTadaSound() {
+      const notes = [523.25, 659.25, 783.99, 1046.5]; // C5 E5 G5 C6
+      notes.forEach((f, i) => playTone(f, 0.4, 'triangle', 0.1, i * 0.09));
+    }
+
+    function playRevealSound() {
+      const notes = [392.0, 523.25, 659.25]; // G4 C5 E5
+      notes.forEach((f, i) => playTone(f, 0.3, 'sine', 0.09, i * 0.07));
+    }
+
+    // --- RUBBELLOS: GESCHENK FREIRUBBELN ---
+    function initScratchCard() {
+      const canvas = document.getElementById('scratch-canvas');
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) { setTimeout(initScratchCard, 50); return; }
+
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      canvas.style.display = '';
+      canvas.style.opacity = '1';
+      canvas.dataset.revealed = '';
+
+      const ctx = canvas.getContext('2d');
+      ctx.globalCompositeOperation = 'source-over';
+      const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      grad.addColorStop(0, '#f43f5e');
+      grad.addColorStop(1, '#f59e0b');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = 'rgba(255,255,255,0.95)';
+      ctx.font = '700 15px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('✨ Hier rubbeln zum Öffnen ✨', canvas.width / 2, canvas.height / 2);
+
+      let isScratching = false;
+      let revealed = false;
+
+      function scratchAt(x, y) {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 24, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function getPos(e) {
+        const r = canvas.getBoundingClientRect();
+        const t = e.touches ? e.touches[0] : e;
+        return { x: t.clientX - r.left, y: t.clientY - r.top };
+      }
+
+      function checkProgress() {
+        if (revealed) return;
+        const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        let cleared = 0, sampled = 0;
+        for (let i = 3; i < data.length; i += 4 * 15) {
+          sampled++;
+          if (data[i] === 0) cleared++;
+        }
+        if (sampled > 0 && cleared / sampled > 0.45) {
+          revealed = true;
+          canvas.dataset.revealed = '1';
+          playRevealSound();
+          canvas.style.transition = 'opacity 0.5s ease';
+          canvas.style.opacity = '0';
+          setTimeout(() => { canvas.style.display = 'none'; }, 500);
+        }
+      }
+
+      function handleMove(e) {
+        if (!isScratching) return;
+        e.preventDefault();
+        const { x, y } = getPos(e);
+        scratchAt(x, y);
+        checkProgress();
+      }
+
+      canvas.onmousedown = e => { isScratching = true; const p = getPos(e); scratchAt(p.x, p.y); checkProgress(); };
+      window.addEventListener('mouseup', () => { isScratching = false; });
+      canvas.onmousemove = handleMove;
+
+      canvas.ontouchstart = e => { isScratching = true; const p = getPos(e); scratchAt(p.x, p.y); checkProgress(); };
+      canvas.ontouchmove = handleMove;
+      canvas.ontouchend = () => { isScratching = false; };
+    }
+
+    // --- COUNTDOWN-HELFER ---
+    function daysUntilDateString(dateStr) {
+      const match = dateStr.match(/(\d{2})\.(\d{2})\./);
+      if (!match) return null;
+      const day = parseInt(match[1], 10);
+      const month = parseInt(match[2], 10) - 1;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      let year = today.getFullYear();
+      let target = new Date(year, month, day);
+      if (target < today) target = new Date(year + 1, month, day);
+      const diffMs = target.getTime() - today.getTime();
+      return Math.round(diffMs / (1000 * 60 * 60 * 24));
+    }
+
+    // --- BILD-HELFER FÜR CANVAS-GENERATOREN ---
+    function loadImageForCanvas(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+    }
+
+    function roundRectPath(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    function drawImageCover(ctx, img, x, y, w, h, radius) {
+      ctx.save();
+      if (radius) { roundRectPath(ctx, x, y, w, h, radius); ctx.clip(); }
+      const scale = Math.max(w / img.width, h / img.height);
+      const dw = img.width * scale, dh = img.height * scale;
+      const dx = x + (w - dw) / 2, dy = y + (h - dh) / 2;
+      ctx.drawImage(img, dx, dy, dw, dh);
+      ctx.restore();
+    }
+
+    function downloadCanvas(canvas, filename) {
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // --- STORY-BILD ZUM TEILEN (INSTAGRAM-STORY-FORMAT) ---
+    async function generateStoryImage() {
+      const topCity = rankedCities[0];
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080;
+      canvas.height = 1920;
+      const ctx = canvas.getContext('2d');
+
+      const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      grad.addColorStop(0, '#ff6f91');
+      grad.addColorStop(0.5, '#ff9a76');
+      grad.addColorStop(1, '#ffd97d');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      let photoDrawn = false;
+      try {
+        const img = await loadImageForCanvas(topCity.image.replace('w=800', 'w=1080'));
+        drawImageCover(ctx, img, 60, 260, canvas.width - 120, 1000, 48);
+        photoDrawn = true;
+      } catch (e) { /* Bild konnte nicht geladen werden, weiter ohne Foto */ }
+
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 46px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillText('Tamlyns Sommer Trip ☀️', canvas.width / 2, 150);
+
+      if (!photoDrawn) {
+        ctx.font = '900 140px -apple-system, sans-serif';
+        ctx.fillText('✈️', canvas.width / 2, 750);
+      }
+
+      ctx.font = '900 88px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillText(topCity.city, canvas.width / 2, 1370);
+
+      ctx.font = '700 38px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillText(topCity.country, canvas.width / 2, 1430);
+
+      ctx.font = '600 34px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillText((selectedDate || '').split(' (')[0], canvas.width / 2, 1500);
+
+      const days = daysUntilDateString(selectedDate || '');
+      ctx.font = '800 40px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillText(days !== null && days >= 0 ? `⏳ Noch ${days} Tage!` : '🎉 Wir freuen uns riesig!', canvas.width / 2, 1750);
+
+      ctx.font = '600 28px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillText('26. Geburtstag Special ❤️', canvas.width / 2, 1830);
+
+      downloadCanvas(canvas, `tamlyns-sommer-trip-${topCity.id}.png`);
+    }
+
+    // --- BOARDINGPASS-GENERATOR (NUR FÜR SIMON, ÜBER GEHEIMEN LINK #simon-ticket) ---
+    function initTicketView() {
+      const select = document.getElementById('ticket-city-select');
+      if (!select) return;
+      if (select.options.length === 0) {
+        select.innerHTML = cities.map((c, i) => `<option value="${i}">${c.city} (${c.country})</option>`).join('');
+        select.onchange = updateTicketPreview;
+        document.getElementById('ticket-date-input').oninput = updateTicketPreview;
+        document.getElementById('ticket-blur-toggle').onchange = updateTicketPreview;
+        document.getElementById('ticket-date-input').value = cities[0].dates[0];
+      }
+      updateTicketPreview();
+    }
+
+    function updateTicketPreview() {
+      const idx = parseInt(document.getElementById('ticket-city-select').value || 0, 10);
+      const c = cities[idx];
+      const blurred = document.getElementById('ticket-blur-toggle').checked;
+      const dateInput = document.getElementById('ticket-date-input');
+      if (!dateInput.value) dateInput.value = c.dates[0];
+
+      document.getElementById('ticket-photo').src = c.image;
+      document.getElementById('ticket-photo').style.filter = blurred ? 'blur(18px) brightness(0.55)' : 'brightness(0.55)';
+      document.getElementById('ticket-city-label').innerText = blurred ? '???' : c.city.toUpperCase();
+      document.getElementById('ticket-date-label').innerText = (dateInput.value || c.dates[0]).split(' (')[0];
+    }
+
+    function printTicket() {
+      window.print();
+    }
+
+    async function downloadTicketImage() {
+      try {
+        const idx = parseInt(document.getElementById('ticket-city-select').value || 0, 10);
+        const c = cities[idx];
+        const blurred = document.getElementById('ticket-blur-toggle').checked;
+        const dateLabel = (document.getElementById('ticket-date-input').value || c.dates[0]).split(' (')[0];
+
+        const canvas = document.createElement('canvas');
+        canvas.width = 1600;
+        canvas.height = 900;
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = '#111827';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        try {
+          const img = await loadImageForCanvas(c.image);
+          ctx.save();
+          ctx.filter = blurred ? 'blur(30px) brightness(0.55)' : 'brightness(0.55)';
+          drawImageCover(ctx, img, 0, 0, canvas.width, canvas.height, 0);
+          ctx.restore();
+        } catch (e) { /* ohne Foto weitermachen */ }
+
+        ctx.fillStyle = 'rgba(0,0,0,0.3)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'left';
+        ctx.font = '900 40px -apple-system, sans-serif';
+        ctx.fillText('✈️ SIMON AIR', 60, 100);
+        ctx.textAlign = 'right';
+        ctx.font = '700 22px -apple-system, sans-serif';
+        ctx.fillText('BOARDING PASS', canvas.width - 60, 100);
+
+        ctx.textAlign = 'left';
+        ctx.font = '600 22px -apple-system, sans-serif';
+        ctx.fillText('PASSAGIER', 60, 420);
+        ctx.font = '900 46px -apple-system, sans-serif';
+        ctx.fillText('Tamlyn ❤️', 60, 470);
+
+        ctx.font = '600 20px -apple-system, sans-serif';
+        ctx.fillText('VON', 60, 560);
+        ctx.font = '900 40px -apple-system, sans-serif';
+        ctx.fillText('MUC/FMM', 60, 605);
+
+        ctx.textAlign = 'right';
+        ctx.font = '600 20px -apple-system, sans-serif';
+        ctx.fillText('NACH', canvas.width - 60, 560);
+        ctx.font = '900 40px -apple-system, sans-serif';
+        ctx.fillText(blurred ? '???' : c.city.toUpperCase(), canvas.width - 60, 605);
+
+        ctx.textAlign = 'center';
+        ctx.font = '700 26px -apple-system, sans-serif';
+        ctx.fillText(dateLabel, canvas.width / 2, 800);
+
+        downloadCanvas(canvas, `boardingpass-${c.id}.png`);
+      } catch (e) {
+        alert('Bild konnte nicht erstellt werden. Nutze stattdessen den Drucken-Button.');
+      }
+    }
+
+    // --- INITIALISIERUNG ---
+    initScratchCard();
+    window.addEventListener('resize', () => {
+      if (!document.getElementById('view-welcome').classList.contains('hidden')) initScratchCard();
+    });
+
+    if (location.hash === '#simon-ticket') {
+      showView('ticket');
     }
   </script>
 </body>
