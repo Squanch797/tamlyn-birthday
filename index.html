@@ -22,9 +22,9 @@
     }
     /* iOS Glassmorphism */
     .glass-header {
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(22px) saturate(160%);
-      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      background: rgba(255, 255, 255, 0.38);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
       box-shadow: 0 10px 30px -10px rgba(0,0,0,0.12);
       border-radius: 0 0 32px 32px;
       overflow: hidden;
@@ -112,14 +112,14 @@
 <body class="flex flex-col items-center select-none">
 
   <header class="w-full glass-header sticky top-0 z-50 transition-all">
-    <div class="w-full max-w-lg mx-auto px-5 py-5 flex items-center justify-between">
-      <div onclick="showView('welcome')" class="flex items-center space-x-3.5 cursor-pointer active:opacity-70 transition group" title="Zurück zur Startseite">
-        <div class="relative w-16 h-16 rounded-full overflow-hidden border-[3px] border-pink-400 shadow-lg flex-shrink-0 group-hover:scale-105 transition">
+    <div class="w-full max-w-lg mx-auto px-5 py-3.5 flex items-center justify-between">
+      <div onclick="showView('welcome')" class="flex items-center space-x-3 cursor-pointer active:opacity-70 transition group" title="Zurück zur Startseite">
+        <div class="relative w-14 h-14 rounded-full overflow-hidden border-[3px] border-pink-400 shadow-lg flex-shrink-0 group-hover:scale-105 transition">
           <img src="IMG_0925.jpeg" alt="Tamlyn" class="w-full h-full object-cover object-top">
-          <span class="absolute text-base drop-shadow-md animate-pulse select-none pointer-events-none" style="top:1px; left:69%; transform: translateX(-50%) rotate(-6deg);">👑</span>
+          <span class="absolute text-sm drop-shadow-md animate-pulse select-none pointer-events-none" style="top:-4px; left:69%; transform: translateX(-50%) rotate(-6deg);">👑</span>
         </div>
         <div>
-          <h3 class="text-lg font-black text-gray-900 leading-tight flex items-center gap-1.5">
+          <h3 class="text-base font-black text-gray-900 leading-tight flex items-center gap-1.5">
             <span>Tamlyns Sommer Trip</span>
             <span class="text-amber-500">☀️</span>
           </h3>
@@ -129,7 +129,7 @@
         </div>
       </div>
 
-      <div onclick="vipBadgeTap(event)" class="bg-gradient-to-r from-pink-500 to-amber-400 text-white text-xs font-black px-4 py-2 rounded-full shadow-md flex items-center space-x-1 cursor-pointer active:scale-90 transition">
+      <div onclick="vipBadgeTap(event)" class="bg-gradient-to-r from-pink-500 to-amber-400 text-white text-xs font-black px-3.5 py-1.5 rounded-full shadow-md flex items-center space-x-1 cursor-pointer active:scale-90 transition">
         <span>VIP</span>
         <span class="animate-bounce">👑</span>
       </div>
@@ -155,7 +155,6 @@
           <span class="absolute text-4xl drop-shadow-lg animate-pulse select-none pointer-events-none" style="top:2px; left:69%; transform: translateX(-50%) rotate(-6deg);">👑</span>
         </div>
       </div>
-      <span id="crown-message" class="hidden text-xs font-black text-pink-500 mb-2 max-w-xs leading-snug"></span>
       <span class="text-xs font-black tracking-widest text-pink-500 uppercase mb-2">07.07. • Happy Birthday! 🎉</span>
       <h1 class="text-3xl md:text-4xl font-black tracking-tight mb-3 text-gray-900 leading-tight">
         Alles Gute, Tamlyn! ❤️
@@ -175,7 +174,7 @@
       <span class="text-[11px] text-gray-400 font-semibold mt-3">✨ Rubbel die Fläche frei, um dein Geschenk zu öffnen</span>
     </div>
 
-    <div id="view-explore" class="hidden my-1">
+    <div id="view-explore" class="hidden mt-5 mb-1">
       <div class="flex justify-between items-center mb-2 px-2">
         <span class="text-xs font-black uppercase tracking-wider text-pink-600 bg-white/90 px-3 py-1.5 rounded-full shadow-sm" id="city-counter">Ziel 1 von 6</span>
         <span class="text-xs font-bold text-gray-600 bg-white/90 px-3 py-1.5 rounded-full shadow-sm" id="viewed-status">👀 Wische oder nutze die Pfeile</span>
@@ -227,7 +226,7 @@
             <span class="text-[11px] font-extrabold text-rose-600 uppercase tracking-widest block mb-1 flex items-center gap-1">
               <span>❤️ Warum das perfekt für uns ist:</span>
             </span>
-            <p id="explore-why" class="text-xs font-semibold text-gray-800 leading-relaxed"></p>
+            <p id="explore-why" class="text-sm font-semibold text-gray-800 leading-relaxed"></p>
           </div>
 
           <div class="no-swipe">
@@ -261,21 +260,15 @@
               </span>
               <span id="secret-arrow" class="text-xs font-bold text-purple-600">▼</span>
             </button>
-            <div id="secret-box" class="hidden mt-2 bg-purple-50/80 p-3.5 rounded-2xl border border-purple-100 text-xs font-medium text-gray-700 leading-relaxed"></div>
+            <div id="secret-box" class="hidden mt-2 bg-purple-50/80 p-3.5 rounded-2xl border border-purple-100 text-sm font-medium text-gray-700 leading-relaxed"></div>
           </div>
 
           <div class="bg-white/60 p-3.5 rounded-2xl border border-white no-swipe">
             <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-1">🔥 Top-Erlebnisse für uns:</span>
-            <p id="explore-highlights" class="text-xs font-bold text-gray-800 leading-relaxed"></p>
+            <p id="explore-highlights" class="text-sm font-bold text-gray-800 leading-relaxed"></p>
           </div>
 
           <div class="pt-2 no-swipe">
-            <div class="flex items-center justify-between text-xs font-extrabold text-gray-400 mb-2 px-2">
-              <span>👈 Vorherige</span>
-              <span class="text-pink-500 animate-pulse font-black">Wische die Karte oder nutze Pfeile!</span>
-              <span>Nächste 👉</span>
-            </div>
-            
             <div class="flex items-center gap-2">
               <button onclick="prevCity()" class="flex-1 bg-white/80 py-3.5 rounded-2xl text-sm font-extrabold text-gray-700 btn-active transition shadow-sm border border-gray-200 text-center flex items-center justify-center gap-1">
                 <span>&larr;</span> <span>Zurück</span>
@@ -302,7 +295,7 @@
         <div class="text-center mb-6">
           <span class="text-xs font-extrabold text-pink-500 uppercase tracking-widest block mb-1">Simons Plan A, B & C</span>
           <h2 class="text-3xl font-black text-gray-900 mb-2">Tamlyns Ranking 🏆</h2>
-          <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
+          <p class="text-sm text-gray-600 leading-relaxed">
             Schiebe deine Favoriten mit den Pfeilen nach oben! Platz 1 ist unser absoluter Plan A. Falls dort Flüge oder Hotels vergriffen sind, habe ich direkt deine Alternativen parat! 😉
           </p>
         </div>
@@ -341,7 +334,7 @@
           </div>
         </div>
 
-        <button onclick="submitChoice()" class="w-full bg-black text-white font-black py-5 rounded-2xl shadow-xl hover:bg-gray-800 btn-active transition-all text-lg tracking-wide flex items-center justify-center space-x-2">
+        <button onclick="confirmAndSubmit()" class="w-full bg-black text-white font-black py-5 rounded-2xl shadow-xl hover:bg-gray-800 btn-active transition-all text-lg tracking-wide flex items-center justify-center space-x-2">
           <span>Geschenk jetzt offiziell einloggen! 🎉</span>
         </button>
       </div>
@@ -393,7 +386,7 @@
 
         <div id="success-countdown" class="hidden inline-flex items-center gap-2 bg-pink-50 text-pink-600 font-black text-xs px-4 py-2.5 rounded-full shadow-sm mb-6"></div>
 
-        <p class="text-xs font-semibold text-gray-600 mb-6 leading-relaxed">
+        <p class="text-sm font-semibold text-gray-600 mb-6 leading-relaxed">
           Ich mache mich jetzt sofort an die Buchung ab Memmingen/München und suche uns das perfekte Hotel raus! Happy Birthday und ich liebe dich! ❤️☀️
         </p>
 
@@ -783,7 +776,7 @@
         landmarkSlider.innerHTML += `
           <div class="w-60 flex-shrink-0 bg-white/90 rounded-2xl overflow-hidden border border-white shadow-sm flex flex-col justify-between">
             <img src="${item.img}" class="w-full h-28 object-cover">
-            <p class="p-2.5 text-[11px] font-bold text-gray-800 leading-tight">${item.text}</p>
+            <p class="p-2.5 text-xs font-bold text-gray-800 leading-tight">${item.text}</p>
           </div>
         `;
       });
@@ -796,7 +789,7 @@
         beachSlider.innerHTML += `
           <div class="w-60 flex-shrink-0 bg-white/90 rounded-2xl overflow-hidden border border-white shadow-sm flex flex-col justify-between">
             <img src="${item.img}" class="w-full h-28 object-cover">
-            <p class="p-2.5 text-[11px] font-bold text-gray-800 leading-tight">${item.text}</p>
+            <p class="p-2.5 text-xs font-bold text-gray-800 leading-tight">${item.text}</p>
           </div>
         `;
       });
@@ -809,7 +802,7 @@
         foodSlider.innerHTML += `
           <div class="w-60 flex-shrink-0 bg-white/90 rounded-2xl overflow-hidden border border-white shadow-sm flex flex-col justify-between">
             <img src="${item.img}" class="w-full h-28 object-cover">
-            <p class="p-2.5 text-[11px] font-bold text-gray-800 leading-tight">${item.text}</p>
+            <p class="p-2.5 text-xs font-bold text-gray-800 leading-tight">${item.text}</p>
           </div>
         `;
       });
@@ -969,8 +962,8 @@
             </div>
           </div>
           <div class="flex space-x-1">
-            <button onclick="moveRank(${idx}, -1)" class="w-9 h-9 bg-gray-100 rounded-xl flex items-center justify-center text-gray-700 hover:bg-gray-200 active:scale-90 transition disabled:opacity-20" ${idx === 0 ? 'disabled' : ''}>▲</button>
-            <button onclick="moveRank(${idx}, 1)" class="w-9 h-9 bg-gray-100 rounded-xl flex items-center justify-center text-gray-700 hover:bg-gray-200 active:scale-90 transition disabled:opacity-20" ${idx === rankedCities.length - 1 ? 'disabled' : ''}>▼</button>
+            <button onclick="moveRank(${idx}, -1)" class="w-9 h-9 bg-gray-100 rounded-2xl flex items-center justify-center text-gray-700 hover:bg-gray-200 active:scale-90 transition disabled:opacity-20" ${idx === 0 ? 'disabled' : ''}>▲</button>
+            <button onclick="moveRank(${idx}, 1)" class="w-9 h-9 bg-gray-100 rounded-2xl flex items-center justify-center text-gray-700 hover:bg-gray-200 active:scale-90 transition disabled:opacity-20" ${idx === rankedCities.length - 1 ? 'disabled' : ''}>▼</button>
           </div>
         `;
         list.appendChild(item);
@@ -1034,12 +1027,41 @@
       });
     }
 
-    // --- SUBMIT ---
-    function submitChoice() {
+    // --- LUSTIGE "BIST DU DIR SICHER?"-BESTÄTIGUNG VOR DEM FINALEN ABSCHICKEN ---
+    function showConfirmModal(text, buttonText, onConfirm) {
+      const overlay = document.createElement('div');
+      overlay.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-6';
+      overlay.innerHTML = `
+        <div class="glass-card rounded-[32px] p-7 max-w-xs w-full text-center shadow-2xl">
+          <p class="text-lg font-black text-gray-900 mb-6">${text}</p>
+          <button class="w-full bg-gradient-to-r from-pink-500 to-amber-500 text-white font-black py-3.5 rounded-2xl btn-active shadow-lg"></button>
+        </div>
+      `;
+      const btn = overlay.querySelector('button');
+      btn.innerText = buttonText;
+      btn.onclick = () => { overlay.remove(); onConfirm(); };
+      document.body.appendChild(overlay);
+    }
+
+    function confirmAndSubmit() {
       if (!selectedDate) {
         alert("Bitte wähle oben noch ein Reisedatum aus! 📅✨");
         return;
       }
+      const steps = ["Bist du dir sicher? 🤔", "Bist du dir ganz, ganz sicher? 😅"];
+      let i = 0;
+      function next() {
+        if (i < steps.length) {
+          showConfirmModal(steps[i], "Ja, sicher!", () => { i++; next(); });
+        } else {
+          showConfirmModal("Verarscht... 😜 Ab geht's in den Urlaub!", "Auf geht's! 🚀", submitChoiceReal);
+        }
+      }
+      next();
+    }
+
+    // --- SUBMIT ---
+    function submitChoiceReal() {
       const topCity = rankedCities[0];
       document.getElementById('success-city').innerText = `${topCity.city} (${topCity.country})`;
       document.getElementById('success-date').innerText = selectedDate;
@@ -1063,7 +1085,7 @@
 
       let rankingText = rankedCities.map((c, i) => `${i+1}. ${c.city}`).join('\n');
       const flightLine = (selectedFlightOut && selectedFlightBack) ? `\n✈️ Hinflug: ${selectedFlightOut}\n✈️ Rückflug: ${selectedFlightBack}\n` : '';
-      const waText = encodeURIComponent(`Hey Simon! Ich habe mein Wunsch-Ranking für unseren September-Trip erstellt! 🎉☀️\n\n🌟 UNSER PLAN A (Platz 1):\n📍 Ziel: ${topCity.city}\n📅 Datum: ${selectedDate}${flightLine}🏨 Hotel: ${selectedVibe}\n\n🛡️ MEIN KOMPLETTES RANKING (Falls was ausgebucht ist):\n${rankingText}\n\nDanke für dieses Wahnsinns-Geburtstagsgeschenk – ich hoffe, wir werden eine wunderschöne Reise haben! ❤️✈️`);
+      const waText = encodeURIComponent(`Hey Simon! Ich habe mein Wunsch-Ranking für unseren September-Trip erstellt! 🎉🌞\n\n🌟 UNSER PLAN A (Platz 1):\n📍 Ziel: ${topCity.city}\n📅 Datum: ${selectedDate}${flightLine}🏨 Hotel: ${selectedVibe}\n\n📋 MEIN KOMPLETTES RANKING (Falls was ausgebucht ist):\n${rankingText}\n\nDanke für dieses Wahnsinns-Geburtstagsgeschenk - ich hoffe, wir werden eine wunderschöne Reise haben! 💛🛫`);
       document.getElementById('whatsapp-btn').href = `https://wa.me/?text=${waText}`;
 
       const countdownEl = document.getElementById('success-countdown');
@@ -1176,13 +1198,7 @@
         setTimeout(() => heart.remove(), 1300);
       }
       playRevealSound();
-      const msgEl = document.getElementById('crown-message');
-      if (msgEl) {
-        msgEl.innerText = sweetMessages[crownTapCount % sweetMessages.length];
-        msgEl.classList.remove('hidden');
-        clearTimeout(msgEl._hideTimer);
-        msgEl._hideTimer = setTimeout(() => msgEl.classList.add('hidden'), 3200);
-      }
+      showMiniToast(sweetMessages[crownTapCount % sweetMessages.length], 2600);
     }
 
     // --- RUBBELLOS: GESCHENK FREIRUBBELN ---
