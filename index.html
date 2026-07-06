@@ -75,6 +75,11 @@
     }
     .fly-in-right { animation: flyInFromRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) both; }
     .fly-in-left { animation: flyInFromLeft 0.75s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    @keyframes softPulse {
+      0%, 100% { box-shadow: 0 8px 22px -8px rgba(16,185,129,0.55); }
+      50% { box-shadow: 0 10px 26px -6px rgba(16,185,129,0.85); }
+    }
+    .unlock-pulse { animation: softPulse 2.4s ease-in-out infinite; }
     @keyframes modalPop {
       0% { transform: scale(0.7); opacity: 0; }
       60% { transform: scale(1.04); opacity: 1; }
@@ -289,67 +294,75 @@
 
         <div class="p-5 md:p-6 flex-1 flex flex-col justify-between space-y-4">
           
-          <!-- Motto als zentrales Zitat -->
-          <p id="explore-motto" class="text-xl font-black text-gray-900 text-center leading-snug px-1"></p>
+          <!-- Motto als Gradient-Headline -->
+          <p id="explore-motto" class="text-xl md:text-2xl font-black text-center leading-tight px-1 bg-gradient-to-r from-pink-600 via-rose-500 to-amber-500 bg-clip-text text-transparent"></p>
 
-          <!-- Kennzahlen als iOS-Segment-Zeile -->
-          <div class="flex bg-white/80 rounded-2xl border border-white shadow-sm overflow-hidden">
-            <div class="flex-1 py-2.5 px-2 text-center">
-              <span class="text-[10px] font-semibold text-gray-400 block uppercase tracking-wide mb-0.5">☀️ Wetter</span>
+          <!-- Kennzahlen als farbige Mini-Karten -->
+          <div class="flex gap-2.5">
+            <div class="flex-1 rounded-2xl bg-gradient-to-br from-amber-100 to-yellow-50 border border-amber-200/70 py-3 px-2 text-center shadow-sm">
+              <span class="text-[10px] font-black text-amber-600 block uppercase tracking-wider mb-0.5">☀️ Wetter</span>
               <span id="explore-temp" class="text-sm font-black text-gray-800"></span>
             </div>
-            <div class="w-px bg-gray-200 my-2.5"></div>
-            <div class="flex-1 py-2.5 px-2 text-center">
-              <span class="text-[10px] font-semibold text-gray-400 block uppercase tracking-wide mb-0.5">❤️ Pärchen-Faktor</span>
+            <div class="flex-1 rounded-2xl bg-gradient-to-br from-rose-100 to-pink-50 border border-rose-200/70 py-3 px-2 text-center shadow-sm">
+              <span class="text-[10px] font-black text-rose-500 block uppercase tracking-wider mb-0.5">❤️ Pärchen-Faktor</span>
               <span id="explore-romance" class="text-sm font-black text-rose-500"></span>
             </div>
           </div>
 
-          <!-- Grouped-Inset-Karte (iOS-Einstellungen-Stil): Warum + Erlebnisse -->
-          <div class="bg-white/85 rounded-2xl border border-white shadow-sm overflow-hidden">
-            <div class="p-4">
-              <span class="text-[11px] font-bold text-rose-500 uppercase tracking-wide block mb-1">Warum das perfekt für uns ist</span>
-              <p id="explore-why" class="text-sm font-medium text-gray-700 leading-relaxed"></p>
-            </div>
-            <div class="h-px bg-gray-100 mx-4"></div>
-            <div class="p-4">
-              <span class="text-[11px] font-bold text-amber-500 uppercase tracking-wide block mb-1">🔥 Top-Erlebnisse für uns</span>
-              <p id="explore-highlights" class="text-sm font-medium text-gray-700 leading-relaxed"></p>
-            </div>
+          <!-- Warum perfekt -->
+          <div class="rounded-2xl p-4 bg-gradient-to-br from-rose-50 to-pink-50 border border-rose-100 shadow-sm">
+            <span class="text-[11px] font-black text-rose-500 uppercase tracking-wider flex items-center gap-1.5 mb-1.5">💕 Warum das perfekt für uns ist</span>
+            <p id="explore-why" class="text-sm font-medium text-gray-700 leading-relaxed"></p>
           </div>
 
+          <!-- Sektion: Sehenswürdigkeiten -->
           <div class="no-swipe">
-            <div class="flex items-center justify-between mb-2 px-0.5">
-              <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">🏛️ Sehenswürdigkeiten</span>
-              <span class="text-[10px] text-gray-300 font-medium">wischen &rarr;</span>
+            <div class="flex items-center gap-2.5 mb-2.5">
+              <span class="inline-flex items-center gap-1.5 text-[11px] font-black text-white uppercase tracking-wider bg-gradient-to-r from-violet-500 to-purple-600 px-3 py-1.5 rounded-full shadow-md">
+                <span>🏛️</span><span>Sehenswürdigkeiten</span>
+              </span>
+              <span class="flex-1 h-0.5 rounded-full bg-gradient-to-r from-purple-300/70 to-transparent"></span>
             </div>
             <div id="slider-landmarks" class="flex overflow-x-auto gap-3 no-scrollbar drag-scroll pb-1 pt-0.5"></div>
           </div>
 
+          <!-- Sektion: Strand & Meer -->
           <div class="no-swipe">
-            <div class="flex items-center justify-between mb-2 px-0.5">
-              <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">🌊 Sommer & Strand</span>
-              <span class="text-[10px] text-gray-300 font-medium">wischen &rarr;</span>
+            <div class="flex items-center gap-2.5 mb-2.5">
+              <span class="inline-flex items-center gap-1.5 text-[11px] font-black text-white uppercase tracking-wider bg-gradient-to-r from-sky-500 to-cyan-500 px-3 py-1.5 rounded-full shadow-md">
+                <span>🌊</span><span>Strände & Meer</span>
+              </span>
+              <span class="flex-1 h-0.5 rounded-full bg-gradient-to-r from-sky-300/70 to-transparent"></span>
             </div>
             <div id="slider-beach" class="flex overflow-x-auto gap-3 no-scrollbar drag-scroll pb-1 pt-0.5"></div>
           </div>
 
+          <!-- Sektion: Kulinarik -->
           <div class="no-swipe">
-            <div class="flex items-center justify-between mb-2 px-0.5">
-              <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">🍷 Kulinarik & Genuss</span>
-              <span class="text-[10px] text-gray-300 font-medium">wischen &rarr;</span>
+            <div class="flex items-center gap-2.5 mb-2.5">
+              <span class="inline-flex items-center gap-1.5 text-[11px] font-black text-white uppercase tracking-wider bg-gradient-to-r from-amber-500 to-orange-500 px-3 py-1.5 rounded-full shadow-md">
+                <span>🍽️</span><span>Kulinarik & Genuss</span>
+              </span>
+              <span class="flex-1 h-0.5 rounded-full bg-gradient-to-r from-amber-300/70 to-transparent"></span>
             </div>
             <div id="slider-food" class="flex overflow-x-auto gap-3 no-scrollbar drag-scroll pb-1 pt-0.5"></div>
           </div>
 
+          <!-- Top-Erlebnisse -->
+          <div class="rounded-2xl p-4 bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 shadow-sm">
+            <span class="text-[11px] font-black text-orange-500 uppercase tracking-wider flex items-center gap-1.5 mb-1.5">🔥 Unsere Top-Erlebnisse</span>
+            <p id="explore-highlights" class="text-sm font-medium text-gray-700 leading-relaxed"></p>
+          </div>
+
+          <!-- Geheimtipp als farbiger CTA -->
           <div class="no-swipe">
-            <button onclick="toggleSecret()" class="w-full bg-white/85 border border-white shadow-sm p-4 rounded-2xl text-left transition flex items-center justify-between active:scale-[0.98]">
-              <span class="text-sm font-bold text-gray-800 flex items-center gap-2">
-                <span>🎁</span><span>Simons Geheimtipp</span>
+            <button onclick="toggleSecret()" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md p-4 rounded-2xl text-left transition flex items-center justify-between active:scale-[0.98]">
+              <span class="text-sm font-black flex items-center gap-2">
+                <span>🎁</span><span>Simons Geheimtipp entdecken</span>
               </span>
-              <span id="secret-arrow" class="text-xs font-bold text-gray-300">▼</span>
+              <span id="secret-arrow" class="text-xs font-bold text-white/80">▼</span>
             </button>
-            <div id="secret-box" class="hidden mt-2 bg-purple-50/70 p-4 rounded-2xl border border-purple-100 text-sm font-medium text-gray-700 leading-relaxed"></div>
+            <div id="secret-box" class="hidden mt-2 bg-gradient-to-br from-purple-50 to-indigo-50 p-4 rounded-2xl border border-purple-100 text-sm font-medium text-gray-700 leading-relaxed"></div>
           </div>
 
           <div class="pt-2 no-swipe">
@@ -593,10 +606,11 @@
 
   </div>
 
-  <div id="unlock-ranking-box" class="hidden fixed bottom-5 left-1/2 z-[60] w-[calc(100%-2.5rem)] max-w-md no-swipe" style="transform: translateX(-50%);">
-    <button onclick="startAppWithLoading('ranking')" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black py-4 rounded-2xl btn-active animate-bounce text-base flex items-center justify-center space-x-2" style="box-shadow: 0 12px 40px -5px rgba(16,185,129,0.6), 0 0 0 4px rgba(255,255,255,0.5);">
-      <span>🏆 Alle entdeckt! Jetzt Städte ranken</span>
-      <span>➡️</span>
+  <div id="unlock-ranking-box" class="hidden fixed bottom-5 left-1/2 z-[60] no-swipe" style="transform: translateX(-50%);">
+    <button onclick="startAppWithLoading('ranking')" class="unlock-pulse bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black pl-5 pr-4 py-3 rounded-full btn-active text-sm flex items-center gap-2 whitespace-nowrap border border-white/40">
+      <span>🏆</span>
+      <span>Weiter zum Ranking</span>
+      <span class="text-base">→</span>
     </button>
   </div>
 
@@ -611,13 +625,13 @@
         temperature: "22°C - 24°C",
         romanceScore: "100% Amore ❤️",
         summerVibeScore: "9/10",
-        image: "https://images.unsplash.com/photo-1744993551783-15876865a783?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1744737037951-5739074ec785?auto=format&fit=crop&w=800&q=80",
         whyPerfect: "Romantik pur! Wir können tagsüber am Atlantikstrand liegen und abends bei warmem Licht durch verwinkelte Gassen schlendern.",
         secretTip: "Geheimtipp: Fahr raus zum Praia de Miramar – kleiner Sandstrand mit der berühmten Kapelle mitten im Meer, oft mit Beachvolleyball-Feldern und einem Traum-Sonnenuntergang.",
         highlights: "Bootstour auf dem Douro bei Sonnenuntergang, Weinprobe in den Kellern von Gaia und barfuß durch die Ribeira schlendern.",
         landmarkSlider: [
           { img: "https://images.unsplash.com/photo-1762294946283-6921938e9937?auto=format&fit=crop&w=400&q=80", text: "Die eiserne Ponte Dom Luís I überspannt majestätisch den Douro." },
-          { img: "https://images.unsplash.com/photo-1744737037951-5739074ec785?auto=format&fit=crop&w=400&q=80", text: "Bunte Fassaden und rote Ziegeldächer prägen das Ribeira-Viertel." },
+          { img: "https://images.unsplash.com/photo-1744993551783-15876865a783?auto=format&fit=crop&w=400&q=80", text: "Traumblick von der Ponte Dom Luís I über den Douro auf die Altstadt." },
           { img: "https://images.unsplash.com/photo-1532682908332-165811c1f832?auto=format&fit=crop&w=400&q=80", text: "Die weltberühmte Buchhandlung Livraria Lello verzaubert mit ihrer Architektur." }
         ],
         beachSlider: [
@@ -881,6 +895,35 @@
       }
     }
 
+    // --- FETT-HERVORHEBUNG EVOKATIVER SCHLÜSSELWÖRTER (Reiseportal-Feeling) ---
+    const EMPH_WORDS = [
+      'Traumstrand','Sandstrand','Stadtstrand','Sonnenuntergang','Sonnenaufgang','Meeresfrüchte',
+      'Streetfood','Altstadt','Promenade','kristallklar','kristallklarem','glasklares','glasklar',
+      'türkisem','türkiser','türkises','türkis','Hochsommer','Beachvolleyball','Flamingos',
+      'karibisch','karibisches','Portwein','Mittelmeer','Atlantik','Barock','schnorcheln',
+      'Bootstour','Cocktails','Tapas','Strände','Strand','Meer','Wein','Buchten','Bucht'
+    ].sort((a, b) => b.length - a.length);
+    const EMPH_RE = new RegExp('\\b(' + EMPH_WORDS.join('|') + ')\\b', 'g');
+    function emphasize(text) {
+      const safe = String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return safe.replace(EMPH_RE, '<strong class="font-black text-gray-900">$1</strong>');
+    }
+
+    // --- PREMIUM-REISEKARTEN FÜR DIE BILDER-SLIDER ---
+    function renderSlider(el, items, tagLabel, tagClass) {
+      el.innerHTML = items.map(item => `
+        <div class="w-60 flex-shrink-0 rounded-2xl overflow-hidden bg-white shadow-md ring-1 ring-black/5 flex flex-col transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl">
+          <div class="relative h-32 overflow-hidden">
+            <img src="${item.img}" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent"></div>
+            <span class="absolute top-2 left-2 text-[9px] font-black uppercase tracking-wider text-white ${tagClass} px-2.5 py-1 rounded-full shadow">${tagLabel}</span>
+          </div>
+          <p class="p-3 text-xs font-bold text-gray-700 leading-snug flex-1">${item.text}</p>
+        </div>
+      `).join('');
+      el.scrollLeft = 0;
+    }
+
     // --- EXPLORER LOGIK & SLIDER RENDERING ---
     function renderCity() {
       const c = cities[currentCityIdx];
@@ -894,51 +937,17 @@
       document.getElementById('explore-vibe-score').innerText = c.summerVibeScore;
       document.getElementById('explore-romance').innerText = c.romanceScore;
       document.getElementById('explore-motto').innerText = c.motto;
-      document.getElementById('explore-why').innerText = c.whyPerfect;
-      document.getElementById('secret-box').innerText = c.secretTip;
-      document.getElementById('explore-highlights').innerText = c.highlights;
+      document.getElementById('explore-why').innerHTML = emphasize(c.whyPerfect);
+      document.getElementById('secret-box').innerHTML = emphasize(c.secretTip);
+      document.getElementById('explore-highlights').innerHTML = emphasize(c.highlights);
 
       document.getElementById('secret-box').classList.add('hidden');
       document.getElementById('secret-arrow').innerText = '▼';
 
-      // Render Visuellen Sehenswürdigkeiten Slider
-      const landmarkSlider = document.getElementById('slider-landmarks');
-      landmarkSlider.innerHTML = '';
-      c.landmarkSlider.forEach(item => {
-        landmarkSlider.innerHTML += `
-          <div class="w-60 flex-shrink-0 bg-white/90 rounded-2xl overflow-hidden border border-white shadow-sm flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
-            <img src="${item.img}" class="w-full h-28 object-cover">
-            <p class="p-2.5 text-xs font-bold text-gray-800 leading-tight">${item.text}</p>
-          </div>
-        `;
-      });
-      landmarkSlider.scrollLeft = 0;
-
-      // Render Visuellen Strand Slider
-      const beachSlider = document.getElementById('slider-beach');
-      beachSlider.innerHTML = '';
-      c.beachSlider.forEach(item => {
-        beachSlider.innerHTML += `
-          <div class="w-60 flex-shrink-0 bg-white/90 rounded-2xl overflow-hidden border border-white shadow-sm flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
-            <img src="${item.img}" class="w-full h-28 object-cover">
-            <p class="p-2.5 text-xs font-bold text-gray-800 leading-tight">${item.text}</p>
-          </div>
-        `;
-      });
-      beachSlider.scrollLeft = 0;
-
-      // Render Visuellen Food Slider
-      const foodSlider = document.getElementById('slider-food');
-      foodSlider.innerHTML = '';
-      c.foodSlider.forEach(item => {
-        foodSlider.innerHTML += `
-          <div class="w-60 flex-shrink-0 bg-white/90 rounded-2xl overflow-hidden border border-white shadow-sm flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
-            <img src="${item.img}" class="w-full h-28 object-cover">
-            <p class="p-2.5 text-xs font-bold text-gray-800 leading-tight">${item.text}</p>
-          </div>
-        `;
-      });
-      foodSlider.scrollLeft = 0;
+      // Premium-Reisekarten je Kategorie rendern
+      renderSlider(document.getElementById('slider-landmarks'), c.landmarkSlider, 'Sehenswürdigkeit', 'bg-violet-500');
+      renderSlider(document.getElementById('slider-beach'), c.beachSlider, 'Strand & Meer', 'bg-sky-500');
+      renderSlider(document.getElementById('slider-food'), c.foodSlider, 'Kulinarik', 'bg-amber-500');
 
       if (viewedCities.size === cities.length) {
         document.getElementById('viewed-status').innerText = "🌟 Alle entdeckt!";
@@ -1526,10 +1535,10 @@
 
       function fitFontSize(text, maxWidth, startSize, weight) {
         let size = startSize;
-        ctx.font = `${weight} ${size}px -apple-system, BlinkMacSystemFont, sans-serif`;
+        ctx.font = `${weight} ${size}px Arial, Helvetica, sans-serif`;
         while (ctx.measureText(text).width > maxWidth && size > 9) {
           size -= 1;
-          ctx.font = `${weight} ${size}px -apple-system, BlinkMacSystemFont, sans-serif`;
+          ctx.font = `${weight} ${size}px Arial, Helvetica, sans-serif`;
         }
       }
 
@@ -1728,7 +1737,7 @@
       // Kopf-Badge
       ctx.textAlign = 'center';
       const badgeText = '☀️ TAMLYNS SOMMER TRIP';
-      ctx.font = '800 34px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.font = '800 34px Arial, Helvetica, sans-serif';
       const badgeW = ctx.measureText(badgeText).width + 70;
       ctx.fillStyle = 'rgba(0,0,0,0.35)';
       roundRectPath(ctx, cx - badgeW / 2, 70, badgeW, 74, 37);
@@ -1737,7 +1746,7 @@
       ctx.fillText(badgeText, cx, 118);
 
       if (!photoDrawn) {
-        ctx.font = '900 160px -apple-system, sans-serif';
+        ctx.font = '900 160px Arial, Helvetica, sans-serif';
         ctx.fillText('✈️', cx, 750);
       }
 
@@ -1745,18 +1754,18 @@
       ctx.shadowColor = 'rgba(0,0,0,0.4)';
       ctx.shadowBlur = 20;
       ctx.fillStyle = '#ffffff';
-      ctx.font = '900 98px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.font = '900 98px Arial, Helvetica, sans-serif';
       ctx.fillText(topCity.city, cx, 1350);
       ctx.shadowBlur = 0;
 
-      ctx.font = '700 40px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.font = '700 40px Arial, Helvetica, sans-serif';
       ctx.fillText(topCity.country, cx, 1408);
 
       // Trenn-Sternchen
-      ctx.font = '600 30px -apple-system, sans-serif';
+      ctx.font = '600 30px Arial, Helvetica, sans-serif';
       ctx.fillText('✨ ✨ ✨', cx, 1460);
 
-      ctx.font = '600 36px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.font = '600 36px Arial, Helvetica, sans-serif';
       ctx.fillText((selectedDate || '').split(' (')[0], cx, 1525);
 
       // Zwei Info-Chips nebeneinander (Wetter & Vibe)
@@ -1765,7 +1774,7 @@
         { text: `☀️ ${topCity.temperature}` },
         { text: `${topCity.romanceScore}` }
       ];
-      ctx.font = '700 30px -apple-system, sans-serif';
+      ctx.font = '700 30px Arial, Helvetica, sans-serif';
       const paddings = chips.map(c => ctx.measureText(c.text).width + 60);
       const totalW = paddings[0] + paddings[1] + 24;
       let chipX = cx - totalW / 2;
@@ -1783,11 +1792,11 @@
       });
 
       const days = daysUntilDateString(selectedDate || '');
-      ctx.font = '800 46px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.font = '800 46px Arial, Helvetica, sans-serif';
       ctx.fillStyle = '#ffffff';
       ctx.fillText(days !== null && days >= 0 ? `⏳ Noch ${days} Tage!` : '🎉 Wir freuen uns riesig!', cx, 1750);
 
-      ctx.font = '600 30px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.font = '600 30px Arial, Helvetica, sans-serif';
       ctx.fillText('26. Geburtstag Special ❤️', cx, 1830);
 
       downloadCanvas(canvas, `tamlyns-sommer-trip-${topCity.id}.png`);
@@ -1909,35 +1918,35 @@
         // Kopfzeile
         ctx.fillStyle = '#fff';
         ctx.textAlign = 'left';
-        ctx.font = '900 34px -apple-system, sans-serif';
+        ctx.font = '900 34px Arial, Helvetica, sans-serif';
         ctx.fillText('✈️ TAMLYN AIRWAYS', 60, 90);
         ctx.textAlign = 'right';
-        ctx.font = '700 18px -apple-system, sans-serif';
+        ctx.font = '700 18px Arial, Helvetica, sans-serif';
         ctx.fillText('BOARDING PASS', stubX - 60, 90);
 
         // Von / Nach
         ctx.textAlign = 'left';
-        ctx.font = '600 16px -apple-system, sans-serif';
+        ctx.font = '600 16px Arial, Helvetica, sans-serif';
         ctx.fillStyle = 'rgba(255,255,255,0.6)';
         ctx.fillText('VON', 60, 220);
         ctx.fillStyle = '#fff';
-        ctx.font = '900 64px -apple-system, sans-serif';
+        ctx.font = '900 64px Arial, Helvetica, sans-serif';
         ctx.fillText(flight.fromCode, 60, 285);
-        ctx.font = '600 20px -apple-system, sans-serif';
+        ctx.font = '600 20px Arial, Helvetica, sans-serif';
         ctx.fillText(fromCity, 60, 315);
 
         ctx.textAlign = 'right';
         ctx.fillStyle = 'rgba(255,255,255,0.6)';
-        ctx.font = '600 16px -apple-system, sans-serif';
+        ctx.font = '600 16px Arial, Helvetica, sans-serif';
         ctx.fillText('NACH', stubX - 60, 220);
         ctx.fillStyle = '#fff';
-        ctx.font = '900 64px -apple-system, sans-serif';
+        ctx.font = '900 64px Arial, Helvetica, sans-serif';
         ctx.fillText(toCode, stubX - 60, 285);
-        ctx.font = '600 20px -apple-system, sans-serif';
+        ctx.font = '600 20px Arial, Helvetica, sans-serif';
         ctx.fillText(toCity, stubX - 60, 315);
 
         ctx.textAlign = 'center';
-        ctx.font = '600 16px -apple-system, sans-serif';
+        ctx.font = '600 16px Arial, Helvetica, sans-serif';
         ctx.fillStyle = 'rgba(255,255,255,0.7)';
         ctx.fillText('✈️', (60 + stubX - 60) / 2, 240);
         ctx.fillText('TL 2607', (60 + stubX - 60) / 2, 300);
@@ -1945,20 +1954,20 @@
         // Passagier
         ctx.textAlign = 'left';
         ctx.fillStyle = 'rgba(255,255,255,0.6)';
-        ctx.font = '600 16px -apple-system, sans-serif';
+        ctx.font = '600 16px Arial, Helvetica, sans-serif';
         ctx.fillText('PASSAGIER', 60, 460);
         ctx.fillStyle = '#fff';
-        ctx.font = '900 42px -apple-system, sans-serif';
+        ctx.font = '900 42px Arial, Helvetica, sans-serif';
         ctx.fillText('TAMLYN ❤️', 60, 510);
 
         // Datum / Abflug / Gate / Sitz
         const gridY = 640, gridLabelY = gridY - 30, cols = [60, 400, 740, 980];
         const gridLabels = ['DATUM', 'ABFLUG', 'GATE', 'SITZ'];
         const gridValues = [flight.date, flight.time, '❤ 7', '1A VIP'];
-        ctx.font = '600 15px -apple-system, sans-serif';
+        ctx.font = '600 15px Arial, Helvetica, sans-serif';
         ctx.fillStyle = 'rgba(255,255,255,0.5)';
         gridLabels.forEach((l, i) => ctx.fillText(l, cols[i], gridLabelY));
-        ctx.font = '800 26px -apple-system, sans-serif';
+        ctx.font = '800 26px Arial, Helvetica, sans-serif';
         ctx.fillStyle = '#fff';
         gridValues.forEach((v, i) => ctx.fillText(v, cols[i], gridY));
 
@@ -1978,17 +1987,17 @@
         // Stub (Abriss-Teil)
         ctx.textAlign = 'center';
         ctx.fillStyle = 'rgba(255,255,255,0.6)';
-        ctx.font = '600 15px -apple-system, sans-serif';
+        ctx.font = '600 15px Arial, Helvetica, sans-serif';
         ctx.fillText('BOARDING', (stubX + canvas.width) / 2, 120);
         ctx.fillStyle = '#fff';
-        ctx.font = '900 48px -apple-system, sans-serif';
+        ctx.font = '900 48px Arial, Helvetica, sans-serif';
         ctx.fillText(toCode, (stubX + canvas.width) / 2, 200);
 
         for (let x = stubX + 60; x < canvas.width - 60; x += 6) {
           ctx.fillRect(x, 380, 3, 140);
         }
 
-        ctx.font = '600 14px -apple-system, sans-serif';
+        ctx.font = '600 14px Arial, Helvetica, sans-serif';
         ctx.fillStyle = 'rgba(255,255,255,0.5)';
         ctx.fillText('❤ VIP-TICKET', (stubX + canvas.width) / 2, 590);
 
