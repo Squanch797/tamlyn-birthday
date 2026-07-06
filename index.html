@@ -289,65 +289,67 @@
 
         <div class="p-5 md:p-6 flex-1 flex flex-col justify-between space-y-4">
           
-          <div class="grid grid-cols-2 gap-2 bg-white/70 p-3.5 rounded-2xl border border-white text-center shadow-sm">
-            <div class="border-r border-gray-200">
-              <span class="text-[11px] font-bold text-gray-400 block uppercase">Wetter im Sept.</span>
+          <!-- Motto als zentrales Zitat -->
+          <p id="explore-motto" class="text-xl font-black text-gray-900 text-center leading-snug px-1"></p>
+
+          <!-- Kennzahlen als iOS-Segment-Zeile -->
+          <div class="flex bg-white/80 rounded-2xl border border-white shadow-sm overflow-hidden">
+            <div class="flex-1 py-2.5 px-2 text-center">
+              <span class="text-[10px] font-semibold text-gray-400 block uppercase tracking-wide mb-0.5">☀️ Wetter</span>
               <span id="explore-temp" class="text-sm font-black text-gray-800"></span>
             </div>
-            <div>
-              <span class="text-[11px] font-bold text-gray-400 block uppercase">Pärchen-Faktor</span>
+            <div class="w-px bg-gray-200 my-2.5"></div>
+            <div class="flex-1 py-2.5 px-2 text-center">
+              <span class="text-[10px] font-semibold text-gray-400 block uppercase tracking-wide mb-0.5">❤️ Pärchen-Faktor</span>
               <span id="explore-romance" class="text-sm font-black text-rose-500"></span>
             </div>
           </div>
 
-          <div class="bg-gradient-to-r from-pink-500/10 to-amber-500/10 rounded-2xl p-3.5 border border-pink-200">
-            <p id="explore-motto" class="text-base font-black text-gray-900 text-center"></p>
-          </div>
-
-          <div class="bg-rose-50/80 p-3.5 rounded-2xl border border-rose-100">
-            <span class="text-[11px] font-extrabold text-rose-600 uppercase tracking-widest block mb-1 flex items-center gap-1">
-              <span>❤️ Warum das perfekt für uns ist:</span>
-            </span>
-            <p id="explore-why" class="text-sm font-semibold text-gray-800 leading-relaxed"></p>
+          <!-- Grouped-Inset-Karte (iOS-Einstellungen-Stil): Warum + Erlebnisse -->
+          <div class="bg-white/85 rounded-2xl border border-white shadow-sm overflow-hidden">
+            <div class="p-4">
+              <span class="text-[11px] font-bold text-rose-500 uppercase tracking-wide block mb-1">Warum das perfekt für uns ist</span>
+              <p id="explore-why" class="text-sm font-medium text-gray-700 leading-relaxed"></p>
+            </div>
+            <div class="h-px bg-gray-100 mx-4"></div>
+            <div class="p-4">
+              <span class="text-[11px] font-bold text-amber-500 uppercase tracking-wide block mb-1">🔥 Top-Erlebnisse für uns</span>
+              <p id="explore-highlights" class="text-sm font-medium text-gray-700 leading-relaxed"></p>
+            </div>
           </div>
 
           <div class="no-swipe">
-            <span class="text-xs font-black text-purple-600 uppercase tracking-wider block mb-2 flex items-center justify-between">
-              <span>🏛️ Top-Sehenswürdigkeiten</span>
-              <span class="text-[10px] text-gray-400 font-normal">👉 In Bildern scrollen</span>
-            </span>
+            <div class="flex items-center justify-between mb-2 px-0.5">
+              <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">🏛️ Sehenswürdigkeiten</span>
+              <span class="text-[10px] text-gray-300 font-medium">wischen &rarr;</span>
+            </div>
             <div id="slider-landmarks" class="flex overflow-x-auto gap-3 no-scrollbar drag-scroll pb-1 pt-0.5"></div>
           </div>
 
           <div class="no-swipe">
-            <span class="text-xs font-black text-blue-500 uppercase tracking-wider block mb-2 flex items-center justify-between">
-              <span>🌊 Sommer & Strand-Vibe</span>
-              <span class="text-[10px] text-gray-400 font-normal">👉 In Bildern scrollen</span>
-            </span>
+            <div class="flex items-center justify-between mb-2 px-0.5">
+              <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">🌊 Sommer & Strand</span>
+              <span class="text-[10px] text-gray-300 font-medium">wischen &rarr;</span>
+            </div>
             <div id="slider-beach" class="flex overflow-x-auto gap-3 no-scrollbar drag-scroll pb-1 pt-0.5"></div>
           </div>
 
           <div class="no-swipe">
-            <span class="text-xs font-black text-amber-600 uppercase tracking-wider block mb-2 flex items-center justify-between">
-              <span>🍷 Kulinarik & Genuss</span>
-              <span class="text-[10px] text-gray-400 font-normal">👉 In Bildern scrollen</span>
-            </span>
+            <div class="flex items-center justify-between mb-2 px-0.5">
+              <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">🍷 Kulinarik & Genuss</span>
+              <span class="text-[10px] text-gray-300 font-medium">wischen &rarr;</span>
+            </div>
             <div id="slider-food" class="flex overflow-x-auto gap-3 no-scrollbar drag-scroll pb-1 pt-0.5"></div>
           </div>
 
           <div class="no-swipe">
-            <button onclick="toggleSecret()" class="w-full bg-gradient-to-r from-purple-500/10 to-indigo-500/10 hover:from-purple-500/20 hover:to-indigo-500/20 border border-purple-200 p-3 rounded-2xl text-left transition flex items-center justify-between">
-              <span class="text-xs font-black text-purple-700 flex items-center gap-1.5">
-                <span>🎁 Klick für Simons Geheimtipp</span>
+            <button onclick="toggleSecret()" class="w-full bg-white/85 border border-white shadow-sm p-4 rounded-2xl text-left transition flex items-center justify-between active:scale-[0.98]">
+              <span class="text-sm font-bold text-gray-800 flex items-center gap-2">
+                <span>🎁</span><span>Simons Geheimtipp</span>
               </span>
-              <span id="secret-arrow" class="text-xs font-bold text-purple-600">▼</span>
+              <span id="secret-arrow" class="text-xs font-bold text-gray-300">▼</span>
             </button>
-            <div id="secret-box" class="hidden mt-2 bg-purple-50/80 p-3.5 rounded-2xl border border-purple-100 text-sm font-medium text-gray-700 leading-relaxed"></div>
-          </div>
-
-          <div class="bg-white/60 p-3.5 rounded-2xl border border-white no-swipe">
-            <span class="text-[11px] font-bold text-gray-400 uppercase tracking-wider block mb-1">🔥 Top-Erlebnisse für uns:</span>
-            <p id="explore-highlights" class="text-sm font-bold text-gray-800 leading-relaxed"></p>
+            <div id="secret-box" class="hidden mt-2 bg-purple-50/70 p-4 rounded-2xl border border-purple-100 text-sm font-medium text-gray-700 leading-relaxed"></div>
           </div>
 
           <div class="pt-2 no-swipe">
@@ -1275,11 +1277,8 @@
 
     function updateVibeButtons() {
       document.querySelectorAll('.vibe-btn').forEach(btn => {
-        if (btn.innerText.includes(selectedVibe.split(' ')[0])) {
-          btn.className = "vibe-btn border-2 border-pink-500 bg-pink-50 text-pink-600 p-4 rounded-2xl text-center text-xs font-black transition btn-active shadow-md";
-        } else {
-          btn.className = "vibe-btn border-2 border-gray-200 bg-white/80 text-gray-800 p-4 rounded-2xl text-center text-xs font-black transition btn-active";
-        }
+        const selected = btn.innerText.includes(selectedVibe.split(' ')[0]);
+        btn.className = `vibe-btn border-2 p-4 rounded-3xl text-center transition btn-active flex flex-col items-center gap-1.5 ${selected ? 'border-pink-500 bg-pink-50 text-pink-600 shadow-md' : 'border-gray-200 bg-white/80 text-gray-800'}`;
       });
     }
 
