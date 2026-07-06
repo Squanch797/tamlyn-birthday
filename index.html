@@ -1734,70 +1734,53 @@
         photoDrawn = true;
       } catch (e) { /* Bild konnte nicht geladen werden, weiter ohne Foto */ }
 
-      // Kopf-Badge
+      // --- ALLE TEXTE STRIKT ZENTRIERT, OHNE measureText (iOS-sicher) ---
       ctx.textAlign = 'center';
-      const badgeText = '☀️ TAMLYNS SOMMER TRIP';
-      ctx.font = '800 34px Arial, Helvetica, sans-serif';
-      const badgeW = ctx.measureText(badgeText).width + 70;
-      ctx.fillStyle = 'rgba(0,0,0,0.35)';
-      roundRectPath(ctx, cx - badgeW / 2, 70, badgeW, 74, 37);
+      ctx.textBaseline = 'alphabetic';
+
+      // Kopf-Band (feste Breite, unabhängig von der Textbreite)
+      const bandW = 780, bandH = 84;
+      ctx.fillStyle = 'rgba(0,0,0,0.38)';
+      roundRectPath(ctx, cx - bandW / 2, 72, bandW, bandH, 42);
       ctx.fill();
       ctx.fillStyle = '#ffffff';
-      ctx.fillText(badgeText, cx, 118);
+      ctx.font = '800 36px Arial, Helvetica, sans-serif';
+      ctx.fillText('☀️ TAMLYNS SOMMER TRIP', cx, 128);
 
       if (!photoDrawn) {
         ctx.font = '900 160px Arial, Helvetica, sans-serif';
-        ctx.fillText('✈️', cx, 750);
+        ctx.fillText('✈️', cx, 760);
       }
 
       // Stadtname mit weichem Schatten
       ctx.shadowColor = 'rgba(0,0,0,0.4)';
       ctx.shadowBlur = 20;
       ctx.fillStyle = '#ffffff';
-      ctx.font = '900 98px Arial, Helvetica, sans-serif';
-      ctx.fillText(topCity.city, cx, 1350);
+      ctx.font = '900 100px Arial, Helvetica, sans-serif';
+      ctx.fillText(topCity.city, cx, 1332);
       ctx.shadowBlur = 0;
 
-      ctx.font = '700 40px Arial, Helvetica, sans-serif';
-      ctx.fillText(topCity.country, cx, 1408);
+      ctx.font = '700 42px Arial, Helvetica, sans-serif';
+      ctx.fillText(topCity.country, cx, 1392);
 
-      // Trenn-Sternchen
       ctx.font = '600 30px Arial, Helvetica, sans-serif';
-      ctx.fillText('✨ ✨ ✨', cx, 1460);
+      ctx.fillText('✨ ✨ ✨', cx, 1448);
 
-      ctx.font = '600 36px Arial, Helvetica, sans-serif';
-      ctx.fillText((selectedDate || '').split(' (')[0], cx, 1525);
+      ctx.font = '700 38px Arial, Helvetica, sans-serif';
+      ctx.fillText((selectedDate || '').split(' (')[0], cx, 1514);
 
-      // Zwei Info-Chips nebeneinander (Wetter & Vibe)
-      const chipY = 1580, chipH = 74;
-      const chips = [
-        { text: `☀️ ${topCity.temperature}` },
-        { text: `${topCity.romanceScore}` }
-      ];
-      ctx.font = '700 30px Arial, Helvetica, sans-serif';
-      const paddings = chips.map(c => ctx.measureText(c.text).width + 60);
-      const totalW = paddings[0] + paddings[1] + 24;
-      let chipX = cx - totalW / 2;
-      chips.forEach((c, i) => {
-        ctx.fillStyle = 'rgba(255,255,255,0.18)';
-        roundRectPath(ctx, chipX, chipY, paddings[i], chipH, chipH / 2);
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-        ctx.lineWidth = 2;
-        roundRectPath(ctx, chipX, chipY, paddings[i], chipH, chipH / 2);
-        ctx.stroke();
-        ctx.fillStyle = '#fff';
-        ctx.fillText(c.text, chipX + paddings[i] / 2, chipY + chipH / 2 + 11);
-        chipX += paddings[i] + 24;
-      });
+      // Wetter & Pärchen-Faktor als eine zentrierte Zeile (keine gemessenen Chips)
+      ctx.font = '700 32px Arial, Helvetica, sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,0.95)';
+      ctx.fillText(`☀️ ${topCity.temperature}   •   ${topCity.romanceScore}`, cx, 1588);
 
       const days = daysUntilDateString(selectedDate || '');
-      ctx.font = '800 46px Arial, Helvetica, sans-serif';
+      ctx.font = '800 48px Arial, Helvetica, sans-serif';
       ctx.fillStyle = '#ffffff';
-      ctx.fillText(days !== null && days >= 0 ? `⏳ Noch ${days} Tage!` : '🎉 Wir freuen uns riesig!', cx, 1750);
+      ctx.fillText(days !== null && days >= 0 ? `⏳ Noch ${days} Tage!` : '🎉 Wir freuen uns riesig!', cx, 1700);
 
-      ctx.font = '600 30px Arial, Helvetica, sans-serif';
-      ctx.fillText('26. Geburtstag Special ❤️', cx, 1830);
+      ctx.font = '600 32px Arial, Helvetica, sans-serif';
+      ctx.fillText('26. Geburtstag Special ❤️', cx, 1786);
 
       downloadCanvas(canvas, `tamlyns-sommer-trip-${topCity.id}.png`);
     }
