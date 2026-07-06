@@ -84,6 +84,8 @@
     @keyframes overlayFade { from { opacity: 0; } to { opacity: 1; } }
     .overlay-fade { animation: overlayFade 0.2s ease both; }
     .dodge-no { transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    @keyframes planeSpin360 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .plane-spinner { animation: planeSpin360 2.6s linear infinite; }
     @keyframes heartPop {
       0% { transform: translate(-50%,-50%) scale(0) rotate(-15deg); opacity: 0; }
       35% { transform: translate(-50%,-50%) scale(1.25) rotate(6deg); opacity: 1; }
@@ -217,7 +219,7 @@
   </header>
 
   <div id="view-loading" class="hidden fixed inset-0 z-50 bg-white/95 backdrop-blur-2xl flex flex-col items-center justify-center p-6 text-center">
-    <div class="w-24 h-24 bg-gradient-to-tr from-pink-500 to-amber-400 rounded-3xl flex items-center justify-center text-5xl shadow-2xl mb-6 animate-spin" style="animation-duration: 3s;">
+    <div class="w-24 h-24 bg-gradient-to-tr from-pink-500 to-amber-400 rounded-3xl flex items-center justify-center text-5xl shadow-2xl mb-6 plane-spinner">
       ✈️
     </div>
     <h3 class="text-2xl font-black text-gray-900 mb-2">Einen Moment, Tamlyn...</h3>
@@ -361,13 +363,6 @@
 
         </div>
       </div>
-
-      <div id="unlock-ranking-box" class="hidden fixed top-20 left-1/2 z-40 w-[calc(100%-2.5rem)] max-w-md no-swipe" style="transform: translateX(-50%);">
-        <button onclick="startAppWithLoading('ranking')" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black py-4 rounded-2xl btn-active animate-bounce text-base flex items-center justify-center space-x-2" style="box-shadow: 0 12px 40px -5px rgba(16,185,129,0.6), 0 0 0 4px rgba(255,255,255,0.5);">
-          <span>🏆 Alle entdeckt! Jetzt Städte ranken</span>
-          <span>➡️</span>
-        </button>
-      </div>
     </div>
 
     <div id="view-ranking" class="hidden my-2">
@@ -391,31 +386,43 @@
 
     <div id="view-select" class="hidden my-2">
       <div class="glass-card rounded-[36px] p-6 md:p-8 shadow-2xl">
-        <div class="text-center mb-6">
-          <span class="text-xs font-extrabold text-pink-500 uppercase tracking-widest block mb-1">Fast geschafft, Tamlyn!</span>
-          <h2 class="text-3xl font-black text-gray-900 mb-1">Wann & Wie? 📅</h2>
-          <p class="text-xs text-gray-500">Wähle das perfekte Datum für deinen Platz 1: <strong id="selected-rank1-name" class="text-pink-600 font-black"></strong></p>
+        <div class="text-center mb-7">
+          <span class="inline-block text-[11px] font-black text-white uppercase tracking-widest bg-gradient-to-r from-pink-500 to-amber-400 px-4 py-1.5 rounded-full mb-3 shadow-md">Fast geschafft, Tamlyn! 🎈</span>
+          <h2 class="text-3xl font-black text-gray-900 mb-2">Wann & Wie? 📅</h2>
+          <div class="inline-flex items-center gap-2 bg-white/70 border border-white rounded-full px-4 py-1.5 shadow-sm">
+            <span class="text-xs text-gray-500">Dein Platz 1:</span>
+            <strong id="selected-rank1-name" class="text-pink-600 font-black text-sm"></strong>
+          </div>
         </div>
 
-        <div class="mb-6">
-          <label class="text-xs font-extrabold uppercase tracking-widest text-gray-500 block mb-3">1. Wähle unser Reisedatum (Top Flugzeiten ab MUC/FMM):</label>
+        <div class="mb-7">
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-full bg-gray-900 text-white flex items-center justify-center text-xs font-black flex-shrink-0">1</span>
+            <span class="text-sm font-black text-gray-800">Wähle euer Reisedatum</span>
+          </div>
           <div id="select-date-list" class="space-y-3"></div>
         </div>
 
         <div class="mb-8">
-          <label class="text-xs font-extrabold uppercase tracking-widest text-gray-500 block mb-3">2. Welchen Hotel-Vibe wünschst du dir?</label>
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-7 h-7 rounded-full bg-gray-900 text-white flex items-center justify-center text-xs font-black flex-shrink-0">2</span>
+            <span class="text-sm font-black text-gray-800">Welcher Hotel-Vibe?</span>
+          </div>
           <div class="grid grid-cols-2 gap-3">
-            <button type="button" onclick="selectVibe('Boutique im Zentrum')" id="vibe-boutique" class="vibe-btn border-2 border-gray-200 p-4 rounded-2xl text-center text-xs font-black transition btn-active">
-              🏨 Boutique-Hotel mitten im Zentrum
+            <button type="button" onclick="selectVibe('Boutique im Zentrum')" id="vibe-boutique" class="vibe-btn border-2 border-gray-200 bg-white/80 p-4 rounded-3xl text-center transition btn-active flex flex-col items-center gap-1.5">
+              <span class="text-3xl">🏨</span>
+              <span class="text-xs font-black leading-tight">Boutique mitten im Zentrum</span>
             </button>
-            <button type="button" onclick="selectVibe('Chillig am Meer/Park')" id="vibe-beach" class="vibe-btn border-2 border-gray-200 p-4 rounded-2xl text-center text-xs font-black transition btn-active">
-              🌴 Chilliges Hotel am Meer/Park
+            <button type="button" onclick="selectVibe('Chillig am Meer/Park')" id="vibe-beach" class="vibe-btn border-2 border-gray-200 bg-white/80 p-4 rounded-3xl text-center transition btn-active flex flex-col items-center gap-1.5">
+              <span class="text-3xl">🌴</span>
+              <span class="text-xs font-black leading-tight">Chillig am Meer / Park</span>
             </button>
           </div>
         </div>
 
-        <button onclick="confirmAndSubmit()" class="w-full bg-black text-white font-black py-5 rounded-2xl shadow-xl hover:bg-gray-800 btn-active transition-all text-lg tracking-wide flex items-center justify-center space-x-2">
-          <span>Geschenk jetzt offiziell einloggen! 🎉</span>
+        <button onclick="confirmAndSubmit()" class="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white font-black py-5 rounded-2xl shadow-xl hover:opacity-95 btn-active transition-all text-lg tracking-wide flex items-center justify-center gap-2">
+          <span>Geschenk offiziell einloggen!</span>
+          <span class="text-2xl">🎉</span>
         </button>
       </div>
     </div>
@@ -584,6 +591,13 @@
 
   </div>
 
+  <div id="unlock-ranking-box" class="hidden fixed bottom-5 left-1/2 z-[60] w-[calc(100%-2.5rem)] max-w-md no-swipe" style="transform: translateX(-50%);">
+    <button onclick="startAppWithLoading('ranking')" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black py-4 rounded-2xl btn-active animate-bounce text-base flex items-center justify-center space-x-2" style="box-shadow: 0 12px 40px -5px rgba(16,185,129,0.6), 0 0 0 4px rgba(255,255,255,0.5);">
+      <span>🏆 Alle entdeckt! Jetzt Städte ranken</span>
+      <span>➡️</span>
+    </button>
+  </div>
+
   <script>
     // Die 6 Städte mit 3 separaten, geprüften Bild-Slidern, echten Wahrzeichen, echten lokalen Stränden/Foods und interaktiven Geheimtipps!
     const cities = [
@@ -684,35 +698,35 @@
         ]
       },
       {
-        id: "rom",
-        city: "Rom",
+        id: "palermo",
+        city: "Palermo",
         country: "Italien 🇮🇹",
-        motto: "La Dolce Vita & Ewige Liebe",
-        temperature: "24°C - 26°C",
-        romanceScore: "100% Amore ❤️",
-        summerVibeScore: "8/10",
-        image: "https://images.unsplash.com/photo-1509024644558-2f56ce76c490?auto=format&fit=crop&w=800&q=80",
-        whyPerfect: "Ein absolutes Bucket-List-Ziel! Wir genießen das italienische Lebensgefühl, essen die beste Pasta der Welt und werfen eine Münze in den Trevi-Brunnen.",
-        secretTip: "Geheimtipp: Der Giardino degli Aranci auf dem Aventin bietet einen der schönsten Sonnenuntergangsblicke über Rom – direkt nebenan siehst du durchs berühmte Schlüsselloch die Kuppel des Petersdoms perfekt gerahmt.",
-        highlights: "Abendspaziergang zum Kolosseum, Aperitivo auf der Piazza Navona und Gelato-Tour durch Trastevere.",
+        motto: "Sizilianische Dolce Vita am Meer",
+        temperature: "27°C - 29°C",
+        romanceScore: "100% Bella Vita ❤️",
+        summerVibeScore: "10/10",
+        image: "https://images.unsplash.com/photo-1568222072587-353613cf4297?auto=format&fit=crop&w=800&q=80",
+        whyPerfect: "Das Beste aus beiden Welten: türkiser Stadtstrand Mondello, die verwinkelte Altstadt voller Barock – und das wohl beste Streetfood Italiens. Sizilianisches Lebensgefühl pur!",
+        secretTip: "Geheimtipp: Fahr mit dem Boot oder Bus raus nach Mondello und schnorchel in der Bucht unterm Monte Pellegrino – abends dann frische Meeresfrüchte direkt an der Strandpromenade.",
+        highlights: "Baden in Mondello, Streetfood-Tour über den Ballarò-Markt und Sonnenuntergang vom Monte Pellegrino.",
         landmarkSlider: [
-          { img: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=400&q=80", text: "Das antike Kolosseum in stiller Morgendämmerung." },
-          { img: "https://images.unsplash.com/photo-1764947810288-079f2cb6f419?auto=format&fit=crop&w=400&q=80", text: "Münzwurf am legendären Trevi-Brunnen bei Dämmerlicht." },
-          { img: "https://images.unsplash.com/photo-1742161052819-82040e7b11f0?auto=format&fit=crop&w=400&q=80", text: "Die imposante Kuppel des Petersdoms im Vatikan." }
+          { img: "https://images.unsplash.com/photo-1541777490254-a50eb9045486?auto=format&fit=crop&w=400&q=80", text: "Piazza Pretoria – der barocke Brunnen im Herzen Palermos." },
+          { img: "https://images.unsplash.com/photo-1749835059724-82154b0d8573?auto=format&fit=crop&w=400&q=80", text: "Teatro Massimo – Italiens größtes Opernhaus." },
+          { img: "https://images.unsplash.com/photo-1708710015201-f3186c2a8edc?auto=format&fit=crop&w=400&q=80", text: "Cefalù – malerisches Küstenstädtchen bei Palermo." }
         ],
         beachSlider: [
-          { img: "https://images.unsplash.com/photo-1600436728014-bbbb1dc65515?auto=format&fit=crop&w=400&q=80", text: "Lido di Ostia: Roms Sandstrand für laue Sommertage." },
-          { img: "https://images.unsplash.com/photo-1516961412704-d6726cf53803?auto=format&fit=crop&w=400&q=80", text: "Aperol Spritz zum römischen Sommerabend-Aperitivo." },
-          { img: "https://images.unsplash.com/photo-1718845643799-9a44658c7a90?auto=format&fit=crop&w=400&q=80", text: "Ruderboot-Idylle in den grünen Gärten der Villa Borghese." }
+          { img: "https://images.unsplash.com/photo-1751379297444-0a392c84eb8c?auto=format&fit=crop&w=400&q=80", text: "Mondello – Palermos türkiser Stadtstrand mit Sonnenschirmen." },
+          { img: "https://images.unsplash.com/photo-1618048558171-8c9edde77055?auto=format&fit=crop&w=400&q=80", text: "Kristallklares Wasser an der Küste des Monte Pellegrino." },
+          { img: "https://images.unsplash.com/photo-1524942434100-2b3f200f5b40?auto=format&fit=crop&w=400&q=80", text: "Goldener Strand von Cefalù am Tyrrhenischen Meer." }
         ],
         foodSlider: [
-          { img: "https://images.unsplash.com/photo-1755594461640-b800c6bafdfa?auto=format&fit=crop&w=400&q=80", text: "Cremige Spaghetti Carbonara, ein römischer Klassiker." },
-          { img: "https://images.unsplash.com/photo-1694444399201-a5680e376313?auto=format&fit=crop&w=400&q=80", text: "Knusprige Pizza frisch aus dem Holzofen." },
-          { img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=400&q=80", text: "Süßer Abschluss: cremiges Tiramisu mit Kakaopulver." }
+          { img: "https://images.unsplash.com/photo-1751199393301-1fcbd21bd34d?auto=format&fit=crop&w=400&q=80", text: "Arancini – knusprige Reisbällchen, Siziliens Streetfood-Klassiker." },
+          { img: "https://images.unsplash.com/photo-1749767138348-2e5bf1cbcef2?auto=format&fit=crop&w=400&q=80", text: "Cannoli – knusprige Röllchen mit süßer Ricotta." },
+          { img: "https://images.unsplash.com/photo-1673442635965-34f1b36d8944?auto=format&fit=crop&w=400&q=80", text: "Sizilianische Pasta mit frischem Tomatensugo." }
         ],
         dates: [
-          { label: "Do, 17.09. - So, 20.09. (ab München, 1 Urlaubstag)", out: "MUC → FCO · Do 17.09., 10:15 – 11:50 Uhr (LH1872)", back: "FCO → MUC · So 20.09., 15:55 – 17:30 Uhr (LH1869)" },
-          { label: "Do, 24.09. - So, 27.09. (ab München, 1 Urlaubstag)", out: "MUC → FCO · Do 24.09., 10:15 – 11:50 Uhr (LH1872)", back: "FCO → MUC · So 27.09., 15:55 – 17:30 Uhr (LH1869)" }
+          { label: "Do, 24.09. - So, 27.09. (Ryanair FMM, 1 Urlaubstag)", out: "FMM → PMO · Do 24.09., 12:15 – 14:10 Uhr", back: "PMO → FMM · So 27.09., 15:45 – 17:40 Uhr" },
+          { label: "Do, 17.09. - So, 20.09. (Ryanair FMM, 1 Urlaubstag)", out: "FMM → PMO · Do 17.09., 12:15 – 14:10 Uhr", back: "PMO → FMM · So 20.09., 15:45 – 17:40 Uhr" }
         ]
       },
       {
@@ -836,6 +850,14 @@
       void target.offsetWidth; // Reflow erzwingen, damit die Animation jedes Mal neu startet
       target.classList.add('view-enter');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Der schwebende "Weiter zum Ranking"-Button gehört nur zur Explore-Ansicht
+      const unlockBox = document.getElementById('unlock-ranking-box');
+      if (viewId !== 'explore' || viewedCities.size < cities.length) {
+        unlockBox.classList.add('hidden');
+      } else {
+        unlockBox.classList.remove('hidden');
+      }
 
       if (viewId === 'explore') renderCity();
       if (viewId === 'ranking') renderRanking();
@@ -1218,15 +1240,20 @@
       topCity.dates.forEach((d, idx) => {
         const btn = document.createElement('button');
         btn.type = "button";
-        btn.className = `w-full border-2 p-4 rounded-2xl text-left text-sm font-bold transition btn-active ${selectedDate === d.label ? 'border-pink-500 bg-pink-50 text-pink-600 shadow-md' : 'border-gray-200 bg-white/80 text-gray-800'}`;
+        const sel = selectedDate === d.label;
+        btn.className = `w-full border-2 p-4 rounded-3xl text-left text-sm font-bold transition btn-active ${sel ? 'border-pink-500 bg-pink-50 text-pink-600 shadow-md' : 'border-gray-200 bg-white/80 text-gray-800'}`;
         btn.innerHTML = `
           <div class="flex justify-between items-center mb-2">
-            <span>📅 ${d.label}</span>
-            <span class="text-xs bg-white px-3 py-1 rounded-full border border-gray-200 text-gray-600 flex-shrink-0 ml-2">Option ${idx + 1}</span>
+            <div class="flex items-center gap-2.5">
+              <span class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 border-2 ${sel ? 'border-pink-500 bg-pink-500 text-white' : 'border-gray-300 text-transparent'}">✓</span>
+              <span>📅 ${d.label.split(' (')[0]}</span>
+            </div>
+            <span class="text-[10px] font-black uppercase tracking-wide bg-white px-2.5 py-1 rounded-full border border-gray-200 text-gray-500 flex-shrink-0 ml-2">Option ${idx + 1}</span>
           </div>
-          <div class="text-[11px] font-semibold text-gray-500 space-y-0.5 border-t border-gray-200 pt-2">
-            <div>🛫 Hinflug: ${d.out}</div>
-            <div>🛬 Rückflug: ${d.back}</div>
+          <div class="text-[11px] font-semibold text-gray-500 space-y-1 border-t ${sel ? 'border-pink-200' : 'border-gray-200'} pt-2.5 mt-1">
+            <div class="flex items-center gap-1.5"><span>🛫</span><span>${d.out}</span></div>
+            <div class="flex items-center gap-1.5"><span>🛬</span><span>${d.back}</span></div>
+            <div class="text-[10px] text-gray-400 pt-0.5">${d.label.includes('(') ? d.label.split('(')[1].replace(')','') : ''}</div>
           </div>
         `;
         btn.onclick = () => {
@@ -1257,7 +1284,7 @@
     }
 
     // --- LUSTIGE "BIST DU DIR SICHER?"-BESTÄTIGUNG VOR DEM FINALEN ABSCHICKEN ---
-    function showConfirmModal(text, buttonText, onConfirm, dodgeNoText) {
+    function showConfirmModal(text, buttonText, onConfirm, dodgeNoText, teaser) {
       const overlay = document.createElement('div');
       overlay.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-[100] flex items-center justify-center p-6 overlay-fade';
       overlay.innerHTML = `
@@ -1265,6 +1292,7 @@
           <p class="text-lg font-black text-gray-900 mb-6">${text}</p>
           <button class="yes-btn w-full bg-gradient-to-r from-pink-500 to-amber-500 text-white font-black py-3.5 rounded-2xl btn-active shadow-lg"></button>
           ${dodgeNoText ? `<button class="no-btn dodge-no mt-3 text-sm font-bold text-gray-400 px-5 py-2 rounded-2xl border border-gray-200 bg-white/70">${dodgeNoText}</button>` : ''}
+          ${teaser ? `<p class="teaser-hint text-[11px] font-bold text-pink-500 mt-3 animate-pulse">${teaser}</p>` : ''}
         </div>
       `;
       const btn = overlay.querySelector('.yes-btn');
@@ -1290,9 +1318,13 @@
           if (dodges >= 5) noBtn.innerText = 'Gib auf! 🙈';
           if (navigator.vibrate) navigator.vibrate(8);
         };
-        noBtn.addEventListener('mouseenter', dodge);
-        noBtn.addEventListener('click', e => { e.preventDefault(); dodge(); });
-        noBtn.addEventListener('touchstart', e => { e.preventDefault(); dodge(); }, { passive: false });
+        const hideTeaser = () => {
+          const t = overlay.querySelector('.teaser-hint');
+          if (t) t.style.display = 'none';
+        };
+        noBtn.addEventListener('mouseenter', () => { hideTeaser(); dodge(); });
+        noBtn.addEventListener('click', e => { e.preventDefault(); hideTeaser(); dodge(); });
+        noBtn.addEventListener('touchstart', e => { e.preventDefault(); hideTeaser(); dodge(); }, { passive: false });
       }
       document.body.appendChild(overlay);
     }
@@ -1310,10 +1342,11 @@
       let i = 0;
       function next() {
         if (i < steps.length) {
-          showConfirmModal(steps[i].text, steps[i].yes, () => { i++; next(); }, "Nein 🙅‍♀️");
+          const teaser = i === 0 ? "👉 Nicht sicher? Dann drück doch auf „Nein“ 😏" : null;
+          showConfirmModal(steps[i].text, steps[i].yes, () => { i++; next(); }, "Nein 🙅‍♀️", teaser);
         } else {
           triggerConfetti();
-          showConfirmModal("Reingelegt! 😜 Deine Entscheidung steht – ab in den Urlaub!", "Auf geht's! 🚀", submitChoiceReal);
+          showConfirmModal("Reingelegt! 😜 Du kamst am „Nein“ einfach nicht vorbei – ab in den Urlaub!", "Auf geht's! 🚀", submitChoiceReal);
         }
       }
       next();
@@ -1654,22 +1687,27 @@
       try {
         const img = await loadImageForCanvas(topCity.image.replace('w=800', 'w=1080'));
 
-        // Unscharfer, randloser Hintergrund (verhindert hässliche Zuschnitte/Ränder)
+        // Full-Bleed-Hintergrund als Cover (kein ctx.filter -> funktioniert auch auf iOS/Safari)
         ctx.save();
-        ctx.filter = 'blur(45px) brightness(0.6) saturate(1.2)';
-        drawImageCover(ctx, img, -40, -40, canvas.width + 80, canvas.height + 80, 0);
+        ctx.globalAlpha = 0.55;
+        drawImageCover(ctx, img, 0, 0, canvas.width, canvas.height, 0);
         ctx.restore();
 
-        ctx.fillStyle = 'rgba(0,0,0,0.15)';
+        // Dunkler Verlauf drüber für Kontrast & Lesbarkeit
+        const dark = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        dark.addColorStop(0, 'rgba(20,10,30,0.55)');
+        dark.addColorStop(0.45, 'rgba(20,10,30,0.25)');
+        dark.addColorStop(1, 'rgba(20,10,30,0.7)');
+        ctx.fillStyle = dark;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // Scharfes Foto komplett sichtbar (kein Beschnitt) in einer "Poster"-Karte
         const cardX = 70, cardY = 230, cardW = canvas.width - 140, cardH = 980, cardR = 44;
         ctx.save();
-        ctx.shadowColor = 'rgba(0,0,0,0.35)';
+        ctx.shadowColor = 'rgba(0,0,0,0.45)';
         ctx.shadowBlur = 50;
-        ctx.shadowOffsetY = 20;
-        ctx.fillStyle = 'rgba(0,0,0,0.25)';
+        ctx.shadowOffsetY = 22;
+        ctx.fillStyle = '#1a1420';
         roundRectPath(ctx, cardX, cardY, cardW, cardH, cardR);
         ctx.fill();
         ctx.restore();
@@ -1677,13 +1715,11 @@
         ctx.save();
         roundRectPath(ctx, cardX, cardY, cardW, cardH, cardR);
         ctx.clip();
-        ctx.fillStyle = '#000';
-        ctx.fillRect(cardX, cardY, cardW, cardH);
-        drawImageContain(ctx, img, cardX, cardY, cardW, cardH, 0);
+        drawImageCover(ctx, img, cardX, cardY, cardW, cardH, 0);
         ctx.restore();
 
-        ctx.strokeStyle = 'rgba(255,255,255,0.85)';
-        ctx.lineWidth = 6;
+        ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+        ctx.lineWidth = 7;
         roundRectPath(ctx, cardX, cardY, cardW, cardH, cardR);
         ctx.stroke();
 
@@ -1851,12 +1887,24 @@
         try {
           const img = await loadImageForCanvas(c.image);
           ctx.save();
-          ctx.filter = blurred ? 'blur(30px) brightness(0.5)' : 'brightness(0.5)';
-          drawImageCover(ctx, img, 0, 0, canvas.width, canvas.height, 0);
+          ctx.globalAlpha = 0.5;
+          // bei "verschleiert" das Bild stark hochskaliert zeichnen -> pixeliger Pseudo-Blur ohne ctx.filter (iOS-sicher)
+          if (blurred) {
+            const s = 0.06;
+            const tmp = document.createElement('canvas');
+            tmp.width = Math.max(2, Math.round(canvas.width * s));
+            tmp.height = Math.max(2, Math.round(canvas.height * s));
+            const tctx = tmp.getContext('2d');
+            drawImageCover(tctx, img, 0, 0, tmp.width, tmp.height, 0);
+            ctx.imageSmoothingEnabled = true;
+            ctx.drawImage(tmp, 0, 0, canvas.width, canvas.height);
+          } else {
+            drawImageCover(ctx, img, 0, 0, canvas.width, canvas.height, 0);
+          }
           ctx.restore();
         } catch (e) { /* ohne Foto weitermachen */ }
 
-        ctx.fillStyle = 'rgba(0,0,0,0.35)';
+        ctx.fillStyle = 'rgba(0,0,0,0.4)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // Kopfzeile
