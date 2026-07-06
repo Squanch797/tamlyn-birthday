@@ -1674,6 +1674,23 @@
       link.click();
     }
 
+    // Entfernt Emojis/Flaggen aus Canvas-Text (iOS zentriert Emoji-Text falsch)
+    function stripEmoji(s) {
+      let out = String(s);
+      try {
+        out = out
+          .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, '')                 // Länder-Flaggen
+          .replace(/\p{Extended_Pictographic}/gu, '')             // sämtliche Emoji-Piktogramme
+          .replace(/[︀-️‍⃣]/g, ''); // Variation-Selektoren, ZWJ, Keycap
+      } catch (e) {
+        // Fallback ohne Unicode-Property-Escapes (sehr alte Browser)
+        out = out
+          .replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, '')
+          .replace(/[←-⇿⌀-➿⬀-⯿☀-⛿︀-️‍⃣]/g, '');
+      }
+      return out.replace(/\s{2,}/g, ' ').trim();
+    }
+
     // --- STORY-BILD ZUM TEILEN (INSTAGRAM-STORY-FORMAT) ---
     async function generateStoryImage() {
       const topCity = rankedCities[0];
@@ -1734,22 +1751,22 @@
         photoDrawn = true;
       } catch (e) { /* Bild konnte nicht geladen werden, weiter ohne Foto */ }
 
-      // --- ALLE TEXTE STRIKT ZENTRIERT, OHNE measureText (iOS-sicher) ---
+      // --- ALLE TEXTE ZENTRIERT & OHNE EMOJI (iOS zentriert Emoji-Text falsch) ---
       ctx.textAlign = 'center';
       ctx.textBaseline = 'alphabetic';
 
       // Kopf-Band (feste Breite, unabhängig von der Textbreite)
-      const bandW = 780, bandH = 84;
+      const bandW = 720, bandH = 84;
       ctx.fillStyle = 'rgba(0,0,0,0.38)';
       roundRectPath(ctx, cx - bandW / 2, 72, bandW, bandH, 42);
       ctx.fill();
       ctx.fillStyle = '#ffffff';
-      ctx.font = '800 36px Arial, Helvetica, sans-serif';
-      ctx.fillText('☀️ TAMLYNS SOMMER TRIP', cx, 128);
+      ctx.font = '800 34px Arial, Helvetica, sans-serif';
+      ctx.fillText('TAMLYNS SOMMER TRIP', cx, 126);
 
       if (!photoDrawn) {
-        ctx.font = '900 160px Arial, Helvetica, sans-serif';
-        ctx.fillText('✈️', cx, 760);
+        ctx.font = '800 60px Arial, Helvetica, sans-serif';
+        ctx.fillText('Reise-Special', cx, 760);
       }
 
       // Stadtname mit weichem Schatten
@@ -1757,30 +1774,30 @@
       ctx.shadowBlur = 20;
       ctx.fillStyle = '#ffffff';
       ctx.font = '900 100px Arial, Helvetica, sans-serif';
-      ctx.fillText(topCity.city, cx, 1332);
+      ctx.fillText(stripEmoji(topCity.city), cx, 1332);
       ctx.shadowBlur = 0;
 
       ctx.font = '700 42px Arial, Helvetica, sans-serif';
-      ctx.fillText(topCity.country, cx, 1392);
+      ctx.fillText(stripEmoji(topCity.country), cx, 1392);
 
-      ctx.font = '600 30px Arial, Helvetica, sans-serif';
-      ctx.fillText('✨ ✨ ✨', cx, 1448);
+      ctx.font = '600 34px Arial, Helvetica, sans-serif';
+      ctx.fillText('• • •', cx, 1448);
 
       ctx.font = '700 38px Arial, Helvetica, sans-serif';
-      ctx.fillText((selectedDate || '').split(' (')[0], cx, 1514);
+      ctx.fillText(stripEmoji((selectedDate || '').split(' (')[0]), cx, 1514);
 
-      // Wetter & Pärchen-Faktor als eine zentrierte Zeile (keine gemessenen Chips)
+      // Wetter & Pärchen-Faktor als eine zentrierte Zeile (emoji-frei)
       ctx.font = '700 32px Arial, Helvetica, sans-serif';
       ctx.fillStyle = 'rgba(255,255,255,0.95)';
-      ctx.fillText(`☀️ ${topCity.temperature}   •   ${topCity.romanceScore}`, cx, 1588);
+      ctx.fillText(`${stripEmoji(topCity.temperature)}   •   ${stripEmoji(topCity.romanceScore)}`, cx, 1588);
 
       const days = daysUntilDateString(selectedDate || '');
       ctx.font = '800 48px Arial, Helvetica, sans-serif';
       ctx.fillStyle = '#ffffff';
-      ctx.fillText(days !== null && days >= 0 ? `⏳ Noch ${days} Tage!` : '🎉 Wir freuen uns riesig!', cx, 1700);
+      ctx.fillText(days !== null && days >= 0 ? `Noch ${days} Tage!` : 'Wir freuen uns riesig!', cx, 1700);
 
       ctx.font = '600 32px Arial, Helvetica, sans-serif';
-      ctx.fillText('26. Geburtstag Special ❤️', cx, 1786);
+      ctx.fillText('26. Geburtstag Special', cx, 1786);
 
       downloadCanvas(canvas, `tamlyns-sommer-trip-${topCity.id}.png`);
     }
